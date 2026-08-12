@@ -1,0 +1,23 @@
+{
+  "name": "bunyang-total-cost",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "분양 아파트 총비용 계산기 - 계약금부터 입주까지 실제 필요 현금을 계산합니다",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.check.json"
+  },
+  "dependencies": {
+    "astro": "^7.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.production
+.DS_Store
+
+# 검증용 브라우저 산출물
+.playwright-mcp/
+/*.png
+
+# 저작권 리스크 차단: 도면·조감도·투시도 등 시공사 저작물은 저장소에 두지 않는다.
+# (설계 원칙이므로 실수로 커밋되는 것을 막기 위해 명시적으로 무시한다)
+public/floorplans/
+public/renderings/
+*.평면도.*
