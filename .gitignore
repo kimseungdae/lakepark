@@ -17,3 +17,6 @@ public/renderings/
 
 # VSCode Local History 확장 스냅샷
 .history/
+
+# 로컬 브레인스토밍 시안
+.superpowers/
