@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import StatusCard from '../components/StatusCard.astro';
+import SubscribeCta from '../components/SubscribeCta.astro';
+import { STATUS_BOARD } from '../data/status/board';
+import type { StatusCategory } from '../data/status/types';
+
+const CATEGORIES: Array<{ key: StatusCategory; label: string }> = [
+  { key: 'transport', label: '교통' },
+  { key: 'development', label: '개발' },
+  { key: 'park', label: '공원·수변' },
+  { key: 'culture', label: '문화' },
+  { key: 'education', label: '교육' },
+  { key: 'admin', label: '행정' },
+];
+
+const grouped = CATEGORIES.map((category) => ({
+  ...category,
+  items: STATUS_BOARD.filter((item) => item.category === category.key),
+})).filter((group) => group.items.length > 0);
+---
+
+<Base
+  title="개발계획 상태판"
+  description="5호선·학교·공원 등 검단 개발계획이 지금 어느 단계인지, 근거·확인일과 함께 요약"
+>
+  <h1>개발계획 상태판</h1>
+  <p class="lede">
+    "호재"라는 말 대신 <strong>행정 단계</strong>를 표시합니다. 예타 통과는 개통이 아니고,
+    입찰공고는 착공이 아니며, 준공은 개관이 아닙니다. 모든 항목에 마지막 확인일과 출처를 붙입니다.
+  </p>
+
+  <Hero
+    image="status-city.jpg"
+    optional
+    alt="공사 중인 신도시 풍경"
+  />
+
+  <details class="legend card">
+    <summary>배지 읽는 법</summary>
+    <ul>
+      <li><strong>확정</strong> — 모집공고·법령·고시·공식 개통 등으로 확인됨</li>
+      <li><strong>추진</strong> — 예타 통과, 계약, 착공 등 절차가 실제로 진행 중</li>
+      <li><strong>계획</strong> — 발표는 있으나 일정·내용이 바뀔 수 있음</li>
+      <li><strong>홍보</strong> — 시행사·시공사 홍보 표현으로 독립 검증 필요</li>
+      <li><strong>확인필요</strong> — 현재 자료만으로 확정할 수 없음</li>
+      <li>
+        <strong>n/7 단계</strong> — 사업 생애주기: 언급→계획→예산→공고→계약→착공→준공→운영.
+        숫자가 클수록 실현에 가깝습니다.
+      </li>
+    </ul>
+  </details>
+
+  {
+    grouped.map((group) => (
+      <section aria-labelledby={`cat-${group.key}`}>
+        <h2 id={`cat-${group.key}`}>{group.label}</h2>
+        {group.items.map((item) => (
+          <StatusCard item={item} />
+        ))}
+      </section>
+    ))
+  }
+
+  <SubscribeCta context="status" />
+
+  <style>
+    .lede {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0 0 1.25rem;
+    }
+    .legend summary {
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .legend ul {
+      margin: 0.6rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.83rem;
+    }
+    .legend li {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</Base>

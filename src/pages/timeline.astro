@@ -1,0 +1,184 @@
+---
+import Base from '../layouts/Base.astro';
+import SubscribeCta from '../components/SubscribeCta.astro';
+import { CURATED_MILESTONES } from '../data/timeline/milestones';
+import { GEOMDAN_LAKEPARK, PAYMENT_STRUCTURE } from '../data/presets/geomdan-lakepark';
+import { buildMoveInTimeline } from '../lib/timeline';
+import { formatDate } from '../lib/format';
+
+const timeline = buildMoveInTimeline({
+  interimDates: PAYMENT_STRUCTURE.interim.dates,
+  interimRatioEach: PAYMENT_STRUCTURE.interim.ratioEach,
+  balanceRatio: PAYMENT_STRUCTURE.balanceRatio,
+  moveInDate: GEOMDAN_LAKEPARK.expectedMoveInDate,
+  milestones: CURATED_MILESTONES,
+});
+
+const KIND_LABEL: Record<string, string> = {
+  payment: '납부',
+  inspection: '점검',
+  admin: '준비',
+  moveIn: '입주',
+};
+
+function displayDate(date: string, precision: string): string {
+  if (precision === 'day') return formatDate(date);
+  const [y, m] = date.split('-');
+  if (precision === 'month') return `${y}년 ${Number(m)}월경`;
+  return `${y}년 ${Number(m)}월 전후`;
+}
+---
+
+<Base title="입주까지 일정" description="중도금 회차부터 사전점검, 입주지정일까지 오늘 기준 남은 일정">
+  <h1>입주까지 남은 일정</h1>
+  <p class="lede">
+    입주자모집공고에 명시된 납부일은 <span class="badge conf">확정</span>,
+    입주예정일에서 파생된 일정은 <span class="badge est">추정</span>으로 표시합니다.
+  </p>
+
+  <section class="card next-card" aria-live="polite">
+    <p class="card-title">다음 일정</p>
+    <p id="t-next" class="next-body">아래 표에서 오늘 기준 남은 일정을 확인하세요.</p>
+  </section>
+
+  <ol class="tl">
+    {
+      timeline.map((entry) => (
+        <li
+          class="tl-item"
+          data-date={entry.date}
+          data-precision={entry.datePrecision}
+          data-kind={entry.kind}
+        >
+          <div class="tl-head">
+            <span class="tl-date">{displayDate(entry.date, entry.datePrecision)}</span>
+            <span class={`badge ${entry.confidence === 'confirmed' ? 'conf' : 'est'}`}>
+              {entry.confidence === 'confirmed' ? '확정' : '추정'}
+            </span>
+            <span class="dday" hidden />
+          </div>
+          <p class="tl-title">
+            <span class="tl-kind">{KIND_LABEL[entry.kind]}</span>
+            {entry.title}
+          </p>
+          {entry.note && <p class="tl-note">{entry.note}</p>}
+          {entry.sourceLabel && <p class="tl-source">출처: {entry.sourceLabel}</p>}
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="hint">
+    개인 계약일에 따라 달라지는 계약금 1·2차 일정과 회차별 실제 금액은
+    <a href="/calculator">총비용 계산기</a>에서 확인할 수 있습니다.
+  </p>
+
+  <SubscribeCta context="timeline" />
+
+  <script>
+    import '../scripts/timeline';
+  </script>
+
+  <style>
+    .lede {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0 0 1.25rem;
+    }
+    .next-card {
+      border-left: 3px solid var(--accent);
+    }
+    .next-body {
+      margin: 0;
+      font-size: 1.02rem;
+    }
+    :global(.next-body .dday-big) {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .tl {
+      list-style: none;
+      margin: 1.25rem 0;
+      padding: 0;
+      border-left: 2px solid var(--border);
+    }
+    .tl-item {
+      position: relative;
+      padding: 0 0 1.25rem 1.1rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -0.36rem;
+      top: 0.35rem;
+      width: 0.6rem;
+      height: 0.6rem;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .tl-item[data-kind='payment']::before {
+      background: var(--accent);
+    }
+    .tl-item.next {
+      background: var(--accent-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding-top: 0.6rem;
+      padding-right: 0.75rem;
+      margin: 0 0 0.5rem;
+    }
+    .tl-item.next::before {
+      top: 0.95rem;
+    }
+    .tl-item.past {
+      opacity: 0.55;
+    }
+    .tl-head {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .tl-date {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .dday {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .tl-item.past .dday {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .tl-title {
+      margin: 0.15rem 0 0;
+      font-weight: 600;
+    }
+    .tl-kind {
+      display: inline-block;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0 0.35rem;
+      margin-right: 0.25rem;
+      vertical-align: middle;
+    }
+    .tl-note {
+      margin: 0.25rem 0 0;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .tl-source {
+      margin: 0.2rem 0 0;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+  </style>
+</Base>

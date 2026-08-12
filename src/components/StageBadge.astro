@@ -1,0 +1,47 @@
+---
+import type { StatusStage } from '../data/status/types';
+
+/**
+ * 검증 상태 배지. 색상은 Base.astro의 confirmed/estimated/warn CSS 변수를 재사용한다.
+ * 확정=녹색, 추진=파랑, 계획=주황, 홍보·의견=회색, 확인필요=빨강.
+ */
+interface Props {
+  stage: StatusStage;
+}
+
+const { stage } = Astro.props;
+
+const TONE: Record<StatusStage, string> = {
+  확정: 'tone-conf',
+  추진: 'tone-accent',
+  계획: 'tone-est',
+  홍보: 'tone-muted',
+  의견: 'tone-muted',
+  확인필요: 'tone-warn',
+};
+---
+
+<span class={`badge stage ${TONE[stage]}`}>{stage}</span>
+
+<style>
+  .stage.tone-conf {
+    background: var(--confirmed-soft);
+    color: var(--confirmed);
+  }
+  .stage.tone-accent {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .stage.tone-est {
+    background: var(--estimated-soft);
+    color: var(--estimated);
+  }
+  .stage.tone-muted {
+    background: var(--surface-2);
+    color: var(--text-muted);
+  }
+  .stage.tone-warn {
+    background: var(--warn-soft);
+    color: var(--warn);
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+import type { InfoSource } from '../data/status/types';
+
+/**
+ * 출처 한 줄 표기: 확정/추정 배지 + 출처명(링크) + 확인일 + 근거 등급.
+ * url이 비어 있으면 링크 없이 이름만 보여준다 (예: 공고 PDF처럼 공개 URL이 없는 원문).
+ */
+interface Props {
+  source: InfoSource;
+}
+
+const { source } = Astro.props;
+const isConfirmed = source.confidence === 'confirmed';
+---
+
+<span class="source-line">
+  <span class={`badge ${isConfirmed ? 'conf' : 'est'}`}>{isConfirmed ? '확정' : '추정'}</span>
+  {
+    source.url ? (
+      <a href={source.url} target="_blank" rel="noopener noreferrer">
+        {source.label}
+      </a>
+    ) : (
+      <span>{source.label}</span>
+    )
+  }
+  <span class="source-meta">
+    {source.asOf} 확인{source.grade && ` · 등급 ${source.grade}`}
+  </span>
+</span>
+
+<style>
+  .source-line {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+  }
+  .source-meta {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+</style>

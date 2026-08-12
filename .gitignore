@@ -14,3 +14,6 @@ dist/
 public/floorplans/
 public/renderings/
 *.평면도.*
+
+# VSCode Local History 확장 스냅샷
+.history/

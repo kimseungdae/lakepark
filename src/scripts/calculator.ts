@@ -2,6 +2,7 @@ import { GEOMDAN_LAKEPARK, type UnitType } from '../data/presets/geomdan-lakepar
 import { ACQUISITION_TAX, MOVE_IN_COSTS, type MoveInLevel } from '../data/rates';
 import { trackOnce } from '../lib/analytics';
 import { formatDate, formatKRW, formatPercent, formatRange } from '../lib/format';
+import { saveProfile } from '../lib/profile';
 import { calculateTotalCost, type TotalCostResult } from '../lib/calc/total';
 import type { InterimLoanInterestMode } from '../lib/calc/loanInterest';
 
@@ -292,6 +293,19 @@ function init(): void {
       el.addEventListener('input', render);
     }
   }
+
+  // 홈 개인화 브리지 — 현재 선택을 localStorage 프로필로 저장한다 (전송 없음).
+  document.getElementById('f-save-profile')?.addEventListener('click', () => {
+    const supplyPrice = Number(els.price.value);
+    saveProfile({
+      block: currentBlock(),
+      type: currentType().code,
+      ...(supplyPrice > 0 ? { supplyPrice } : {}),
+      ...(els.contractDate.value ? { contractDate: els.contractDate.value } : {}),
+    });
+    const note = document.getElementById('f-save-profile-note');
+    if (note) note.hidden = false;
+  });
 }
 
 init();

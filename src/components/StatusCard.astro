@@ -1,0 +1,134 @@
+---
+import type { StatusItem } from '../data/status/types';
+import { LIFECYCLE_LABELS } from '../data/status/types';
+import { formatDate } from '../lib/format';
+import SourceBadge from './SourceBadge.astro';
+import StageBadge from './StageBadge.astro';
+
+/**
+ * 상태판 항목 카드. 접힌 상태(요약 한 줄 + 배지 + 확인일)가 전부이고,
+ * 이력·출처·주의점은 details로 펼쳐 본다 — "요약 먼저, 상세는 선택" 원칙.
+ */
+interface Props {
+  item: StatusItem;
+}
+
+const { item } = Astro.props;
+const lifecycleLabel =
+  item.lifecycle === undefined ? undefined : `${item.lifecycle}/7 ${LIFECYCLE_LABELS[item.lifecycle]}`;
+---
+
+<article class="card status-card" id={item.id}>
+  <div class="sc-head">
+    <StageBadge stage={item.stage} />
+    {lifecycleLabel && <span class="sc-lifecycle">{lifecycleLabel}</span>}
+    <h3 class="sc-title">{item.title}</h3>
+  </div>
+
+  <p class="sc-summary">{item.summary}</p>
+  <p class="sc-checked">마지막 확인 {formatDate(item.lastChecked)}</p>
+
+  <details class="sc-more">
+    <summary>주의점·이력·출처</summary>
+    {item.caution && <p class="sc-caution">⚠️ {item.caution}</p>}
+
+    <h4>변경 이력</h4>
+    <ul class="sc-history">
+      {
+        item.history.map((change) => (
+          <li>
+            <span class="sc-date">{formatDate(change.date)}</span>
+            {change.summary}
+            {change.stage && <StageBadge stage={change.stage} />}
+          </li>
+        ))
+      }
+    </ul>
+
+    <h4>출처</h4>
+    <ul class="sc-sources">
+      {
+        item.sources.map((source) => (
+          <li>
+            <SourceBadge source={source} />
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</article>
+
+<style>
+  .status-card {
+    margin-bottom: 0.75rem;
+  }
+  .sc-head {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .sc-title {
+    font-size: 1rem;
+    margin: 0;
+    flex: 1 1 auto;
+  }
+  .sc-lifecycle {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.05rem 0.4rem;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .sc-summary {
+    margin: 0 0 0.35rem;
+    font-size: 0.97rem;
+  }
+  .sc-checked {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .sc-more {
+    border-top: 1px solid var(--border);
+    padding-top: 0.5rem;
+  }
+  .sc-more summary {
+    cursor: pointer;
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .sc-caution {
+    background: var(--warn-soft);
+    color: var(--warn);
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.86rem;
+    margin: 0.6rem 0;
+  }
+  .sc-more h4 {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0.85rem 0 0.3rem;
+  }
+  .sc-history,
+  .sc-sources {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.89rem;
+  }
+  .sc-history li,
+  .sc-sources li {
+    margin-bottom: 0.25rem;
+  }
+  .sc-date {
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    margin-right: 0.35rem;
+  }
+</style>
