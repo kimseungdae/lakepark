@@ -18,7 +18,7 @@ export type EditorialUpdate = {
 
 const toStatus = (item: StatusItem): EditorialStatus => {
   if (item.stage === '확인필요' || item.stage === '의견' || item.stage === '홍보') return 'recheck';
-  if (item.lifecycle === 7) return 'operating';
+  if (item.stage === '확정' || item.lifecycle === 7) return 'operating';
   if (item.stage === '추진') return 'inProgress';
   if (item.stage === '계획') return 'planned';
   return item.lifecycle !== undefined && item.lifecycle >= 4 ? 'inProgress' : 'planned';

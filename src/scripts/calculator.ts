@@ -189,7 +189,7 @@ const render = (): void => {
       ? '공고 금액입니다. 이 층의 실제 세대 존재 여부는 계약서에서 다시 확인하세요.'
       : '입주자모집공고 가격표와 동별 라인 배정을 대조한 금액입니다.';
   elements.selectionNote.textContent = hasBalconyPrice
-    ? `발코니 확장비 ${formatKRW(type.balconyExpansion!)}를 포함해 계산 중입니다.`
+    ? `발코니 확장비 ${formatKRW(type.balconyExpansion!)}을 포함해 계산 중입니다.`
     : 'AB22 발코니 확장비는 아직 미반영입니다. 계약서 금액을 직접 더해 주세요.';
   renderSchedule(high);
 };
