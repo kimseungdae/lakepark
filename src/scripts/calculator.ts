@@ -2,6 +2,7 @@ import { GEOMDAN_LAKEPARK, type UnitType, type UnitTypeCode } from '../data/pres
 import { calculateTotalCost, type TotalCostResult } from '../lib/calc/total';
 import { formatDate, formatKRW, formatRange } from '../lib/format';
 import { loadProfileV2, saveProfileV2 } from '../lib/profile';
+import { buildQuickPreview } from '../lib/quickPreview';
 import {
   getBuildingOptions,
   getUnitTypesForBuilding,
@@ -23,7 +24,11 @@ const elements = {
   unitType: get<HTMLSelectElement>('f-type'),
   lineField: get<HTMLLabelElement>('line-field'),
   line: get<HTMLSelectElement>('f-line'),
-  selectionNote: get<HTMLParagraphElement>('selection-note'),
+  selectionNote: get<HTMLElement>('selection-note'),
+  quickResult: get<HTMLAnchorElement>('quick-result'),
+  quickSelection: get<HTMLElement>('r-quick-selection'),
+  quickTotal: get<HTMLElement>('r-quick-total'),
+  quickPrice: get<HTMLElement>('r-quick-price'),
   contractDate: get<HTMLInputElement>('f-contract-date'),
   loanRatio: get<HTMLSelectElement>('f-loan-ratio'),
   loanRate: get<HTMLInputElement>('f-loan-rate'),
@@ -159,6 +164,7 @@ const render = (): void => {
     elements.empty.textContent = unavailableMessage[resolution.reason] ?? '이 조건은 공고 가격표를 다시 확인해야 합니다.';
     elements.empty.classList.remove('hidden');
     elements.content.classList.add('hidden');
+    elements.quickResult.classList.add('hidden');
     return;
   }
 
@@ -169,12 +175,24 @@ const render = (): void => {
   const extraMax = high.estimated.total.max + selectedOptionsTotal();
   const planMin = bounds.min + low.estimated.total.min + selectedOptionsTotal();
   const planMax = bounds.max + high.estimated.total.max + selectedOptionsTotal();
+  const preview = buildQuickPreview({
+    building: building.building,
+    floor,
+    unitType,
+    officialPrice: bounds,
+    planTotal: { min: planMin, max: planMax },
+    ...(hasBalconyPrice ? { includedOptionAmount: type.balconyExpansion } : {}),
+  });
 
   elements.empty.classList.add('hidden');
   elements.content.classList.remove('hidden');
-  elements.selection.textContent = `${building.building}동 · ${floor}층 · ${unitType}`;
-  elements.planTotal.textContent = amountRange(planMin, planMax);
-  elements.price.textContent = amountRange(bounds.min, bounds.max);
+  elements.quickResult.classList.remove('hidden');
+  elements.quickSelection.textContent = preview.selectionLabel;
+  elements.quickTotal.textContent = preview.planTotalLabel;
+  elements.quickPrice.textContent = preview.officialPriceLabel;
+  elements.selection.textContent = preview.selectionLabel;
+  elements.planTotal.textContent = preview.planTotalLabel;
+  elements.price.textContent = preview.officialPriceLabel;
   elements.extra.textContent = amountRange(extraMin, extraMax);
   elements.before.textContent = amountRange(low.cashByPhase.beforeMoveIn, high.cashByPhase.beforeMoveIn);
   elements.at.textContent = amountRange(low.cashByPhase.atMoveIn, high.cashByPhase.atMoveIn);
@@ -188,9 +206,7 @@ const render = (): void => {
     : resolution.occupancy === 'needs-contract-check'
       ? '공고 금액입니다. 이 층의 실제 세대 존재 여부는 계약서에서 다시 확인하세요.'
       : '입주자모집공고 가격표와 동별 라인 배정을 대조한 금액입니다.';
-  elements.selectionNote.textContent = hasBalconyPrice
-    ? `발코니 확장비 ${formatKRW(type.balconyExpansion!)}을 포함해 계산 중입니다.`
-    : 'AB22 발코니 확장비는 아직 미반영입니다. 계약서 금액을 직접 더해 주세요.';
+  elements.selectionNote.textContent = preview.includedCostLabel;
   renderSchedule(high);
 };
 

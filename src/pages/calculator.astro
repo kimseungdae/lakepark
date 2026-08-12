@@ -43,7 +43,16 @@ import SectionHeader from '../components/SectionHeader.astro';
           <span class="text-xs text-muted">6304동 84A 저층만 라인에 따라 금액이 달라 확인이 필요합니다.</span>
         </label>
 
-        <p id="selection-note" class="m-0 rounded-xl bg-white px-3 py-2.5 text-sm text-muted" aria-live="polite"></p>
+        <a id="quick-result" class="hidden rounded-xl border border-action/20 bg-action-soft p-4 no-underline lg:hidden" href="#result" aria-live="polite">
+          <span class="block text-xs font-extrabold text-action">선택과 동시에 계산됐어요</span>
+          <span id="r-quick-selection" class="mt-1 block text-xs font-bold text-muted"></span>
+          <strong id="r-quick-total" class="num mt-2 block text-[1.45rem] leading-tight tracking-[-.04em] text-ink"></strong>
+          <span class="mt-2 flex flex-wrap gap-x-2 text-xs text-muted">
+            <span>공식 분양가 <strong id="r-quick-price" class="num text-ink"></strong></span>
+            <span id="selection-note"></span>
+          </span>
+          <span class="mt-3 block text-xs font-extrabold text-action">자세한 자금 일정 보기 ↓</span>
+        </a>
 
         <details class="group border-t border-line pt-4">
           <summary class="flex cursor-pointer list-none items-center justify-between text-sm font-bold">
