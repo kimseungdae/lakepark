@@ -1,390 +1,177 @@
 ---
 import Base from '../layouts/Base.astro';
-import SubscribeCta from '../components/SubscribeCta.astro';
-import { GEOMDAN_LAKEPARK, PAYMENT_STRUCTURE } from '../data/presets/geomdan-lakepark';
-import { formatDate } from '../lib/format';
-
-const preset = GEOMDAN_LAKEPARK;
-const blocks = Object.entries(preset.blocks) as Array<
-  [keyof typeof preset.blocks, (typeof preset.blocks)[keyof typeof preset.blocks]]
->;
+import SectionHeader from '../components/SectionHeader.astro';
 ---
 
-<Base title="총비용 계산기" description="계약금부터 입주까지, 실제로 필요한 현금이 얼마인지 계산합니다">
-  <h1>분양가만 보면 자금계획이 틀어집니다</h1>
-  <p class="lede">
-    계약금·중도금·잔금에 취득세, 등기비, 옵션 잔금, 인테리어까지 더해
-    <strong>언제 얼마의 현금이 필요한지</strong>를 시점별로 계산합니다.
-  </p>
+<Base title="우리 집 비용 계산" description="동, 층, 타입만 고르면 공식 분양가와 입주 자금 계획을 바로 확인합니다.">
+  <header class="mx-auto mb-10 max-w-3xl">
+    <p class="mb-3 text-sm font-bold text-action">우리 집 비용 계산</p>
+    <h1 class="mb-4">동·층·타입만 고르면<br />필요한 돈이 보입니다</h1>
+    <p class="m-0 max-w-2xl text-[1.05rem] leading-7 text-muted">
+      공고 가격표에서 해당 금액을 찾아 계약금부터 입주 준비비까지 한 번에 정리합니다.
+      날짜와 대출 조건은 기본값으로 먼저 계산하고 나중에 바꿀 수 있습니다.
+    </p>
+  </header>
 
-  <p class="notice">
-    <strong>{preset.displayName}</strong> 프리셋이 기본 탑재되어 있습니다. 금액은
-    {preset.source.label} 기준이며, {preset.source.asOf}에 확인했습니다.
-    <a href="/about">이 계산기는 비공식 개인 도구입니다.</a>
-  </p>
+  <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:items-start">
+    <section class="rounded-2xl border border-line bg-canvas p-5 lg:sticky lg:top-32" aria-labelledby="home-select-title">
+      <div class="mb-5 flex items-center justify-between">
+        <h2 id="home-select-title" class="m-0 text-xl">어느 집인가요?</h2>
+        <span class="rounded-full bg-white px-2.5 py-1 text-xs font-bold text-muted">약 10초</span>
+      </div>
 
-  <form id="calc" autocomplete="off">
-    <section class="card">
-      <h2 class="card-title">1. 세대 선택</h2>
-      <div class="grid-2">
-        <label class="field">
-          <span class="label">블록</span>
-          <select id="f-block">
-            {blocks.map(([key, block]) => <option value={key}>{block.name}</option>)}
-          </select>
+      <form id="quick-calc" class="grid gap-4" autocomplete="off">
+        <label class="grid gap-1.5">
+          <span class="text-sm font-bold">1. 동</span>
+          <select id="f-building" aria-describedby="building-help"></select>
+          <span id="building-help" class="text-xs text-muted">동을 고르면 AB22·AB23 블록은 자동으로 구분합니다.</span>
         </label>
-        <label class="field">
-          <span class="label">타입</span>
+
+        <label class="grid gap-1.5">
+          <span class="text-sm font-bold">2. 층</span>
+          <input id="f-floor" type="number" min="1" max="29" inputmode="numeric" value="10" />
+        </label>
+
+        <label class="grid gap-1.5">
+          <span class="text-sm font-bold">3. 타입</span>
           <select id="f-type"></select>
         </label>
-      </div>
 
-      <div class="field">
-        <span class="label">공급금액 (분양가)</span>
-        <div id="f-price-quick" class="chips"></div>
-        <input id="f-price" type="number" step="100000" inputmode="numeric" />
-        <p id="f-price-hint" class="hint"></p>
-      </div>
+        <label id="line-field" class="hidden gap-1.5 rounded-xl border border-estimated/30 bg-estimated-soft p-3">
+          <span class="text-sm font-bold">같은 조건에 가격이 두 개예요</span>
+          <select id="f-line"></select>
+          <span class="text-xs text-muted">6304동 84A 저층만 라인에 따라 금액이 달라 확인이 필요합니다.</span>
+        </label>
 
-      <label class="field">
-        <span class="label">계약일</span>
-        <input id="f-contract-date" type="date" value="2026-07-20" />
-        <p class="hint">
-          계약금 2차 기한(계약 후 {PAYMENT_STRUCTURE.downPayment.secondInstallmentOffsetDays}일 이내)이
-          여기서 계산됩니다.
-        </p>
-      </label>
+        <a id="quick-result" class="hidden rounded-xl border border-action/20 bg-action-soft p-4 no-underline lg:hidden" href="#result" aria-live="polite">
+          <span class="block text-xs font-extrabold text-action">선택과 동시에 계산됐어요</span>
+          <span id="r-quick-selection" class="mt-1 block text-xs font-bold text-muted"></span>
+          <strong id="r-quick-total" class="num mt-2 block text-[1.45rem] leading-tight tracking-[-.04em] text-ink"></strong>
+          <span class="mt-2 flex flex-wrap gap-x-2 text-xs text-muted">
+            <span>공식 분양가 <strong id="r-quick-price" class="num text-ink"></strong></span>
+            <span id="selection-note"></span>
+          </span>
+          <span class="mt-3 block text-xs font-extrabold text-action">자세한 자금 일정 보기 ↓</span>
+        </a>
+
+        <details class="group border-t border-line pt-4">
+          <summary class="flex cursor-pointer list-none items-center justify-between text-sm font-bold">
+            계산 기준 바꾸기
+            <span class="text-action group-open:rotate-45" aria-hidden="true">＋</span>
+          </summary>
+          <div class="mt-4 grid gap-4">
+            <label class="grid gap-1.5">
+              <span class="text-sm font-bold">계약일</span>
+              <input id="f-contract-date" type="date" value="2026-07-20" />
+            </label>
+            <label class="grid gap-1.5">
+              <span class="text-sm font-bold">중도금 대출 비율</span>
+              <select id="f-loan-ratio">
+                <option value="0.6">60% · 기본</option>
+                <option value="0.5">50%</option>
+                <option value="0.4">40%</option>
+                <option value="0">대출 없음</option>
+              </select>
+            </label>
+            <label class="grid gap-1.5">
+              <span class="text-sm font-bold">예상 금리</span>
+              <div class="relative"><input id="f-loan-rate" class="pr-10" type="number" min="0" max="20" step="0.1" value="4.5" /><span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted">%</span></div>
+            </label>
+            <label class="grid gap-1.5">
+              <span class="text-sm font-bold">이자 납부 방식</span>
+              <select id="f-loan-mode">
+                <option value="이자후불제">이자후불제 · 입주 때 정산</option>
+                <option value="이자자납">이자자납 · 공사 중 납부</option>
+                <option value="무이자">무이자</option>
+              </select>
+            </label>
+            <label id="balcony-field" class="check rounded-lg bg-white px-3 py-2">
+              <input id="f-balcony" type="checkbox" checked />
+              <span>발코니 확장비 포함</span>
+            </label>
+            <label class="grid gap-1.5">
+              <span class="text-sm font-bold">그 밖의 유상옵션</span>
+              <div class="relative"><input id="f-options" class="pr-10" type="number" min="0" step="100000" value="0" inputmode="numeric" /><span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted">원</span></div>
+            </label>
+            <label class="grid gap-1.5">
+              <span class="text-sm font-bold">입주 준비 수준</span>
+              <select id="f-interior">
+                <option value="minimal">꼭 필요한 것만</option>
+                <option value="standard" selected>보통 수준</option>
+                <option value="premium">여유 있게</option>
+              </select>
+            </label>
+          </div>
+        </details>
+
+        <button id="save-profile" type="button" class="mt-1 rounded-xl bg-ink px-4 py-3 text-sm font-bold text-white hover:bg-black">이 선택 기억하기</button>
+        <p id="save-note" class="m-0 hidden text-center text-xs font-semibold text-confirmed">이 기기에 저장했습니다.</p>
+      </form>
     </section>
 
-    <section class="card">
-      <h2 class="card-title">2. 발코니 확장 · 유상옵션</h2>
-      <p class="hint">
-        옵션은 분양대금과 <strong>별도 트랙</strong>입니다. 계약 시
-        {PAYMENT_STRUCTURE.optionDownPaymentRatio * 100}%, 입주지정일에 나머지를 냅니다.
-      </p>
-
-      <label class="check">
-        <input id="f-balcony" type="checkbox" checked />
-        <span>발코니 확장 (일괄확장, 실별 선택 불가)</span>
-        <span id="f-balcony-amount" class="num muted"></span>
-      </label>
-
-      <div id="f-options" class="options"></div>
-
-      <p class="hint">
-        같은 품목의 등급(예: 시스템에어컨 기본형·전실형)은 하나만 선택해야 합니다.
-        이 목록은 선택한 금액을 그대로 합산할 뿐 배타 조건을 검사하지 않습니다.
-      </p>
-
-      <p class="options-total">선택한 옵션 합계 <strong id="f-options-total">0원</strong></p>
-    </section>
-
-    <section class="card">
-      <h2 class="card-title">3. 중도금 대출</h2>
-      <p class="warn-inline">
-        사업주체는 대출 알선·승인·한도·금리를 보장하지 않습니다. 대출이 실행되지 않으면
-        해당 금액을 전액 자기자금으로 조달해야 합니다.
-      </p>
-      <div class="grid-3">
-        <label class="field">
-          <span class="label">대출 비율 (분양가 대비 %)</span>
-          <input id="f-loan-ratio" type="number" min="0" max="100" step="5" value="60" />
-        </label>
-        <label class="field">
-          <span class="label">이자 방식</span>
-          <select id="f-loan-mode">
-            <option value="이자후불제">이자후불제 (입주 시 정산)</option>
-            <option value="이자자납">이자자납 (공사 중 납부)</option>
-            <option value="무이자">무이자 (시행사 부담)</option>
-          </select>
-        </label>
-        <div id="f-loan-rate-row" class="field">
-          <label class="label" for="f-loan-rate">연이율 (%)</label>
-          <input id="f-loan-rate" type="number" min="0" max="15" step="0.1" value="4.5" />
+    <section id="result" aria-live="polite">
+      <div id="result-empty" class="rounded-2xl border border-line p-8 text-center text-muted">집 정보를 고르면 바로 계산합니다.</div>
+      <div id="result-content" class="hidden">
+        <div class="border-b-2 border-ink pb-7">
+          <div class="mb-3 flex flex-wrap items-center gap-2">
+            <span class="badge conf">공고 가격표 조회</span>
+            <span id="r-selection" class="text-sm font-bold text-muted"></span>
+          </div>
+          <p class="mb-1 text-sm font-bold text-muted">입주까지 계획할 금액</p>
+          <p id="r-plan-total" class="num m-0 text-[clamp(2rem,8vw,3.4rem)] font-[850] leading-tight tracking-[-.055em]"></p>
+          <p class="mb-0 mt-3 text-sm leading-6 text-muted">공고 금액에 세금·대출이자·기본 입주 준비비를 더한 예상 범위입니다.</p>
         </div>
-      </div>
-    </section>
 
-    <section class="card">
-      <h2 class="card-title">4. 입주 준비 비용</h2>
-      <div class="grid-2">
-        <label class="field">
-          <span class="label">인테리어 수준</span>
-          <select id="f-interior">
-            <option value="minimal">최소 — 도배·조명 위주</option>
-            <option value="standard" selected>표준 — 중문·줄눈·탄성코트 포함</option>
-            <option value="premium">고급 — 주방·욕실 부분 리모델링</option>
-          </select>
-        </label>
-        <div class="field">
-          <span class="label">계상 옵션</span>
-          <label class="check">
-            <input id="f-appliances" type="checkbox" checked />
-            <span>가전 구입비 포함</span>
-          </label>
-          <label class="check">
-            <input id="f-options-tax" type="checkbox" checked />
-            <span>옵션을 취득세 과세표준에 포함</span>
-          </label>
-          <p class="hint">
-            옵션의 과세표준 포함 범위는 세무 확인 대상입니다. 위택스·세무 전문가에게 확인하세요.
-          </p>
+        <div class="grid border-b border-line py-6 sm:grid-cols-2">
+          <article class="pb-5 sm:border-r sm:border-line sm:pb-0 sm:pr-6">
+            <p class="m-0 text-sm font-bold text-muted">공식 분양가</p>
+            <p id="r-price" class="num my-1 text-2xl font-extrabold"></p>
+            <p id="r-price-note" class="m-0 text-xs leading-5 text-muted"></p>
+          </article>
+          <article class="border-t border-line pt-5 sm:border-t-0 sm:pl-6 sm:pt-0">
+            <p class="m-0 text-sm font-bold text-muted">세금·이자·입주 준비비</p>
+            <p id="r-extra" class="num my-1 text-2xl font-extrabold"></p>
+            <p class="m-0 text-xs leading-5 text-muted">개인 조건과 2029년 시세에 따라 달라지는 추정치입니다.</p>
+          </article>
         </div>
+
+        <section class="py-7" aria-labelledby="cash-title">
+          <SectionHeader title="언제 얼마가 필요할까요?" eyebrow="현금 계획" />
+          <div class="mt-4 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-3">
+            <article class="bg-white p-4"><p class="m-0 text-xs font-bold text-muted">입주 전까지</p><p id="r-before" class="num my-1 text-lg font-extrabold"></p><p class="m-0 text-xs text-muted">계약금·대출 외 중도금</p></article>
+            <article class="bg-white p-4"><p class="m-0 text-xs font-bold text-muted">입주하는 날</p><p id="r-at" class="num my-1 text-lg font-extrabold"></p><p class="m-0 text-xs text-muted">잔금·세금·등기·이자</p></article>
+            <article class="bg-white p-4"><p class="m-0 text-xs font-bold text-muted">입주 후</p><p id="r-after" class="num my-1 text-lg font-extrabold"></p><p class="m-0 text-xs text-muted">인테리어·이사·가전</p></article>
+          </div>
+          <p class="mt-3 rounded-xl bg-action-soft px-4 py-3 text-sm leading-6 text-ink">중도금 대출 <strong id="r-loan" class="num"></strong>은 입주 때 상환하거나 주택담보대출로 바꿔야 합니다.</p>
+        </section>
+
+        <section class="border-t border-line py-7" aria-labelledby="schedule-title">
+          <div class="flex items-end justify-between gap-4">
+            <SectionHeader title="납부 일정" eyebrow="공고 기준" />
+            <a class="mb-1 text-sm font-bold text-action no-underline" href="/move-in">입주 준비로 이동</a>
+          </div>
+          <div class="scroll-x mt-3">
+            <table>
+              <thead><tr><th>날짜</th><th>납부 항목</th><th class="text-right">내 돈</th></tr></thead>
+              <tbody id="r-schedule"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <details class="border-y border-line py-5">
+          <summary class="cursor-pointer text-sm font-bold">이 계산의 기준과 주의사항</summary>
+          <ul class="mb-0 mt-4 grid gap-2 pl-5 text-sm leading-6 text-muted">
+            <li>공급금액은 2026년 6월 12일 입주자모집공고 가격표를 조회했습니다.</li>
+            <li>계약일 2026년 7월 20일, 중도금 대출 60%, 금리 연 4.5%, 이자후불제를 기본값으로 사용합니다.</li>
+            <li>발코니·유상옵션과 실제 대출 조건은 계약서 및 금융기관 안내가 우선합니다.</li>
+            <li>저층과 21층 이상은 실제 세대 존재 여부를 계약서에서 다시 확인해야 합니다.</li>
+          </ul>
+        </details>
       </div>
     </section>
-  </form>
-
-  <h2>언제 얼마가 필요한가</h2>
-  <div class="phases">
-    <div class="phase">
-      <p class="phase-label">입주 전까지</p>
-      <p class="phase-amount" id="r-phase-before">—</p>
-      <p class="phase-note">계약금 + 중도금 자기부담 + 옵션 계약금</p>
-    </div>
-    <div class="phase">
-      <p class="phase-label">입주지정일 ({formatDate(preset.expectedMoveInDate)} 예정)</p>
-      <p class="phase-amount" id="r-phase-at">—</p>
-      <p class="phase-note">잔금 + 옵션 잔금 + 취득세 + 등기비</p>
-    </div>
-    <div class="phase">
-      <p class="phase-label">입주 후 <span class="badge est">추정</span></p>
-      <p class="phase-amount" id="r-phase-after">—</p>
-      <p class="phase-note">인테리어 + 청소 + 이사 + 가전</p>
-    </div>
   </div>
-
-  <p class="carried">
-    이와 별개로 <strong id="r-carried-loan">—</strong>의 중도금 대출 잔액을 입주 시점에
-    <strong>상환하거나 주택담보대출로 전환</strong>해야 합니다. 2029년의 DSR·LTV 규정과
-    담보평가액은 지금 확정할 수 없습니다.
-  </p>
-
-  <div class="card save-profile">
-    <p class="hint">
-      이 블록·타입·분양가를 홈 프로필로 저장하면 <a href="/">홈</a>에서 다음 중도금 D-day와
-      내 타입 정보를 바로 볼 수 있습니다. 저장은 이 브라우저에만 되며 전송되지 않습니다.
-    </p>
-    <button type="button" id="f-save-profile" class="chip">🏠 내 프로필로 저장</button>
-    <p id="f-save-profile-note" class="hint" hidden>
-      저장했습니다. <a href="/">홈에서 확인하세요.</a>
-    </p>
-  </div>
-
-  <h2>확정 금액과 추정 금액</h2>
-  <div class="grid-2">
-    <div class="card sum confirmed">
-      <p class="sum-label"><span class="badge conf">공고 확정</span></p>
-      <p class="sum-amount" id="r-confirmed-total">—</p>
-      <p class="sum-detail" id="r-confirmed-detail"></p>
-      <p class="hint">입주자모집공고와 공급계약서에 적힌 금액입니다.</p>
-    </div>
-    <div class="card sum estimated">
-      <p class="sum-label"><span class="badge est">추정</span></p>
-      <p class="sum-amount" id="r-estimated-total">—</p>
-      <table class="mini">
-        <tbody id="r-estimated-rows"></tbody>
-      </table>
-      <p class="hint">
-        개인 조건·시장에 따라 달라집니다. 확정 금액과 더한 단일 "총 입주비용"은
-        의도적으로 제공하지 않습니다.
-      </p>
-    </div>
-  </div>
-
-  <h2>납부 타임라인</h2>
-  <div class="scroll-x">
-    <table>
-      <thead>
-        <tr>
-          <th>납부일</th>
-          <th>구분</th>
-          <th class="num">금액</th>
-          <th class="num">대출</th>
-          <th class="num">자기부담</th>
-        </tr>
-      </thead>
-      <tbody id="r-timeline"></tbody>
-    </table>
-  </div>
-
-  <details class="basis">
-    <summary>산출 근거 보기</summary>
-    <div id="r-basis" class="prose"></div>
-  </details>
-
-  <SubscribeCta context="calculator" />
 
   <script>
     import '../scripts/calculator';
   </script>
-
-  <style>
-    .lede {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin: 0 0 1.25rem;
-    }
-    .notice {
-      background: var(--accent-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.75rem 0.9rem;
-      font-size: 0.87rem;
-      margin: 0 0 1.5rem;
-    }
-    .grid-2,
-    .grid-3 {
-      display: grid;
-      gap: 0.9rem;
-    }
-    @media (min-width: 40rem) {
-      .grid-2 {
-        grid-template-columns: 1fr 1fr;
-      }
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .field {
-      display: block;
-      margin: 0 0 0.9rem;
-    }
-    .field:last-child {
-      margin-bottom: 0;
-    }
-    .label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-    }
-    .options {
-      margin-top: 0.5rem;
-      border-top: 1px solid var(--border);
-      padding-top: 0.4rem;
-    }
-    .options-total {
-      margin: 0.75rem 0 0;
-      padding-top: 0.6rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.87rem;
-      display: flex;
-      justify-content: space-between;
-      font-variant-numeric: tabular-nums;
-    }
-    .warn-inline {
-      background: var(--warn-soft);
-      color: var(--warn);
-      border-radius: 8px;
-      padding: 0.55rem 0.7rem;
-      font-size: 0.8rem;
-      margin: 0 0 0.9rem;
-    }
-    .phases {
-      display: grid;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    @media (min-width: 46rem) {
-      .phases {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .phase {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.9rem 1rem;
-    }
-    .phase-label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin: 0 0 0.3rem;
-    }
-    .phase-amount {
-      font-size: 1.3rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      margin: 0 0 0.3rem;
-      letter-spacing: -0.02em;
-    }
-    .phase-note {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin: 0;
-    }
-    .carried {
-      background: var(--warn-soft);
-      color: var(--warn);
-      border-radius: var(--radius);
-      padding: 0.75rem 0.9rem;
-      font-size: 0.85rem;
-      margin: 0 0 1rem;
-    }
-    .sum {
-      margin-bottom: 0;
-    }
-    .sum-label {
-      margin: 0 0 0.4rem;
-    }
-    .sum-amount {
-      font-size: 1.45rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      margin: 0 0 0.3rem;
-      letter-spacing: -0.02em;
-    }
-    .sum-detail {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin: 0 0 0.5rem;
-    }
-    .confirmed {
-      border-left: 3px solid var(--confirmed);
-    }
-    .estimated {
-      border-left: 3px solid var(--estimated);
-    }
-    :global(#r-timeline .tag) {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      margin-left: 0.4rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0 0.35rem;
-    }
-    :global(#r-timeline .is-option) {
-      color: var(--text-muted);
-    }
-    :global(#r-timeline .strong) {
-      font-weight: 600;
-    }
-    .basis {
-      margin: 1.5rem 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.75rem 1rem;
-    }
-    .basis summary {
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-    :global(#r-basis h4) {
-      font-size: 0.88rem;
-      margin: 1rem 0 0.35rem;
-    }
-    :global(#r-basis ul) {
-      margin: 0;
-      font-size: 0.83rem;
-    }
-    :global(#r-basis code) {
-      background: var(--surface-2);
-      padding: 0.05rem 0.3rem;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
-  </style>
 </Base>

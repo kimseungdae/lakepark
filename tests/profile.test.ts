@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { parseProfile } from '../src/lib/profile';
+import { parseProfile, parseProfileV2 } from '../src/lib/profile';
 
 describe('parseProfile', () => {
   test('정상 프로필은 그대로 복원된다', () => {
@@ -61,5 +61,68 @@ describe('parseProfile', () => {
     expect(profile?.supplyPrice).toBeUndefined();
     expect(profile?.contractDate).toBeUndefined();
     expect(profile?.savedAt).toBe('');
+  });
+});
+
+describe('parseProfileV2', () => {
+  test('동·층·타입과 계산 가정을 복원한다', () => {
+    const profile = parseProfileV2(JSON.stringify({
+      v: 2,
+      block: 'AB23',
+      building: '6304',
+      floor: 2,
+      unitType: '84A',
+      contractDate: '2026-07-20',
+      loanRatio: 0.6,
+      loanRate: 0.045,
+      savedAt: '2026-08-13',
+    }));
+
+    expect(profile).toMatchObject({
+      v: 2,
+      block: 'AB23',
+      building: '6304',
+      floor: 2,
+      unitType: '84A',
+      loanRatio: 0.6,
+      loanRate: 0.045,
+    });
+  });
+
+  test('v1 프로필은 v2로 안전하게 옮긴다', () => {
+    const profile = parseProfileV2(JSON.stringify({
+      v: 1,
+      block: 'AB22',
+      type: '59B',
+      contractDate: '2026-07-20',
+      savedAt: '2026-08-12',
+    }));
+
+    expect(profile).toEqual({
+      v: 2,
+      block: 'AB22',
+      unitType: '59B',
+      contractDate: '2026-07-20',
+      savedAt: '2026-08-12',
+    });
+  });
+
+  test('유효하지 않은 동·층·비율은 저장하지 않는다', () => {
+    const profile = parseProfileV2(JSON.stringify({
+      v: 2,
+      block: 'AB23',
+      building: '9999',
+      floor: 0,
+      unitType: '84A',
+      loanRatio: 2,
+      loanRate: -1,
+    }));
+
+    expect(profile).toEqual({
+      v: 2,
+      block: 'AB23',
+      unitType: '84A',
+      savedAt: '',
+    });
   });
 });

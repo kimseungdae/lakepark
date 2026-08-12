@@ -1,311 +1,270 @@
-import { GEOMDAN_LAKEPARK, type UnitType } from '../data/presets/geomdan-lakepark';
-import { ACQUISITION_TAX, MOVE_IN_COSTS, type MoveInLevel } from '../data/rates';
-import { trackOnce } from '../lib/analytics';
-import { formatDate, formatKRW, formatPercent, formatRange } from '../lib/format';
-import { saveProfile } from '../lib/profile';
+import { GEOMDAN_LAKEPARK, type UnitType, type UnitTypeCode } from '../data/presets/geomdan-lakepark';
 import { calculateTotalCost, type TotalCostResult } from '../lib/calc/total';
+import { formatDate, formatKRW, formatRange } from '../lib/format';
+import { loadProfileV2, saveProfileV2 } from '../lib/profile';
+import { buildQuickPreview } from '../lib/quickPreview';
+import {
+  getBuildingOptions,
+  getUnitTypesForBuilding,
+  resolveOfficialPrice,
+  type PriceResolution,
+} from '../lib/priceResolver';
+import type { MoveInLevel } from '../data/rates';
 import type { InterimLoanInterestMode } from '../lib/calc/loanInterest';
 
-type BlockKey = keyof typeof GEOMDAN_LAKEPARK.blocks;
-
-const $ = <T extends HTMLElement>(id: string): T => {
-  const el = document.getElementById(id);
-  if (!el) throw new Error(`계산기 요소를 찾을 수 없습니다: #${id}`);
-  return el as T;
+const get = <T extends HTMLElement>(id: string): T => {
+  const element = document.getElementById(id);
+  if (!element) throw new Error(`필수 화면 요소가 없습니다: #${id}`);
+  return element as T;
 };
 
-const els = {
-  block: $<HTMLSelectElement>('f-block'),
-  unitType: $<HTMLSelectElement>('f-type'),
-  price: $<HTMLInputElement>('f-price'),
-  priceHint: $<HTMLParagraphElement>('f-price-hint'),
-  priceQuick: $<HTMLDivElement>('f-price-quick'),
-  contractDate: $<HTMLInputElement>('f-contract-date'),
-  balcony: $<HTMLInputElement>('f-balcony'),
-  balconyLabel: $<HTMLSpanElement>('f-balcony-amount'),
-  optionList: $<HTMLDivElement>('f-options'),
-  optionTotal: $<HTMLSpanElement>('f-options-total'),
-  loanRatio: $<HTMLInputElement>('f-loan-ratio'),
-  loanRate: $<HTMLInputElement>('f-loan-rate'),
-  loanMode: $<HTMLSelectElement>('f-loan-mode'),
-  loanRateRow: $<HTMLDivElement>('f-loan-rate-row'),
-  interiorLevel: $<HTMLSelectElement>('f-interior'),
-  appliances: $<HTMLInputElement>('f-appliances'),
-  optionsInTax: $<HTMLInputElement>('f-options-tax'),
-
-  phaseBefore: $<HTMLElement>('r-phase-before'),
-  phaseAt: $<HTMLElement>('r-phase-at'),
-  phaseAfter: $<HTMLElement>('r-phase-after'),
-  carriedLoan: $<HTMLElement>('r-carried-loan'),
-  confirmedTotal: $<HTMLElement>('r-confirmed-total'),
-  confirmedDetail: $<HTMLElement>('r-confirmed-detail'),
-  estimatedTotal: $<HTMLElement>('r-estimated-total'),
-  estimatedRows: $<HTMLElement>('r-estimated-rows'),
-  timeline: $<HTMLTableSectionElement>('r-timeline'),
-  basis: $<HTMLElement>('r-basis'),
+const elements = {
+  building: get<HTMLSelectElement>('f-building'),
+  floor: get<HTMLInputElement>('f-floor'),
+  unitType: get<HTMLSelectElement>('f-type'),
+  lineField: get<HTMLLabelElement>('line-field'),
+  line: get<HTMLSelectElement>('f-line'),
+  selectionNote: get<HTMLElement>('selection-note'),
+  quickResult: get<HTMLAnchorElement>('quick-result'),
+  quickSelection: get<HTMLElement>('r-quick-selection'),
+  quickTotal: get<HTMLElement>('r-quick-total'),
+  quickPrice: get<HTMLElement>('r-quick-price'),
+  contractDate: get<HTMLInputElement>('f-contract-date'),
+  loanRatio: get<HTMLSelectElement>('f-loan-ratio'),
+  loanRate: get<HTMLInputElement>('f-loan-rate'),
+  loanMode: get<HTMLSelectElement>('f-loan-mode'),
+  balconyField: get<HTMLLabelElement>('balcony-field'),
+  balcony: get<HTMLInputElement>('f-balcony'),
+  options: get<HTMLInputElement>('f-options'),
+  interior: get<HTMLSelectElement>('f-interior'),
+  empty: get<HTMLDivElement>('result-empty'),
+  content: get<HTMLDivElement>('result-content'),
+  selection: get<HTMLElement>('r-selection'),
+  planTotal: get<HTMLElement>('r-plan-total'),
+  price: get<HTMLElement>('r-price'),
+  priceNote: get<HTMLElement>('r-price-note'),
+  extra: get<HTMLElement>('r-extra'),
+  before: get<HTMLElement>('r-before'),
+  at: get<HTMLElement>('r-at'),
+  after: get<HTMLElement>('r-after'),
+  loan: get<HTMLElement>('r-loan'),
+  schedule: get<HTMLTableSectionElement>('r-schedule'),
+  save: get<HTMLButtonElement>('save-profile'),
+  saveNote: get<HTMLParagraphElement>('save-note'),
 };
 
-function currentBlock(): BlockKey {
-  return els.block.value as BlockKey;
-}
+const buildingOptions = getBuildingOptions();
 
-function currentTypes(): readonly UnitType[] {
-  return GEOMDAN_LAKEPARK.blocks[currentBlock()].types;
-}
+const selectedBuilding = () => buildingOptions.find(
+  (option) => option.building === Number(elements.building.value),
+)!;
 
-function currentType(): UnitType {
-  const found = currentTypes().find((t) => t.code === els.unitType.value);
-  return found ?? currentTypes()[0]!;
-}
+const selectedType = (): UnitType => {
+  const block = selectedBuilding().block;
+  return GEOMDAN_LAKEPARK.blocks[block].types.find(
+    (type) => type.code === elements.unitType.value,
+  )!;
+};
 
-/** 선택된 유상옵션 금액 합계 (발코니 확장 포함) */
-function selectedOptionsTotal(): number {
-  const type = currentType();
-  const balcony = els.balcony.checked ? (type.balconyExpansion ?? 0) : 0;
-  const checked = Array.from(
-    els.optionList.querySelectorAll<HTMLInputElement>('input[type=checkbox]:checked'),
-  ).reduce((acc, input) => acc + Number(input.dataset.amount ?? 0), 0);
-  return balcony + checked;
-}
+const renderTypeOptions = (preferred?: UnitTypeCode): void => {
+  const types = getUnitTypesForBuilding(Number(elements.building.value));
+  elements.unitType.innerHTML = types.map((type) => `<option value="${type}">${type} 타입</option>`).join('');
+  if (preferred && types.includes(preferred)) elements.unitType.value = preferred;
+};
 
-function renderTypeOptions(): void {
-  els.unitType.innerHTML = currentTypes()
-    .map((t) => `<option value="${t.code}">${t.code} · 전용 ${t.exclusiveAreaSqm}㎡</option>`)
-    .join('');
-}
+const selectedOptionsTotal = (): number => {
+  const balcony = elements.balcony.checked ? (selectedType().balconyExpansion ?? 0) : 0;
+  return balcony + Math.max(0, Number(elements.options.value) || 0);
+};
 
-function renderOptionCatalog(): void {
-  const block = GEOMDAN_LAKEPARK.blocks[currentBlock()];
-  const type = currentType();
+const calculate = (supplyPrice: number): TotalCostResult => calculateTotalCost({
+  supplyPrice,
+  exclusiveAreaSqm: selectedType().exclusiveAreaSqm,
+  contractDate: elements.contractDate.value || '2026-07-20',
+  moveInDate: GEOMDAN_LAKEPARK.expectedMoveInDate,
+  optionsTotal: selectedOptionsTotal(),
+  loanRatioOfContract: Number(elements.loanRatio.value),
+  loanAnnualRate: (Number(elements.loanRate.value) || 0) / 100,
+  loanInterestMode: elements.loanMode.value as InterimLoanInterestMode,
+  interiorLevel: elements.interior.value as MoveInLevel,
+  includeAppliances: true,
+  includeOptionsInTaxBase: true,
+});
 
-  // 발코니 확장은 타입별 금액이라 별도 체크박스로 둔다.
-  const balconyAmount = type.balconyExpansion;
-  els.balcony.disabled = balconyAmount === undefined;
-  els.balconyLabel.textContent =
-    balconyAmount === undefined ? '공고 확인 필요' : formatKRW(balconyAmount);
-  if (balconyAmount === undefined) els.balcony.checked = false;
+const amountRange = (low: number, high: number): string => formatRange({ min: low, max: high });
 
-  const applicable = block.options.filter(
-    (o) => !o.appliesTo || o.appliesTo.includes(type.code),
-  );
+const priceBounds = (resolution: PriceResolution): { min: number; max: number } | null => {
+  if (resolution.kind === 'exact') return { min: resolution.amountWon, max: resolution.amountWon };
+  if (resolution.kind === 'range') return { min: resolution.minWon, max: resolution.maxWon };
+  return null;
+};
 
-  if (applicable.length === 0) {
-    els.optionList.innerHTML =
-      '<p class="muted small">이 블록의 유상옵션 가격표는 아직 정리되지 않았습니다. 옵션 금액은 직접 더해 확인하세요.</p>';
+const renderLineChoice = (resolution: PriceResolution): PriceResolution => {
+  if (resolution.kind !== 'range') {
+    elements.lineField.classList.add('hidden');
+    elements.lineField.classList.remove('grid');
+    return resolution;
+  }
+
+  elements.lineField.classList.remove('hidden');
+  elements.lineField.classList.add('grid');
+  const current = Number(elements.line.value);
+  elements.line.innerHTML = [
+    '<option value="">라인을 모르겠어요 · 범위로 보기</option>',
+    ...resolution.candidateLines.map((line) => `<option value="${line}">${line}호 라인</option>`),
+  ].join('');
+  if (resolution.candidateLines.includes(current)) elements.line.value = String(current);
+  if (!elements.line.value) return resolution;
+
+  return resolveOfficialPrice({
+    block: selectedBuilding().block,
+    building: Number(elements.building.value),
+    floor: Number(elements.floor.value),
+    unitType: elements.unitType.value as UnitTypeCode,
+    line: Number(elements.line.value),
+  });
+};
+
+const renderSchedule = (result: TotalCostResult): void => {
+  elements.schedule.innerHTML = result.schedule.events.map((event) => `
+    <tr>
+      <td class="whitespace-nowrap text-sm">${formatDate(event.date)}</td>
+      <td class="text-sm font-semibold">${event.label}${event.loanAmount > 0 ? '<span class="ml-2 rounded bg-action-soft px-1.5 py-0.5 text-[.68rem] text-action">대출</span>' : ''}</td>
+      <td class="num whitespace-nowrap text-right text-sm font-bold">${formatKRW(event.cashAmount)}</td>
+    </tr>
+  `).join('');
+};
+
+const unavailableMessage: Record<string, string> = {
+  'invalid-building': '동 정보를 다시 골라 주세요.',
+  'type-not-in-building': '이 동에는 선택한 타입이 없습니다.',
+  'floor-out-of-range': '층은 1층부터 29층 사이로 입력해 주세요.',
+  'invalid-line': '이 동에 없는 라인입니다.',
+  'no-price-row': '공고 가격표에서 이 조건의 금액을 찾지 못했습니다.',
+};
+
+const render = (): void => {
+  const building = selectedBuilding();
+  const unitType = elements.unitType.value as UnitTypeCode;
+  const floor = Number(elements.floor.value);
+  const type = selectedType();
+  const hasBalconyPrice = type.balconyExpansion !== undefined;
+  elements.balcony.disabled = !hasBalconyPrice;
+  elements.balconyField.classList.toggle('opacity-50', !hasBalconyPrice);
+
+  let resolution = resolveOfficialPrice({
+    block: building.block,
+    building: building.building,
+    floor,
+    unitType,
+  });
+  resolution = renderLineChoice(resolution);
+
+  if (resolution.kind === 'unavailable') {
+    elements.empty.textContent = unavailableMessage[resolution.reason] ?? '이 조건은 공고 가격표를 다시 확인해야 합니다.';
+    elements.empty.classList.remove('hidden');
+    elements.content.classList.add('hidden');
+    elements.quickResult.classList.add('hidden');
     return;
   }
 
-  els.optionList.innerHTML = applicable
-    .map(
-      (o, i) => `
-      <label class="check">
-        <input type="checkbox" data-amount="${o.amount}" id="opt-${i}" />
-        <span>${o.label}</span>
-        <span class="num muted">${formatKRW(o.amount)}</span>
-      </label>`,
-    )
-    .join('');
-}
-
-function renderPriceHelpers(): void {
-  const type = currentType();
-  const { min, max } = type.supplyPrice;
-  const typical = type.typicalMinPrice;
-
-  const quick: Array<{ label: string; value: number; note?: string }> = [
-    { label: '공고 최저', value: min },
-    ...(typical ? [{ label: '일반 최저', value: typical }] : []),
-    { label: '공고 최고', value: max },
-  ];
-
-  els.priceQuick.innerHTML = quick
-    .map((q) => `<button type="button" class="chip" data-price="${q.value}">${q.label}<br /><span class="num">${formatKRW(q.value)}</span></button>`)
-    .join('');
-
-  els.priceHint.textContent = typical
-    ? `공고상 최저 ${formatKRW(min)}는 특정 동·라인 소수 세대 가격입니다. 다수 라인의 일반 최저는 ${formatKRW(typical)}입니다.`
-    : `공고상 층·라인별 범위는 ${formatKRW(min)} ~ ${formatKRW(max)}입니다.`;
-
-  // 현재 입력값이 새 타입 범위를 벗어나면 대표값으로 되돌린다.
-  const current = Number(els.price.value);
-  if (!current || current < min || current > max) {
-    els.price.value = String(typical ?? max);
-  }
-}
-
-function readInputs() {
-  const type = currentType();
-  return {
-    supplyPrice: Number(els.price.value) || 0,
-    exclusiveAreaSqm: type.exclusiveAreaSqm,
-    contractDate: els.contractDate.value || '2026-07-20',
-    moveInDate: GEOMDAN_LAKEPARK.expectedMoveInDate,
-    optionsTotal: selectedOptionsTotal(),
-    loanRatioOfContract: (Number(els.loanRatio.value) || 0) / 100,
-    loanAnnualRate: (Number(els.loanRate.value) || 0) / 100,
-    loanInterestMode: els.loanMode.value as InterimLoanInterestMode,
-    interiorLevel: els.interiorLevel.value as MoveInLevel,
-    includeAppliances: els.appliances.checked,
-    includeOptionsInTaxBase: els.optionsInTax.checked,
-  };
-}
-
-function renderTimeline(result: TotalCostResult): void {
-  const kindLabel: Record<string, string> = {
-    downPayment: '계약금',
-    interim: '중도금',
-    balance: '잔금',
-    optionDownPayment: '옵션',
-    optionBalance: '옵션',
-  };
-
-  els.timeline.innerHTML = result.schedule.events
-    .map(
-      (e) => `
-      <tr class="${e.kind.startsWith('option') ? 'is-option' : ''}">
-        <td>${formatDate(e.date)}</td>
-        <td>${e.label}<span class="tag">${kindLabel[e.kind] ?? ''}</span></td>
-        <td class="num">${formatKRW(e.amount)}</td>
-        <td class="num">${e.loanAmount > 0 ? formatKRW(e.loanAmount) : '—'}</td>
-        <td class="num strong">${formatKRW(e.cashAmount)}</td>
-      </tr>`,
-    )
-    .join('');
-}
-
-function renderBasis(result: TotalCostResult, inputs: ReturnType<typeof readInputs>): void {
-  const tax = result.acquisitionTax;
-  const taxBase = inputs.includeOptionsInTaxBase
-    ? inputs.supplyPrice + inputs.optionsTotal
-    : inputs.supplyPrice;
-
-  els.basis.innerHTML = `
-    <h4>취득세</h4>
-    <ul>
-      <li>과세표준 ${formatKRW(taxBase)} ${inputs.includeOptionsInTaxBase ? '(분양가 + 옵션)' : '(분양가만)'}</li>
-      <li>적용세율 ${formatPercent(tax.rate)} — 6억 초과 9억 이하 구간은 <code>(취득가액 × 2 ÷ 3억) − 3</code> 누진식</li>
-      <li>취득세 ${formatKRW(tax.acquisitionTax)} + 지방교육세 ${formatKRW(tax.localEducationTax)} + 농어촌특별세 ${formatKRW(tax.ruralSpecialTax)}</li>
-      <li>전용 ${inputs.exclusiveAreaSqm}㎡ → 국민주택 규모(${ACQUISITION_TAX.ruralSpecialTaxExemptAreaSqm}㎡) ${inputs.exclusiveAreaSqm > ACQUISITION_TAX.ruralSpecialTaxExemptAreaSqm ? '초과, 농특세 과세' : '이하, 농특세 비과세'}</li>
-      <li class="muted">기준: ${ACQUISITION_TAX.source.label} (${ACQUISITION_TAX.source.asOf} 확인). 1세대 1주택 표준세율이며 다주택 중과는 반영하지 않습니다.</li>
-    </ul>
-
-    <h4>중도금 대출 이자</h4>
-    <ul>
-      <li>방식: ${result.loanInterest.mode}${result.loanInterest.mode === '무이자' ? ' — 시행사 부담이라 계약자 이자는 0입니다.' : ''}</li>
-      ${
-        result.loanInterest.mode === '무이자'
-          ? ''
-          : `<li>회차별 실행일부터 잔금일까지 <code>원금 × 연이율 × 일수 ÷ 365</code>로 일할 계산</li>
-             <li>총 ${formatKRW(result.loanInterest.total)}</li>`
-      }
-      <li class="muted">사업주체는 대출 알선·승인·한도·금리를 보장하지 않습니다. 대출이 실행되지 않아도 납부기일에 분양대금을 조달해야 합니다.</li>
-    </ul>
-
-    <h4>입주 부대비용 (추정)</h4>
-    <ul>
-      <li>인테리어 ${formatRange(result.moveInCosts.interior)}</li>
-      <li>입주청소 ${formatRange(result.moveInCosts.cleaning)}</li>
-      <li>이사 ${formatRange(result.moveInCosts.moving)}</li>
-      <li>가전 ${formatRange(result.moveInCosts.appliances)}</li>
-      <li class="muted">기준: ${MOVE_IN_COSTS.source.label} (${MOVE_IN_COSTS.source.asOf}). 전용면적 단가 기반 <strong>추정</strong>이며 업체·자재·시기에 따라 크게 달라집니다.</li>
-    </ul>
-  `;
-}
-
-function render(): void {
-  const inputs = readInputs();
-
-  els.loanRateRow.hidden = inputs.loanInterestMode === '무이자';
-  els.optionTotal.textContent = formatKRW(inputs.optionsTotal);
-
-  if (inputs.supplyPrice <= 0) return;
-
-  const result = calculateTotalCost(inputs);
-
-  els.phaseBefore.textContent = formatKRW(result.cashByPhase.beforeMoveIn);
-  els.phaseAt.textContent = formatKRW(result.cashByPhase.atMoveIn);
-  els.phaseAfter.textContent = formatRange(result.cashByPhase.afterMoveIn);
-
-  els.carriedLoan.textContent = formatKRW(result.carriedLoan);
-
-  els.confirmedTotal.textContent = formatKRW(result.confirmed.total);
-  els.confirmedDetail.textContent = `분양대금 ${formatKRW(result.confirmed.supplyPrice)}${
-    result.confirmed.options > 0 ? ` + 옵션 ${formatKRW(result.confirmed.options)}` : ''
-  }`;
-
-  els.estimatedTotal.textContent = formatRange(result.estimated.total);
-  els.estimatedRows.innerHTML = [
-    ['취득세 등', formatKRW(result.estimated.acquisitionTax)],
-    ['등기·법무비', formatKRW(result.estimated.registrationFee)],
-    ['중도금 이자', formatKRW(result.estimated.loanInterest)],
-    ['인테리어·이사·가전', formatRange(result.estimated.moveIn)],
-  ]
-    .map(([label, value]) => `<tr><th scope="row">${label}</th><td class="num">${value}</td></tr>`)
-    .join('');
-
-  renderTimeline(result);
-  renderBasis(result, inputs);
-
-  trackOnce('calc_completed');
-}
-
-function rebuildForType(): void {
-  renderPriceHelpers();
-  renderOptionCatalog();
-  render();
-}
-
-function init(): void {
-  renderTypeOptions();
-  // 84A를 기본 선택 — 세대수가 가장 많은 타입이다.
-  if (currentTypes().some((t) => t.code === '84A')) els.unitType.value = '84A';
-  rebuildForType();
-
-  els.block.addEventListener('change', () => {
-    renderTypeOptions();
-    rebuildForType();
-    trackOnce('preset_selected');
+  const bounds = priceBounds(resolution)!;
+  const low = calculate(bounds.min);
+  const high = calculate(bounds.max);
+  const extraMin = low.estimated.total.min + selectedOptionsTotal();
+  const extraMax = high.estimated.total.max + selectedOptionsTotal();
+  const planMin = bounds.min + low.estimated.total.min + selectedOptionsTotal();
+  const planMax = bounds.max + high.estimated.total.max + selectedOptionsTotal();
+  const preview = buildQuickPreview({
+    building: building.building,
+    floor,
+    unitType,
+    officialPrice: bounds,
+    planTotal: { min: planMin, max: planMax },
+    ...(hasBalconyPrice ? { includedOptionAmount: type.balconyExpansion } : {}),
   });
-  els.unitType.addEventListener('change', rebuildForType);
 
-  els.priceQuick.addEventListener('click', (event) => {
-    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('button[data-price]');
-    if (!button) return;
-    els.price.value = button.dataset.price!;
+  elements.empty.classList.add('hidden');
+  elements.content.classList.remove('hidden');
+  elements.quickResult.classList.remove('hidden');
+  elements.quickSelection.textContent = preview.selectionLabel;
+  elements.quickTotal.textContent = preview.planTotalLabel;
+  elements.quickPrice.textContent = preview.officialPriceLabel;
+  elements.selection.textContent = preview.selectionLabel;
+  elements.planTotal.textContent = preview.planTotalLabel;
+  elements.price.textContent = preview.officialPriceLabel;
+  elements.extra.textContent = amountRange(extraMin, extraMax);
+  elements.before.textContent = amountRange(low.cashByPhase.beforeMoveIn, high.cashByPhase.beforeMoveIn);
+  elements.at.textContent = amountRange(low.cashByPhase.atMoveIn, high.cashByPhase.atMoveIn);
+  elements.after.textContent = amountRange(
+    Math.min(low.cashByPhase.afterMoveIn.min, high.cashByPhase.afterMoveIn.min),
+    Math.max(low.cashByPhase.afterMoveIn.max, high.cashByPhase.afterMoveIn.max),
+  );
+  elements.loan.textContent = amountRange(low.carriedLoan, high.carriedLoan);
+  elements.priceNote.textContent = resolution.kind === 'range'
+    ? '같은 동·층·타입 안에서 라인에 따라 달라지는 공고 금액입니다.'
+    : resolution.occupancy === 'needs-contract-check'
+      ? '공고 금액입니다. 이 층의 실제 세대 존재 여부는 계약서에서 다시 확인하세요.'
+      : '입주자모집공고 가격표와 동별 라인 배정을 대조한 금액입니다.';
+  elements.selectionNote.textContent = preview.includedCostLabel;
+  renderSchedule(high);
+};
+
+const init = (): void => {
+  elements.building.innerHTML = buildingOptions.map((option) => (
+    `<option value="${option.building}">${option.building}동 · ${option.block}</option>`
+  )).join('');
+
+  const saved = loadProfileV2();
+  const savedBuilding = saved?.building && buildingOptions.some(
+    (option) => String(option.building) === saved.building,
+  ) ? saved.building : '6304';
+  elements.building.value = savedBuilding;
+  renderTypeOptions(saved?.unitType ?? '84A');
+  if (saved?.floor) elements.floor.value = String(saved.floor);
+  if (saved?.contractDate) elements.contractDate.value = saved.contractDate;
+  if (saved?.loanRatio !== undefined) elements.loanRatio.value = String(saved.loanRatio);
+  if (saved?.loanRate !== undefined) elements.loanRate.value = String(saved.loanRate * 100);
+
+  elements.building.addEventListener('change', () => {
+    renderTypeOptions();
+    elements.line.value = '';
     render();
   });
-
-  els.optionList.addEventListener('change', render);
-
-  for (const el of [
-    els.price,
-    els.contractDate,
-    els.balcony,
-    els.loanRatio,
-    els.loanRate,
-    els.loanMode,
-    els.interiorLevel,
-    els.appliances,
-    els.optionsInTax,
+  elements.unitType.addEventListener('change', () => {
+    elements.line.value = '';
+    render();
+  });
+  for (const element of [
+    elements.floor,
+    elements.line,
+    elements.contractDate,
+    elements.loanRatio,
+    elements.loanRate,
+    elements.loanMode,
+    elements.balcony,
+    elements.options,
+    elements.interior,
   ]) {
-    el.addEventListener('change', render);
-    if (el instanceof HTMLInputElement && el.type === 'number') {
-      el.addEventListener('input', render);
-    }
+    element.addEventListener('change', render);
+    if (element instanceof HTMLInputElement) element.addEventListener('input', render);
   }
 
-  // 홈 개인화 브리지 — 현재 선택을 localStorage 프로필로 저장한다 (전송 없음).
-  document.getElementById('f-save-profile')?.addEventListener('click', () => {
-    const supplyPrice = Number(els.price.value);
-    saveProfile({
-      block: currentBlock(),
-      type: currentType().code,
-      ...(supplyPrice > 0 ? { supplyPrice } : {}),
-      ...(els.contractDate.value ? { contractDate: els.contractDate.value } : {}),
+  elements.save.addEventListener('click', () => {
+    const building = selectedBuilding();
+    saveProfileV2({
+      block: building.block,
+      building: String(building.building),
+      floor: Number(elements.floor.value),
+      unitType: elements.unitType.value as UnitTypeCode,
+      contractDate: elements.contractDate.value,
+      loanRatio: Number(elements.loanRatio.value),
+      loanRate: Number(elements.loanRate.value) / 100,
     });
-    const note = document.getElementById('f-save-profile-note');
-    if (note) note.hidden = false;
+    elements.saveNote.classList.remove('hidden');
   });
-}
+
+  render();
+};
 
 init();

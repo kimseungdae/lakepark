@@ -1,6 +1,6 @@
 ---
 title: 전체 문서 색인
-updated: 2026-08-11
+updated: 2026-08-12
 status: active
 ---
 
@@ -49,6 +49,8 @@ status: active
 
 ## 정보 사이트 운영
 
+- [2026-08-12 실용 기능 후보·입주 생존 키트](50-site-business/practical_resident_tools_2026-08-12.md)
+- [2026-08-12 기능 후보·인프라 가치요인 통합 리서치](50-site-business/feature_candidate_research_2026-08-12.md)
 - [콘텐츠·광고 전략](50-site-business/content_strategy.md)
 - [사이트 구축 백로그](50-site-business/site_build_backlog.md)
 - [지속형 콘텐츠 생성 엔진](50-site-business/recurring_content_engine.md)
