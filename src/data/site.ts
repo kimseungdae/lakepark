@@ -11,8 +11,8 @@ export const SITE = {
   name: '검단더샵 입주노트',
   tagline: '검단레이크파크 AB22·AB23 예비입주민을 위한 비공식 입주 준비 노트',
 
-  /** 배포 후 실제 도메인으로 교체 */
-  url: 'https://bunyang-total-cost.pages.dev',
+  /** Vercel 프로덕션 URL. 커스텀 도메인 연결 시 교체 */
+  url: 'https://lakepark-sage.vercel.app',
 
   /**
    * 운영 주체 표기.
