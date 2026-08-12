@@ -1,0 +1,17 @@
+---
+interface Props {
+  label: string;
+  tone?: 'green' | 'blue' | 'orange' | 'red' | 'gray';
+}
+
+const { label, tone = 'gray' } = Astro.props;
+const tones = {
+  green: 'bg-confirmed-soft text-confirmed',
+  blue: 'bg-action-soft text-action',
+  orange: 'bg-estimated-soft text-estimated',
+  red: 'bg-danger-soft text-danger',
+  gray: 'bg-canvas text-muted',
+};
+---
+
+<span class:list={['inline-flex items-center rounded-md px-2 py-1 text-[.7rem] font-bold leading-none', tones[tone]]}>{label}</span>

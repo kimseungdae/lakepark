@@ -1,0 +1,22 @@
+---
+import StatusPill from './StatusPill.astro';
+
+interface Props {
+  href: string;
+  category: string;
+  title: string;
+  date?: string;
+  status?: string;
+}
+
+const { href, category, title, date, status } = Astro.props;
+---
+
+<a class="group grid min-h-18 grid-cols-[4.5rem_1fr_auto] items-center gap-3 border-b border-line py-4 no-underline sm:grid-cols-[6rem_1fr_auto]" href={href}>
+  <span class="text-xs font-bold text-muted">{category}</span>
+  <strong class="text-[.95rem] font-[680] leading-6 tracking-[-0.02em] text-ink group-hover:text-action sm:text-base">{title}</strong>
+  <span class="flex items-center gap-2">
+    {status && <StatusPill label={status} tone="blue" />}
+    {date && <time class="hidden text-xs tabular-nums text-muted sm:inline" datetime={date}>{date.slice(5).replace('-', '.')}</time>}
+  </span>
+</a>
