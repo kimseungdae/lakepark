@@ -1,89 +1,77 @@
 ---
 import Base from '../layouts/Base.astro';
-import Hero from '../components/Hero.astro';
-import StatusCard from '../components/StatusCard.astro';
-import SubscribeCta from '../components/SubscribeCta.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import StatusPill from '../components/StatusPill.astro';
 import { STATUS_BOARD } from '../data/status/board';
-import type { StatusCategory } from '../data/status/types';
+import { formatDate } from '../lib/format';
+import { toEditorialUpdate, type EditorialStatus } from '../lib/editorial';
 
-const CATEGORIES: Array<{ key: StatusCategory; label: string }> = [
+const categories = [
   { key: 'transport', label: '교통' },
   { key: 'development', label: '개발' },
   { key: 'park', label: '공원·수변' },
   { key: 'culture', label: '문화' },
   { key: 'education', label: '교육' },
   { key: 'admin', label: '행정' },
-];
-
-const grouped = CATEGORIES.map((category) => ({
+] as const;
+const statusMeta: Record<EditorialStatus, { label: string; tone: 'green' | 'blue' | 'orange' | 'gray' }> = {
+  operating: { label: '운영 중', tone: 'green' },
+  inProgress: { label: '추진 중', tone: 'blue' },
+  planned: { label: '계획', tone: 'orange' },
+  recheck: { label: '확인 필요', tone: 'gray' },
+};
+const groups = categories.map((category) => ({
   ...category,
-  items: STATUS_BOARD.filter((item) => item.category === category.key),
-})).filter((group) => group.items.length > 0);
+  updates: STATUS_BOARD.filter((item) => item.category === category.key).map(toEditorialUpdate),
+})).filter((group) => group.updates.length > 0);
 ---
 
-<Base
-  title="개발계획 상태판"
-  description="5호선·학교·공원 등 검단 개발계획이 지금 어느 단계인지, 근거·확인일과 함께 요약"
->
-  <h1>개발계획 상태판</h1>
-  <p class="lede">
-    "호재"라는 말 대신 <strong>행정 단계</strong>를 표시합니다. 예타 통과는 개통이 아니고,
-    입찰공고는 착공이 아니며, 준공은 개관이 아닙니다. 모든 항목에 마지막 확인일과 출처를 붙입니다.
-  </p>
+<Base title="단지 소식" description="검단 교통·학교·공원·개발 소식을 운영 중, 추진 중, 계획으로 나눠 원문과 함께 정리합니다.">
+  <header class="mb-8 max-w-3xl">
+    <p class="mb-3 text-sm font-bold text-action">단지 소식</p>
+    <h1 class="mb-4">호재 대신,<br />지금 어디까지 왔는지</h1>
+    <p class="m-0 text-[1.05rem] leading-7 text-muted">예타 통과는 개통이 아니고, 입찰공고는 착공이 아닙니다. 공식 발표를 생활에 필요한 말로 번역하고 다음 확인할 지점을 함께 적습니다.</p>
+  </header>
 
-  <Hero
-    image="status-city.jpg"
-    optional
-    alt="공사 중인 신도시 풍경"
-  />
+  <div class="mb-10 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
+    <div class="bg-white p-4"><StatusPill label="운영 중" tone="green" /><p class="mb-0 mt-2 text-xs text-muted">현재 실제 이용 가능</p></div>
+    <div class="bg-white p-4"><StatusPill label="추진 중" tone="blue" /><p class="mb-0 mt-2 text-xs text-muted">행정·계약·공사가 진행</p></div>
+    <div class="bg-white p-4"><StatusPill label="계획" tone="orange" /><p class="mb-0 mt-2 text-xs text-muted">발표됐지만 실행 전</p></div>
+    <div class="bg-white p-4"><StatusPill label="확인 필요" tone="gray" /><p class="mb-0 mt-2 text-xs text-muted">미래 시점에 다시 확인</p></div>
+  </div>
 
-  <details class="legend card">
-    <summary>배지 읽는 법</summary>
-    <ul>
-      <li><strong>확정</strong> — 모집공고·법령·고시·공식 개통 등으로 확인됨</li>
-      <li><strong>추진</strong> — 예타 통과, 계약, 착공 등 절차가 실제로 진행 중</li>
-      <li><strong>계획</strong> — 발표는 있으나 일정·내용이 바뀔 수 있음</li>
-      <li><strong>홍보</strong> — 시행사·시공사 홍보 표현으로 독립 검증 필요</li>
-      <li><strong>확인필요</strong> — 현재 자료만으로 확정할 수 없음</li>
-      <li>
-        <strong>n/7 단계</strong> — 사업 생애주기: 언급→계획→예산→공고→계약→착공→준공→운영.
-        숫자가 클수록 실현에 가깝습니다.
-      </li>
-    </ul>
-  </details>
+  <nav class="-mx-[1.125rem] mb-12 flex gap-5 overflow-x-auto border-y border-line px-[1.125rem] py-3 text-sm font-bold [scrollbar-width:none]" aria-label="소식 분류">
+    {groups.map((group) => <a class="shrink-0 no-underline hover:text-action" href={`#category-${group.key}`}>{group.label} <span class="text-muted">{group.updates.length}</span></a>)}
+  </nav>
 
-  {
-    grouped.map((group) => (
-      <section aria-labelledby={`cat-${group.key}`}>
-        <h2 id={`cat-${group.key}`}>{group.label}</h2>
-        {group.items.map((item) => (
-          <StatusCard item={item} />
-        ))}
+  <div class="grid gap-14">
+    {groups.map((group) => (
+      <section id={`category-${group.key}`} class="scroll-mt-32">
+        <SectionHeader title={group.label} description={`${group.updates.length}개 항목을 추적하고 있습니다.`} />
+        <div class="divide-y divide-line border-b border-line">
+          {group.updates.map((update) => {
+            const meta = statusMeta[update.status];
+            return (
+              <article id={update.id} class="scroll-mt-32 py-7">
+                <div class="mb-3 flex flex-wrap items-center gap-2"><StatusPill label={meta.label} tone={meta.tone} /><time class="text-xs font-semibold text-muted" datetime={update.checkedAt}>{formatDate(update.checkedAt)} 확인</time></div>
+                <h2 class="m-0 text-[1.45rem] sm:text-[1.7rem]">{update.headline}</h2>
+                <p class="mb-4 mt-2 max-w-4xl text-base leading-7 text-muted">{update.dek}</p>
+                <dl class="grid gap-3 rounded-xl bg-canvas p-4 text-sm leading-6 sm:grid-cols-3">
+                  <div><dt class="font-extrabold text-ink">무엇이 바뀌었나</dt><dd class="m-0 mt-1 text-muted">{update.whatChanged}</dd></div>
+                  <div><dt class="font-extrabold text-ink">지금 의미</dt><dd class="m-0 mt-1 text-muted">{update.currentMeaning}</dd></div>
+                  <div><dt class="font-extrabold text-ink">다음에 볼 것</dt><dd class="m-0 mt-1 text-muted">{update.nextCheck}</dd></div>
+                </dl>
+                <details class="mt-3">
+                  <summary class="cursor-pointer text-xs font-bold text-action">공식 근거 {update.sources.length}개 보기</summary>
+                  <ul class="mb-0 mt-2 grid gap-1 pl-5 text-xs leading-5 text-muted">
+                    {update.sources.map((source) => <li><a class="underline underline-offset-2 hover:text-action" href={source.url} target="_blank" rel="noreferrer">{source.label}</a> · {source.asOf}</li>)}
+                  </ul>
+                </details>
+              </article>
+            );
+          })}
+        </div>
       </section>
-    ))
-  }
-
-  <SubscribeCta context="status" />
-
-  <style>
-    .lede {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin: 0 0 1.25rem;
-    }
-    .legend summary {
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-    .legend ul {
-      margin: 0.6rem 0 0;
-      padding-left: 1.1rem;
-      font-size: 0.83rem;
-    }
-    .legend li {
-      margin-bottom: 0.25rem;
-    }
-  </style>
+    ))}
+  </div>
 </Base>

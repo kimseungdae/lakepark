@@ -5,100 +5,27 @@ import { ACQUISITION_TAX, ANCILLARY_COSTS, INTERIM_LOAN, MOVE_IN_COSTS } from '.
 import { SITE } from '../data/site';
 
 const sources = [
-  { name: '분양가·납부일정·옵션 가격', ...GEOMDAN_LAKEPARK.source },
-  { name: '취득세·지방교육세·농어촌특별세', ...ACQUISITION_TAX.source },
-  { name: '중도금 대출 이자 계산 방식', ...INTERIM_LOAN.source },
-  { name: '인테리어·청소·이사·가전', ...MOVE_IN_COSTS.source },
+  { name: '분양가·납부일정·옵션', ...GEOMDAN_LAKEPARK.source },
+  { name: '취득세', ...ACQUISITION_TAX.source },
+  { name: '중도금 대출 이자', ...INTERIM_LOAN.source },
+  { name: '입주 준비비', ...MOVE_IN_COSTS.source },
   { name: '등기·법무 비용', ...ANCILLARY_COSTS.source },
 ];
 ---
 
-<Base title="안내" description={`${SITE.name}의 운영 주체, 계산 근거, 한계를 밝힙니다.`}>
-  <h1>이 사이트에 대해</h1>
+<Base title="운영 안내" description={`${SITE.name}의 운영 주체, 근거, 한계를 밝힙니다.`}>
+  <header class="mb-10 max-w-3xl"><p class="mb-3 text-sm font-bold text-action">운영 안내</p><h1 class="mb-4">누가, 왜 만들었나요?</h1><p class="m-0 text-lg leading-7 text-muted">복잡한 공고와 입주 준비를 계약자가 실제 쓰는 말과 도구로 바꿉니다.</p></header>
+  <div class="max-w-4xl text-[.98rem] leading-7">
+    <section class="rounded-2xl bg-danger-soft p-6"><h2 class="mt-0 text-xl">시공사와 무관한 비공식 사이트입니다</h2><p class="mb-0 text-muted">개인이 만든 참고 도구이며 시공사·시행사·분양사·입주자대표회의와 아무런 관계가 없습니다. 단지명과 블록명은 대상을 특정하기 위한 데이터 값으로만 사용합니다.</p></section>
 
-  <div class="prose">
-    <h2>무엇을 하는 도구인가</h2>
-    <p>
-      분양 아파트를 계약하면 분양가 외에도 취득세, 등기비, 옵션 잔금, 중도금 이자, 인테리어,
-      이사비가 순서대로 발생합니다. 이 계산기는 그 지출을 <strong>시점별로 갈라서</strong>
-      "언제 얼마의 현금이 필요한가"를 보여줍니다.
-    </p>
+    <section class="mt-10"><h2>제공하는 것</h2><ul class="grid gap-2 pl-5 text-muted"><li>동·층·타입으로 공고 가격표를 조회하는 비용 계산</li><li>계약금·중도금·잔금과 입주 준비비의 시점별 현금 계획</li><li>납부계좌 대조, 권리 시계, 일정 캘린더</li><li>견적·치수·하자 기록을 위한 로컬 도구</li><li>교통·학교·공원·행정의 현재 단계와 공식 근거</li></ul></section>
 
-    <h2>운영 주체와 관계 고지</h2>
-    <p class="callout">
-      이 사이트는 <strong>개인이 만든 비공식 참고 도구</strong>입니다.
-      포스코이앤씨·HDC현대산업개발·현대건설을 비롯한 시공사, 시행사, 분양사,
-      입주자대표회의와 <strong>아무런 관계가 없습니다.</strong>
-      단지명과 블록명은 계산 대상을 특정하기 위한 데이터 값으로만 사용합니다.
-    </p>
-    <p>
-      운영자는 해당 단지의 계약자입니다. 즉 <strong>이해관계 당사자</strong>입니다.
-      그래서 이 사이트는 시세 전망, 투자 판단, 가격 상승 여부를 다루지 않습니다.
-      납부 금액과 시점이라는 검증 가능한 사실만 계산합니다.
-    </p>
+    <section class="mt-10"><h2>계산 결과를 읽는 법</h2><p class="text-muted"><span class="badge conf">공고 가격</span>은 공식 가격표에서 조회한 금액입니다. <span class="badge est">계획용 예상</span>은 세금·이자·입주 준비비를 기본 가정으로 더한 범위입니다. 실제 공급계약서, 금융기관 조건, 입주 시점의 세법과 견적이 항상 우선합니다.</p></section>
 
-    <h2>확정과 추정을 구분합니다</h2>
-    <p>
-      <span class="badge conf">공고 확정</span>은 입주자모집공고에 적힌 금액,
-      <span class="badge est">추정</span>은 시장 조사에 근거한 범위입니다.
-      두 값을 더한 단일 "총 입주비용" 숫자는 <strong>의도적으로 제공하지 않습니다.</strong>
-      그 숫자는 확정처럼 보이지만 확정이 아니기 때문입니다.
-    </p>
+    <section class="mt-10"><h2>계산 근거</h2><div class="scroll-x"><table><thead><tr><th>항목</th><th>근거</th><th>기준일</th></tr></thead><tbody>{sources.map((source) => <tr><td class="font-bold">{source.name}</td><td>{source.url ? <a class="underline underline-offset-2" href={source.url}>{source.label}</a> : source.label}</td><td class="num whitespace-nowrap">{source.asOf}</td></tr>)}</tbody></table></div></section>
 
-    <h2>계산 근거와 기준일</h2>
-    <div class="scroll-x">
-      <table>
-        <thead>
-          <tr>
-            <th>항목</th>
-            <th>근거</th>
-            <th>기준일</th>
-            <th>구분</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            sources.map((s) => (
-              <tr>
-                <td>{s.name}</td>
-                <td>{s.url ? <a href={s.url} rel="noopener nofollow">{s.label}</a> : s.label}</td>
-                <td>{s.asOf}</td>
-                <td>
-                  <span class={`badge ${s.confidence === 'confirmed' ? 'conf' : 'est'}`}>
-                    {s.confidence === 'confirmed' ? '확정' : '추정'}
-                  </span>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
+    <section class="mt-10"><h2>하지 않는 것</h2><ul class="grid gap-2 pl-5 text-muted"><li>시세 전망, 투자 추천, 가격 상승 가능성을 판단하지 않습니다.</li><li>대출 승인·한도, 세액, 전매 가능일, 법정 하자 여부를 확정하지 않습니다.</li><li>특정 업체를 추천하거나 광고·제휴 순위를 만들지 않습니다.</li><li>시공사 저작물인 평면도·조감도를 재게시하지 않습니다.</li></ul></section>
 
-    <h2>이 계산기가 하지 않는 것</h2>
-    <ul>
-      <li><strong>대출 가능액을 확정하지 않습니다.</strong> 사업주체는 중도금 대출 알선·승인·한도·금리를 보장하지 않으며, 2029년 잔금대출 시점의 DSR·LTV 규정은 지금 알 수 없습니다.</li>
-      <li><strong>다주택 중과세율을 다루지 않습니다.</strong> 1세대 1주택 표준세율만 계산합니다.</li>
-      <li><strong>시세·전망·투자 판단을 하지 않습니다.</strong></li>
-      <li><strong>평면도·조감도·투시도를 게시하지 않습니다.</strong> 시공사 저작물이기 때문입니다.</li>
-      <li><strong>특정 업체를 추천하지 않습니다.</strong> 현재 광고·제휴·협찬이 없습니다.</li>
-    </ul>
-
-    <h2>틀렸다면 알려주세요</h2>
-    <p>
-      계산 결과가 공급계약서와 다르면 그것은 이 사이트의 오류입니다.
-      모든 계산 로직은 공개된 모집공고 기준표와 자동 대조 검증을 거치지만,
-      공고 개정이나 개인별 특약은 반영되지 않을 수 있습니다.
-      <strong>최종 판단은 항상 입주자모집공고, 공급계약서, 금융기관, 위택스, 세무 전문가를 기준으로 하세요.</strong>
-    </p>
+    <section class="mt-10 border-t border-line pt-8"><h2>최종 확인</h2><p class="text-muted">금액과 날짜는 본인 공급계약서·변경계약서·공식 입주안내문을, 대출은 금융기관을, 세금은 위택스·세무 전문가를, 법률 문제는 최신 법령과 전문가를 기준으로 확인하세요.</p></section>
   </div>
-
-  <style>
-    .callout {
-      background: var(--warn-soft);
-      color: var(--warn);
-      border-radius: var(--radius);
-      padding: 0.8rem 1rem;
-    }
-  </style>
 </Base>
