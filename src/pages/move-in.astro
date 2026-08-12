@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+---
+
+<Base title="입주 준비" description="납부 안전 확인부터 일정, 견적, 치수, 하자까지 이 기기에서 관리합니다.">
+  <header class="mb-8 max-w-3xl">
+    <p class="mb-3 text-sm font-bold text-action">입주 준비 작업대</p>
+    <h1 class="mb-4">입주일까지 해야 할 일을<br />한곳에 모았습니다</h1>
+    <p class="m-0 text-[1.05rem] leading-7 text-muted">공식 일정은 캘린더로 받고, 송금 전 계좌를 대조하고, 견적·치수·하자를 이 기기에 기록하세요.</p>
+  </header>
+
+  <nav class="no-print -mx-[1.125rem] mb-10 flex gap-2 overflow-x-auto border-y border-line px-[1.125rem] py-3 [scrollbar-width:none]" aria-label="입주 준비 바로가기">
+    {['할 일', '납부 안전', '권리 시계', '견적', '치수', '하자'].map((label, index) => (
+      <a class="shrink-0 rounded-full bg-canvas px-4 py-2 text-sm font-bold no-underline hover:bg-action-soft hover:text-action" href={`#section-${index + 1}`}>{label}</a>
+    ))}
+  </nav>
+
+  <div class="grid gap-14">
+    <section id="section-1" class="scroll-mt-32">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <SectionHeader title="내 입주 일정" eyebrow="사건이 정해지면 날짜를 입력하세요" />
+        <button id="download-calendar" class="no-print rounded-lg bg-action px-4 py-2 text-sm font-bold text-white" type="button">공식 납부일 캘린더 받기</button>
+      </div>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-muted">입주일은 아직 예정입니다. 공식 입주안내문이 나오면 입력한 날짜를 바꾸고, 예전에 받은 캘린더 일정도 함께 수정하세요.</p>
+
+      <div class="mt-5 grid gap-3 rounded-2xl border border-line bg-canvas p-5 sm:grid-cols-2 lg:grid-cols-3">
+        <label class="grid gap-1.5 text-sm font-bold">사전방문 시작일<input data-date-field="preVisitStart" type="date" /></label>
+        <label class="grid gap-1.5 text-sm font-bold">사전방문 종료일<input data-date-field="preVisitEnd" type="date" /></label>
+        <label class="grid gap-1.5 text-sm font-bold">입주가능 시작일<input data-date-field="confirmedMoveInStart" type="date" /></label>
+        <label class="grid gap-1.5 text-sm font-bold">내가 정한 입주일<input data-date-field="selectedMoveInDate" type="date" /></label>
+        <label class="grid gap-1.5 text-sm font-bold">입주지정기간 종료일<input data-date-field="designatedPeriodEnd" type="date" /></label>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="mb-3">지금부터 할 일</h3>
+        <div id="task-list" class="divide-y divide-line border-y border-line"></div>
+      </div>
+    </section>
+
+    <section id="section-2" class="scroll-mt-32 border-t border-line pt-12">
+      <SectionHeader title="송금 전 5가지 대조" eyebrow="납부 안전" />
+      <div class="mt-5 grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
+        <div class="rounded-2xl bg-danger-soft p-5">
+          <p class="m-0 text-sm font-extrabold text-danger">지정계좌 밖으로 보내면 HUG 분양보증에서 제외될 수 있습니다.</p>
+          <div class="mt-4 grid gap-3">
+            <label class="grid gap-1 text-sm font-bold">블록<select id="payment-block"><option value="AB22">AB22</option><option value="AB23">AB23</option></select></label>
+            <label class="grid gap-1 text-sm font-bold">납부 항목<select id="payment-kind"><option value="firstPayment">1차 계약금</option><option value="balcony">발코니 확장</option><option value="option">추가선택품목</option><option value="virtual">2차 계약금·중도금·잔금</option></select></label>
+          </div>
+          <article id="account-card" class="mt-4 rounded-xl border border-danger/20 bg-white p-4"></article>
+        </div>
+        <div>
+          <p class="mt-0 text-sm leading-6 text-muted">계좌번호 복사 기능은 제공하지 않습니다. 송금 화면과 본인 계약서를 나란히 놓고 직접 대조하세요.</p>
+          <div id="safety-checks" class="grid gap-1">
+            {['블록이 계약서와 같습니다', '납부 항목이 맞습니다', '예금주가 맞습니다', '공고 원문 페이지를 확인했습니다', '은행·계좌번호를 공급계약서와 다시 대조했습니다'].map((label) => (
+              <label class="check border-b border-line py-2"><input type="checkbox" /><span>{label}</span></label>
+            ))}
+          </div>
+          <p id="safety-result" class="mt-4 rounded-xl bg-canvas px-4 py-3 text-sm font-bold text-muted" aria-live="polite">5가지를 모두 확인하면 대조 완료로 표시됩니다.</p>
+          <label class="check mt-3"><input id="receipt-kept" type="checkbox" /><span>송금 후 이체확인증을 별도 보관했습니다</span></label>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-3" class="scroll-mt-32 border-t border-line pt-12">
+      <div class="flex items-end justify-between gap-4"><SectionHeader title="계약 권리 시계" eyebrow="날짜보다 재확인 기관이 중요합니다" /><select id="rights-block" class="!w-auto"><option value="AB22">AB22</option><option value="AB23">AB23</option></select></div>
+      <div id="rights-list" class="mt-5 grid gap-3 sm:grid-cols-2"></div>
+      <p class="mt-4 text-xs leading-5 text-muted">이 화면은 법률 판단이나 가능일 확정이 아닙니다. 공급계약서와 실제 시점의 법령, 사업주체·LH 안내가 우선합니다.</p>
+    </section>
+
+    <section id="section-4" class="scroll-mt-32 border-t border-line pt-12">
+      <SectionHeader title="견적 비교" eyebrow="같은 범위를 적어야 가격을 비교할 수 있습니다" />
+      <form id="quote-form" class="no-print mt-5 grid gap-3 rounded-2xl bg-canvas p-5 sm:grid-cols-2 lg:grid-cols-5">
+        <input name="category" placeholder="분류 · 이사/청소" required />
+        <input name="company" placeholder="업체명" required />
+        <input name="amount" type="number" min="0" inputmode="numeric" placeholder="총액(원)" required />
+        <input name="note" placeholder="포함·추가 비용 메모" />
+        <button class="rounded-lg bg-ink px-4 py-2 font-bold text-white" type="submit">견적 추가</button>
+      </form>
+      <div id="quote-list" class="mt-4"></div>
+    </section>
+
+    <section id="section-5" class="scroll-mt-32 border-t border-line pt-12">
+      <SectionHeader title="우리 집 치수" eyebrow="가구 주문 전에 직접 재확인하세요" />
+      <form id="measurement-form" class="no-print mt-5 grid gap-3 rounded-2xl bg-canvas p-5 sm:grid-cols-2 lg:grid-cols-4">
+        <input name="room" placeholder="공간 · 거실" required />
+        <input name="item" placeholder="위치 · 소파 벽면" required />
+        <input name="widthMm" type="number" min="0" inputmode="numeric" placeholder="가로 mm" />
+        <input name="heightMm" type="number" min="0" inputmode="numeric" placeholder="높이 mm" />
+        <input name="depthMm" type="number" min="0" inputmode="numeric" placeholder="깊이 mm" />
+        <input class="lg:col-span-2" name="note" placeholder="몰딩·콘센트·문 열림 메모" />
+        <button class="rounded-lg bg-ink px-4 py-2 font-bold text-white" type="submit">치수 추가</button>
+      </form>
+      <div id="measurement-list" class="mt-4"></div>
+    </section>
+
+    <section id="section-6" class="scroll-mt-32 border-t border-line pt-12">
+      <SectionHeader title="하자 기록" eyebrow="법정 하자 여부는 판정하지 않습니다" />
+      <p class="mt-3 text-sm leading-6 text-muted">사진에는 얼굴·주소·문서와 위치정보가 들어갈 수 있습니다. 필요한 부분만 촬영하세요. 사진은 서버로 보내지 않고 이 브라우저의 IndexedDB에만 저장합니다.</p>
+      <form id="defect-form" class="no-print mt-5 grid gap-3 rounded-2xl bg-canvas p-5 sm:grid-cols-2 lg:grid-cols-4">
+        <input name="room" placeholder="공간 · 안방" required />
+        <input class="lg:col-span-2" name="description" placeholder="무엇을 발견했나요?" required />
+        <select name="severity"><option value="낮음">중요도 낮음</option><option value="보통" selected>중요도 보통</option><option value="높음">중요도 높음</option></select>
+        <select name="status"><option>발견</option><option>접수</option><option>방문 예정</option><option>보수 중</option><option>재점검</option><option>완료</option></select>
+        <input name="receiptNumber" placeholder="접수번호 · 선택" />
+        <input name="revisitNote" placeholder="재점검 메모 · 선택" />
+        <input name="photos" type="file" accept="image/*" multiple aria-label="하자 사진" />
+        <button class="rounded-lg bg-ink px-4 py-2 font-bold text-white" type="submit">하자 추가</button>
+      </form>
+      <div id="defect-list" class="mt-4 grid gap-3"></div>
+    </section>
+
+    <section class="no-print border-t border-line pt-10">
+      <SectionHeader title="내 데이터 관리" eyebrow="이 기기에만 저장됩니다" />
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button id="export-data" class="rounded-lg border border-line px-4 py-2 text-sm font-bold" type="button">JSON 백업</button>
+        <label class="cursor-pointer rounded-lg border border-line px-4 py-2 text-sm font-bold">JSON 복원<input id="import-data" class="sr-only" type="file" accept="application/json" /></label>
+        <button class="rounded-lg border border-line px-4 py-2 text-sm font-bold" type="button" onclick="window.print()">인쇄·PDF</button>
+        <button id="delete-data" class="rounded-lg border border-danger/30 px-4 py-2 text-sm font-bold text-danger" type="button">전체 데이터 삭제</button>
+      </div>
+      <p class="mt-3 text-xs leading-5 text-muted">JSON에는 일정·견적·치수·하자 텍스트만 들어가며 사진 원본은 포함하지 않습니다.</p>
+    </section>
+  </div>
+
+  <script>
+    import '../scripts/move-in';
+  </script>
+</Base>
