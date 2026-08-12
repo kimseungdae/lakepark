@@ -58,3 +58,7 @@ UI는 `src/pages/*.astro` + `src/layouts/Base.astro`, 클라이언트 로직은 
   해당 구독 섹션·계측 스크립트는 렌더링되지 않는다(배포 전 채움).
 - 미확정 값(중도금 무이자 여부, 입주지정일, 옵션 취득세 과세표준 포함 범위 등)은
   README "아직 확정되지 않은 값" 표를 참조.
+- `docs/`·`sources/`·`templates/`·`research_inbox/`는 단지 연구 지식베이스(Markdown)로,
+  계산기 코드와 독립적이다. 색인은 `docs/README.md`·`docs/INDEX.md`, 운영 규칙은
+  `docs/00-meta/knowledge_base_rules.md` 참조. 공고 수치를 코드에 반영할 때는
+  `docs/20-contract-finance/`의 납부액 자료와 교차 확인할 것.
