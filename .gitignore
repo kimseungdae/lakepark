@@ -17,3 +17,4 @@ public/renderings/
 
 # VSCode Local History 확장 스냅샷
 .history/
+.vercel
