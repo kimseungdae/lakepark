@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-13T03:50:01.991Z",
+  "fetchedAt": "2026-08-13T23:27:30.815Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-13",
+    "asOf": "2026-08-14",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -15,6 +15,34 @@
     "넥스트콤플렉스"
   ],
   "bids": [
+    {
+      "bidNtceNo": "R26BK01677265",
+      "bidNtceNm": "[긴급]검단중학교 외부환경(비탈면) 개선공사 입찰 공고",
+      "kind": "공사",
+      "dminsttNm": "인천광역시교육청 인천광역시서부교육지원청",
+      "noticedAt": "2026-08-13",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-14",
+      "closesAt": "2026-08-20"
+    },
+    {
+      "bidNtceNo": "R26BK01681878",
+      "bidNtceNm": "검단신도시 3-1공구 공원화장실 전기공사",
+      "kind": "공사",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-08-13",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-14",
+      "closesAt": "2026-08-21"
+    },
     {
       "bidNtceNo": "R26BK01678296",
       "bidNtceNm": "2026년 검단구 재난대비 긴급 도로유지보수공사(연간단가)",

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-13T02:29:24.897Z",
+  "fetchedAt": "2026-08-13T23:27:30.429Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-13",
+    "asOf": "2026-08-14",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -83,14 +83,14 @@
     },
     {
       "month": "2026-07",
-      "count": 264,
+      "count": 266,
       "medianAmountMan": 49000,
       "provisional": true
     },
     {
       "month": "2026-08",
-      "count": 73,
-      "medianAmountMan": 48700,
+      "count": 76,
+      "medianAmountMan": 48750,
       "provisional": true
     }
   ],
@@ -112,6 +112,16 @@
       "floor": 2,
       "dealDate": "2026-08-12",
       "amountMan": 56000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "당하푸르지오",
+      "umdNm": "당하동",
+      "excluUseAr": 84.943,
+      "floor": 10,
+      "dealDate": "2026-08-12",
+      "amountMan": 39800,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -287,6 +297,16 @@
       "dealingGbn": "중개거래"
     },
     {
+      "aptNm": "검단신도시예미지트리플에듀",
+      "umdNm": "원당동",
+      "excluUseAr": 76.357,
+      "floor": 8,
+      "dealDate": "2026-08-08",
+      "amountMan": 58900,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
       "aptNm": "호반써밋프라임뷰",
       "umdNm": "당하동",
       "excluUseAr": 84.2832,
@@ -373,26 +393,6 @@
       "floor": 5,
       "dealDate": "2026-08-08",
       "amountMan": 23800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "월드",
-      "umdNm": "불로동",
-      "excluUseAr": 59.89,
-      "floor": 15,
-      "dealDate": "2026-08-08",
-      "amountMan": 22500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시푸르지오더베뉴",
-      "umdNm": "원당동",
-      "excluUseAr": 84.92,
-      "floor": 4,
-      "dealDate": "2026-08-07",
-      "amountMan": 70200,
       "canceled": false,
       "dealingGbn": "중개거래"
     }
