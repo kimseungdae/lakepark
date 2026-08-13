@@ -79,6 +79,9 @@ export async function collectBids(
         };
         const closesAt = normalizeDate(item.bidClseDt);
         if (closesAt) raw.closesAt = closesAt;
+        // 일반 키워드 '검단'은 타지역 동명이지(울산 검단리, 성남 검단초, 하남 검단산 등)를
+        // 끌고 온다 — 인천 소속 기관 공고만 통과시킨다. 고유명 키워드는 제한 없음.
+        if (raw.matchedKeyword === '검단' && !raw.dminsttNm.includes('인천')) continue;
         raws.push(raw);
       }
       return raws;
