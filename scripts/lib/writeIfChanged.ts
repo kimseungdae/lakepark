@@ -28,6 +28,15 @@ function withoutKeys(value: Record<string, unknown>, keys: readonly string[]): R
   return clone;
 }
 
+/** 두 스냅샷이 ignoreKeys(기본 fetchedAt)를 제외하고 동일한가 — FS·GitHub API 경로 공용. */
+export function snapshotsEqual(
+  a: Record<string, unknown>,
+  b: Record<string, unknown>,
+  ignoreKeys: readonly string[] = ['fetchedAt'],
+): boolean {
+  return stableStringify(withoutKeys(a, ignoreKeys)) === stableStringify(withoutKeys(b, ignoreKeys));
+}
+
 /** 변경이 있어 실제로 썼으면 true. */
 export function writeIfChanged(
   path: string,

@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "regions": ["icn1"],
+  "functions": {
+    "api/update-data.ts": { "maxDuration": 60 }
+  },
+  "crons": [{ "path": "/api/update-data", "schedule": "30 22 * * *" }]
 }

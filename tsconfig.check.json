@@ -2,7 +2,7 @@
   "//": "타입 검사 전용. @astrojs/check가 TypeScript 7을 아직 지원하지 않아(peer ^5||^6) .ts 소스만 검사한다. .astro 파일의 문법·템플릿 오류는 astro build가 잡는다.",
   "extends": "./tsconfig.json",
   "//include": "astro sync가 생성하는 .astro/types.d.ts가 있어야 import.meta.env 타입이 잡힌다",
-  "include": [".astro/types.d.ts", "src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"],
+  "include": [".astro/types.d.ts", "src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts", "api/**/*.ts"],
   "compilerOptions": {
     "noEmit": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
