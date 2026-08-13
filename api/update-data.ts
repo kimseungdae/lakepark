@@ -82,19 +82,35 @@ async function commitFiles(
   return commit.sha;
 }
 
-export default async function handler(request: Request): Promise<Response> {
+/** Vercel Node 런타임 클래식 시그니처 (req/res). 웹 Request가 아니다. */
+type NodeRequest = { headers: Record<string, string | string[] | undefined> };
+type NodeResponse = {
+  statusCode: number;
+  setHeader(name: string, value: string): void;
+  end(body: string): void;
+};
+
+function json(res: NodeResponse, status: number, body: unknown): void {
+  res.statusCode = status;
+  res.setHeader('content-type', 'application/json; charset=utf-8');
+  res.end(JSON.stringify(body));
+}
+
+export default async function handler(req: NodeRequest, res: NodeResponse): Promise<void> {
   const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret && request.headers.get('authorization') !== `Bearer ${cronSecret}`) {
-    return Response.json({ error: 'unauthorized' }, { status: 401 });
+  const authorization = Array.isArray(req.headers.authorization)
+    ? req.headers.authorization[0]
+    : req.headers.authorization;
+  if (cronSecret && authorization !== `Bearer ${cronSecret}`) {
+    json(res, 401, { error: 'unauthorized' });
+    return;
   }
 
   const serviceKey = process.env.DATA_GO_KR_SERVICE_KEY;
   const ghToken = process.env.GH_CONTENTS_TOKEN;
   if (!serviceKey || !ghToken) {
-    return Response.json(
-      { skipped: true, reason: 'DATA_GO_KR_SERVICE_KEY 또는 GH_CONTENTS_TOKEN 미설정' },
-      { status: 200 },
-    );
+    json(res, 200, { skipped: true, reason: 'DATA_GO_KR_SERVICE_KEY 또는 GH_CONTENTS_TOKEN 미설정' });
+    return;
   }
 
   const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
@@ -152,5 +168,5 @@ export default async function handler(request: Request): Promise<Response> {
     commitSha = await commitFiles(ghToken, changedFiles, `data: 공공데이터 자동 갱신 ${today}`);
   }
 
-  return Response.json({ today, summary, committed: commitSha });
+  json(res, 200, { today, summary, committed: commitSha });
 }
