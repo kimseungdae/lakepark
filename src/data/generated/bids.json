@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-13T00:00:00.000Z",
+  "fetchedAt": "2026-08-13T02:35:55.783Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
@@ -8,6 +8,696 @@
     "confidence": "confirmed",
     "grade": "B"
   },
-  "keywords": ["검단", "나진포천", "워라밸빌리지", "넥스트콤플렉스"],
-  "bids": []
+  "keywords": [
+    "검단",
+    "나진포천",
+    "워라밸빌리지",
+    "넥스트콤플렉스"
+  ],
+  "bids": [
+    {
+      "bidNtceNo": "R26BK01678296",
+      "bidNtceNm": "2026년 검단구 재난대비 긴급 도로유지보수공사(연간단가)",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 종합건설본부",
+      "noticedAt": "2026-08-12",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-08-19"
+    },
+    {
+      "bidNtceNo": "R26BK01680148",
+      "bidNtceNm": "(가칭)검단3중학교 신축 전기공사 감리용역(계속비_총괄)",
+      "kind": "용역",
+      "dminsttNm": "인천광역시교육청",
+      "noticedAt": "2026-08-12",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-08-20"
+    },
+    {
+      "bidNtceNo": "R26BK01674105",
+      "bidNtceNm": "검단2일반산업단지 개발사업 건설폐기물 수집운반 및 중간처리(파쇄, 분쇄)용역",
+      "kind": "용역",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-08-11",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan2-industrial"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-08-19"
+    },
+    {
+      "bidNtceNo": "R26BK01670975",
+      "bidNtceNm": "(가칭)검단3중학교 신축공사 건설재해예방기술지도, 공사안전보건대장 (관급자재 포함) 적정성 및 이행 확인 용역 견적제출 안내 공고",
+      "kind": "용역",
+      "dminsttNm": "인천광역시교육청",
+      "noticedAt": "2026-08-06",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-08-12"
+    },
+    {
+      "bidNtceNo": "R26BK01664328",
+      "bidNtceNm": "사업수행능력평가서 제출 안내공고[검단 박물관·도서관 복합문화시설 건립사업 감독권한대행 등 건설사업관리용역]",
+      "kind": "용역",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-08-04",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "museum-library"
+      ],
+      "firstSeenAt": "2026-08-13"
+    },
+    {
+      "bidNtceNo": "R26BK01662034",
+      "bidNtceNm": "사업수행능력평가서 제출 안내공고[검단 박물관·도서관 복합문화시설 건립사업 감독권한대행 등 건설사업관리용역]",
+      "kind": "용역",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-08-03",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "museum-library"
+      ],
+      "firstSeenAt": "2026-08-13"
+    },
+    {
+      "bidNtceNo": "R26BK01650490",
+      "bidNtceNm": "검단신도시 3-1공구 공원화장실 건립사업",
+      "kind": "공사",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-07-28",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-08-13"
+    },
+    {
+      "bidNtceNo": "R26BK01654320",
+      "bidNtceNm": "2026학년도 검단고등학교 2학년 숙박형 현장체험학습 위탁 용역 입찰 공고",
+      "kind": "용역",
+      "dminsttNm": "인천광역시교육청 검단고등학교",
+      "noticedAt": "2026-07-28",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-08-19"
+    },
+    {
+      "bidNtceNo": "R26BK01651820",
+      "bidNtceNm": "검단구 청사 주변 임시주차장 조성사업",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-07-27",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-31"
+    },
+    {
+      "bidNtceNo": "R26BK01648326",
+      "bidNtceNm": "검단초 옥상방수공사",
+      "kind": "공사",
+      "dminsttNm": "경기도교육청 경기도성남교육지원청",
+      "noticedAt": "2026-07-24",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-30"
+    },
+    {
+      "bidNtceNo": "R26BK01649156",
+      "bidNtceNm": "웅촌면 검단리 검단마을 일원 배수관 부설공사 건설폐기물처리용역",
+      "kind": "용역",
+      "dminsttNm": "울산광역시 상수도사업본부 울주사업소",
+      "noticedAt": "2026-07-24",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-30"
+    },
+    {
+      "bidNtceNo": "R26BK01649220",
+      "bidNtceNm": "웅촌면 검단리 검단마을 일원 배수관 부설공사 GIS DB 구축 용역",
+      "kind": "용역",
+      "dminsttNm": "울산광역시 상수도사업본부 울주사업소",
+      "noticedAt": "2026-07-24",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-30"
+    },
+    {
+      "bidNtceNo": "R26BK01645853",
+      "bidNtceNm": "웅촌면 검단리 검단마을 일원 배수관 부설공사",
+      "kind": "공사",
+      "dminsttNm": "울산광역시 상수도사업본부 울주사업소",
+      "noticedAt": "2026-07-22",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-30"
+    },
+    {
+      "bidNtceNo": "R26BK01640573",
+      "bidNtceNm": "검단2일반산업단지 개발사업 단지전기 설계용역",
+      "kind": "용역",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-07-21",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan2-industrial"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-29"
+    },
+    {
+      "bidNtceNo": "R26BK01634841",
+      "bidNtceNm": "2026년 검단구 관내 교통안전시설물 설치 및 정비공사(단가계약)",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-07-15",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-22"
+    },
+    {
+      "bidNtceNo": "R26BK01626593",
+      "bidNtceNm": "[긴급] (가칭)검단3중학교 신축 정보통신공사(계속비)",
+      "kind": "공사",
+      "dminsttNm": "인천광역시교육청",
+      "noticedAt": "2026-07-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-23"
+    },
+    {
+      "bidNtceNo": "R26BK01626904",
+      "bidNtceNm": "검단초 외부환경개선공사 소액수의 견적제출",
+      "kind": "공사",
+      "dminsttNm": "경기도성남교육청 검단초등학교",
+      "noticedAt": "2026-07-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-16"
+    },
+    {
+      "bidNtceNo": "R26BK01627150",
+      "bidNtceNm": "검단초 외부환경개선공사 폐기물처리 용역 소액수의 견적제출",
+      "kind": "용역",
+      "dminsttNm": "경기도성남교육청 검단초등학교",
+      "noticedAt": "2026-07-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-16"
+    },
+    {
+      "bidNtceNo": "R26BK01627454",
+      "bidNtceNm": "검단산 배드민턴장 바닥 보수공사",
+      "kind": "공사",
+      "dminsttNm": "경기도 하남시",
+      "noticedAt": "2026-07-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-16"
+    },
+    {
+      "bidNtceNo": "R26BK01628014",
+      "bidNtceNm": "2026년 검단구 중봉대로 외 2개노선 재난대비 도로유지보수공사",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 종합건설본부",
+      "noticedAt": "2026-07-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-16"
+    },
+    {
+      "bidNtceNo": "R26BK01628034",
+      "bidNtceNm": "2026년 검단구 중봉대로 외 2개노선 재난대비 도로유지보수공사 폐기물처리용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 종합건설본부",
+      "noticedAt": "2026-07-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-16"
+    },
+    {
+      "bidNtceNo": "R26BK01614845",
+      "bidNtceNm": "[긴급] (가칭)검단3중학교 신축 전기공사(계속비)",
+      "kind": "공사",
+      "dminsttNm": "인천광역시교육청",
+      "noticedAt": "2026-07-03",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-15"
+    },
+    {
+      "bidNtceNo": "R26BK01606011",
+      "bidNtceNm": "2026년 드림나래(인천청년 면접복장 지원) 지정 정장업체(검단구) 용역",
+      "kind": "용역",
+      "dminsttNm": "인천테크노파크",
+      "noticedAt": "2026-06-29",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-10"
+    },
+    {
+      "bidNtceNo": "R26BK01599496",
+      "bidNtceNm": "검단중앙공원 내 급경사지 정비 공사",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 계양공원사업소",
+      "noticedAt": "2026-06-24",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-30"
+    },
+    {
+      "bidNtceNo": "R26BK01594584",
+      "bidNtceNm": "2026년 검단구 도로노면청소차 잔재물(폐토사) 처리용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-22",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-26"
+    },
+    {
+      "bidNtceNo": "R26BK01590435",
+      "bidNtceNm": "[긴급] (가칭)검단3중학교 신축 소방공사(계속비)",
+      "kind": "공사",
+      "dminsttNm": "인천광역시교육청",
+      "noticedAt": "2026-06-19",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-07-07"
+    },
+    {
+      "bidNtceNo": "R26BK01589483",
+      "bidNtceNm": "2026~2029년 업무용 차량 임차 용역 (검단근로자복합문화센터, 계산국민체육센터)",
+      "kind": "용역",
+      "dminsttNm": "인천시설공단",
+      "noticedAt": "2026-06-18",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-24"
+    },
+    {
+      "bidNtceNo": "R26BK01589860",
+      "bidNtceNm": "검단하수처리장 증설공사(2단계) 건설사업관리용역",
+      "kind": "용역",
+      "dminsttNm": "인천도시공사",
+      "noticedAt": "2026-06-18",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-29"
+    },
+    {
+      "bidNtceNo": "R26BK01586248",
+      "bidNtceNm": "웅촌 검단 안골길 확포장공사",
+      "kind": "공사",
+      "dminsttNm": "울산광역시 울주군",
+      "noticedAt": "2026-06-17",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-24"
+    },
+    {
+      "bidNtceNo": "R26BK01573345",
+      "bidNtceNm": "2026년 검단구 도로노면청소차 잔재물(폐토사) 처리용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-16",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-16"
+    },
+    {
+      "bidNtceNo": "R26BK01577543",
+      "bidNtceNm": "웅촌 검단 안골길 확포장공사",
+      "kind": "공사",
+      "dminsttNm": "울산광역시 울주군",
+      "noticedAt": "2026-06-16",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-19"
+    },
+    {
+      "bidNtceNo": "R26BK01584249",
+      "bidNtceNm": "2026년 하반기 검단 도로시설물 정기안전점검용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 종합건설본부",
+      "noticedAt": "2026-06-16",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-23"
+    },
+    {
+      "bidNtceNo": "R26BK01579533",
+      "bidNtceNm": "검단중학교 등 11교 냉난방기 종합세척 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시교육청 인천광역시교육청학교지원단",
+      "noticedAt": "2026-06-15",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-23"
+    },
+    {
+      "bidNtceNo": "R26BK01577977",
+      "bidNtceNm": "2026년 검단구 직원 단체보장보험 가입",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-12",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-18"
+    },
+    {
+      "bidNtceNo": "R26BK01578122",
+      "bidNtceNm": "2026~2029년 업무용 차량 임차 용역 (검단근로자복합문화센터, 계산국민체육센터)",
+      "kind": "용역",
+      "dminsttNm": "인천시설공단",
+      "noticedAt": "2026-06-12",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-18"
+    },
+    {
+      "bidNtceNo": "R26BK01572750",
+      "bidNtceNm": "2026년 하반기 음식물류폐기물 RFID 종량기 유지보수(검단)",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-18"
+    },
+    {
+      "bidNtceNo": "R26BK01573101",
+      "bidNtceNm": "2026년 검단구 불법투기폐기물(그 밖의 폐기물) 위탁처리용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-16"
+    },
+    {
+      "bidNtceNo": "R26BK01564067",
+      "bidNtceNm": "용역 수의계약 안내공고(나진포천 지방하천 정비사업 내 법정보호종(맹꽁이) 정밀조사, 포획∙이주 및 모니터링 용역)",
+      "kind": "용역",
+      "dminsttNm": "경기도청 북부청사",
+      "noticedAt": "2026-06-08",
+      "matchedKeywords": [
+        "나진포천"
+      ],
+      "statusItemIds": [
+        "najinpo-stream"
+      ],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-12"
+    },
+    {
+      "bidNtceNo": "R26BK01567071",
+      "bidNtceNm": "2026년 검단구청 임시청사 방호 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-08",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-16"
+    },
+    {
+      "bidNtceNo": "R26BK01560809",
+      "bidNtceNm": "2026년 검단지역 하천 준설공사 폐기물(준설토) 처리 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 서해구",
+      "noticedAt": "2026-06-04",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-10"
+    },
+    {
+      "bidNtceNo": "R26BK01558896",
+      "bidNtceNm": "2026년 검단구 직원 단체보장보험 가입",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-03",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-12"
+    },
+    {
+      "bidNtceNo": "R26BK01544732",
+      "bidNtceNm": "41.eBAB 서부, 호남권 광역 충전인프라 구축(검단버스)",
+      "kind": "공사",
+      "dminsttNm": "주식회사 펌프킨",
+      "noticedAt": "2026-05-29",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-05"
+    },
+    {
+      "bidNtceNo": "R26BK01552230",
+      "bidNtceNm": "2026년 검단소방서 신설 소방용수시설 설치 공사",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 검단소방서",
+      "noticedAt": "2026-05-29",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-05"
+    },
+    {
+      "bidNtceNo": "R26BK01534765",
+      "bidNtceNm": "검단중앙공원 내 급경사지 정비 공사",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 계양공원사업소",
+      "noticedAt": "2026-05-21",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-05-29"
+    },
+    {
+      "bidNtceNo": "R26BK01538354",
+      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-05-21",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-11"
+    },
+    {
+      "bidNtceNo": "R26BK01538541",
+      "bidNtceNm": "대소원면검단지구급배수관시설공사",
+      "kind": "공사",
+      "dminsttNm": "충청북도 충주시",
+      "noticedAt": "2026-05-21",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-05-27"
+    },
+    {
+      "bidNtceNo": "R26BK01523869",
+      "bidNtceNm": "2026년 우기대비 검단천 준설공사",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 서해구",
+      "noticedAt": "2026-05-19",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-05-20"
+    },
+    {
+      "bidNtceNo": "R26BK01529628",
+      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-05-19",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-09"
+    },
+    {
+      "bidNtceNo": "R26BK01532699",
+      "bidNtceNm": "2026년 우기대비 검단천 준설공사",
+      "kind": "공사",
+      "dminsttNm": "인천광역시 서해구",
+      "noticedAt": "2026-05-19",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-05-26"
+    },
+    {
+      "bidNtceNo": "R26BK01525428",
+      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-05-18",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-05"
+    }
+  ]
 }

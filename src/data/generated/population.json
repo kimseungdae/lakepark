@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-13T00:00:00.000Z",
+  "fetchedAt": "2026-08-13T02:35:54.618Z",
   "source": {
     "label": "행정안전부 주민등록 인구·세대현황 (기계 수집)",
     "url": "https://www.data.go.kr/data/15108071/openapi.do",
@@ -9,6 +9,12 @@
     "grade": "B"
   },
   "scope": "인천광역시 검단구",
-  "months": [],
+  "months": [
+    {
+      "month": "2026-07",
+      "population": 273735,
+      "households": 112282
+    }
+  ],
   "seriesNote": "검단구는 2026-07-01 신설(舊 인천 서구에서 분리)되어 이전 서구 통계와 시계열이 단절됩니다. 주민등록 통계에는 외국인이 포함되지 않습니다."
 }
