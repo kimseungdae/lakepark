@@ -1,6 +1,6 @@
 import { aggregateTrades, toTrade } from './aggregateTrades.ts';
 import { fetchText } from './http.ts';
-import { discoverDistrictCodes, LEGACY_SEOGU, TARGET_DONGS } from './lawdCodes.ts';
+import { discoverDistrictCodes, GEOMDAN_GU, TARGET_DONGS } from './lawdCodes.ts';
 import { parseXmlItems, xmlResultCode, xmlTotalCount } from './xmlItems.ts';
 import type { MarketSnapshot, MarketTrade } from '../../src/data/generated/types.ts';
 
@@ -39,7 +39,7 @@ async function fetchMonth(serviceKey: string, lawdCd: string, dealYmd: string): 
 }
 
 export async function collectMarket(serviceKey: string, today: string): Promise<MarketSnapshot> {
-  const districts = [LEGACY_SEOGU, ...(await discoverDistrictCodes(serviceKey))].filter(
+  const districts = [GEOMDAN_GU, ...(await discoverDistrictCodes(serviceKey))].filter(
     (district, index, all) => all.findIndex((d) => d.lawdCd === district.lawdCd) === index,
   );
 

@@ -9,8 +9,12 @@ import { fetchJson } from './http.ts';
  * 둘 다 조회한 뒤 중복 제거한다.
  */
 
-/** 분구 전 인천 서구 (검단 지역 포함) — 과거 계약월 조회용 */
-export const LEGACY_SEOGU = { lawdCd: '28260', name: '인천 서구(분구 전)' } as const;
+/**
+ * 인천 검단구 시군구 코드 — 2026-08-13 실거래 API 실측으로 확정.
+ * 분구(2026-07-01) 이후 舊 서구 코드(28260)는 과거 계약월까지 전부 0건으로 비었고,
+ * 데이터가 신규 코드로 재편됐다: 28290=검단구(당하동 등), 28275=서해구(검암동 등).
+ */
+export const GEOMDAN_GU = { lawdCd: '28290', name: '인천 검단구' } as const;
 
 /** 검단신도시 생활권 법정동 — 실거래 필터 기준 (umdNm 일치) */
 export const TARGET_DONGS: readonly string[] = [
