@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-13T02:35:55.783Z",
+  "fetchedAt": "2026-08-13T03:50:01.991Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
@@ -145,58 +145,6 @@
       "closesAt": "2026-07-31"
     },
     {
-      "bidNtceNo": "R26BK01648326",
-      "bidNtceNm": "검단초 옥상방수공사",
-      "kind": "공사",
-      "dminsttNm": "경기도교육청 경기도성남교육지원청",
-      "noticedAt": "2026-07-24",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-30"
-    },
-    {
-      "bidNtceNo": "R26BK01649156",
-      "bidNtceNm": "웅촌면 검단리 검단마을 일원 배수관 부설공사 건설폐기물처리용역",
-      "kind": "용역",
-      "dminsttNm": "울산광역시 상수도사업본부 울주사업소",
-      "noticedAt": "2026-07-24",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-30"
-    },
-    {
-      "bidNtceNo": "R26BK01649220",
-      "bidNtceNm": "웅촌면 검단리 검단마을 일원 배수관 부설공사 GIS DB 구축 용역",
-      "kind": "용역",
-      "dminsttNm": "울산광역시 상수도사업본부 울주사업소",
-      "noticedAt": "2026-07-24",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-30"
-    },
-    {
-      "bidNtceNo": "R26BK01645853",
-      "bidNtceNm": "웅촌면 검단리 검단마을 일원 배수관 부설공사",
-      "kind": "공사",
-      "dminsttNm": "울산광역시 상수도사업본부 울주사업소",
-      "noticedAt": "2026-07-22",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-30"
-    },
-    {
       "bidNtceNo": "R26BK01640573",
       "bidNtceNm": "검단2일반산업단지 개발사업 단지전기 설계용역",
       "kind": "용역",
@@ -238,45 +186,6 @@
       ],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-07-23"
-    },
-    {
-      "bidNtceNo": "R26BK01626904",
-      "bidNtceNm": "검단초 외부환경개선공사 소액수의 견적제출",
-      "kind": "공사",
-      "dminsttNm": "경기도성남교육청 검단초등학교",
-      "noticedAt": "2026-07-10",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-16"
-    },
-    {
-      "bidNtceNo": "R26BK01627150",
-      "bidNtceNm": "검단초 외부환경개선공사 폐기물처리 용역 소액수의 견적제출",
-      "kind": "용역",
-      "dminsttNm": "경기도성남교육청 검단초등학교",
-      "noticedAt": "2026-07-10",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-16"
-    },
-    {
-      "bidNtceNo": "R26BK01627454",
-      "bidNtceNm": "검단산 배드민턴장 바닥 보수공사",
-      "kind": "공사",
-      "dminsttNm": "경기도 하남시",
-      "noticedAt": "2026-07-10",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-07-16"
     },
     {
       "bidNtceNo": "R26BK01628014",
@@ -406,19 +315,6 @@
       "closesAt": "2026-06-29"
     },
     {
-      "bidNtceNo": "R26BK01586248",
-      "bidNtceNm": "웅촌 검단 안골길 확포장공사",
-      "kind": "공사",
-      "dminsttNm": "울산광역시 울주군",
-      "noticedAt": "2026-06-17",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-24"
-    },
-    {
       "bidNtceNo": "R26BK01573345",
       "bidNtceNm": "2026년 검단구 도로노면청소차 잔재물(폐토사) 처리용역",
       "kind": "용역",
@@ -432,19 +328,6 @@
       ],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-16"
-    },
-    {
-      "bidNtceNo": "R26BK01577543",
-      "bidNtceNm": "웅촌 검단 안골길 확포장공사",
-      "kind": "공사",
-      "dminsttNm": "울산광역시 울주군",
-      "noticedAt": "2026-06-16",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-19"
     },
     {
       "bidNtceNo": "R26BK01584249",
@@ -583,19 +466,6 @@
       "closesAt": "2026-06-12"
     },
     {
-      "bidNtceNo": "R26BK01544732",
-      "bidNtceNm": "41.eBAB 서부, 호남권 광역 충전인프라 구축(검단버스)",
-      "kind": "공사",
-      "dminsttNm": "주식회사 펌프킨",
-      "noticedAt": "2026-05-29",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-05"
-    },
-    {
       "bidNtceNo": "R26BK01552230",
       "bidNtceNm": "2026년 검단소방서 신설 소방용수시설 설치 공사",
       "kind": "공사",
@@ -633,19 +503,6 @@
       "statusItemIds": [],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-11"
-    },
-    {
-      "bidNtceNo": "R26BK01538541",
-      "bidNtceNm": "대소원면검단지구급배수관시설공사",
-      "kind": "공사",
-      "dminsttNm": "충청북도 충주시",
-      "noticedAt": "2026-05-21",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-05-27"
     },
     {
       "bidNtceNo": "R26BK01523869",
