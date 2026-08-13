@@ -1,0 +1,174 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import StatusPill from '../../components/StatusPill.astro';
+import { ANALYSES } from '../../data/analysis/items';
+import {
+  ACTION_DIFFICULTY_LABELS,
+  LIFE_AREA_LABELS,
+  type ImpactAnalysis,
+} from '../../data/analysis/types';
+import { formatDate } from '../../lib/format';
+
+export function getStaticPaths() {
+  return ANALYSES.map((analysis) => ({ params: { id: analysis.id }, props: { analysis } }));
+}
+
+interface Props {
+  analysis: ImpactAnalysis;
+}
+
+const { analysis } = Astro.props;
+
+const SCENARIOS = [
+  { key: 'smooth', label: '순항하면', tone: 'green' as const, data: analysis.scenarios.smooth },
+  { key: 'delayed', label: '지연되면', tone: 'orange' as const, data: analysis.scenarios.delayed },
+  { key: 'reduced', label: '축소되면', tone: 'gray' as const, data: analysis.scenarios.reduced },
+];
+
+const DIFFICULTY_TONE = { easy: 'green', medium: 'blue', hard: 'gray' } as const;
+---
+
+<Base title={analysis.title} description={analysis.summary}>
+  <article class="mx-auto max-w-3xl">
+    <header class="mb-8">
+      <p class="mb-3 text-sm font-bold text-action">생활영향 분석</p>
+      <div class="mb-3 flex flex-wrap items-center gap-2">
+        <StatusPill label="편집자 의견" tone="orange" />
+        <time class="text-xs font-semibold text-muted" datetime={analysis.basisDate}>
+          기준일 {formatDate(analysis.basisDate)}
+        </time>
+      </div>
+      <h1 class="mb-4">{analysis.title}</h1>
+      <p class="m-0 text-[1.05rem] leading-7 text-muted">{analysis.summary}</p>
+    </header>
+
+    <p class="mb-10 rounded-xl bg-canvas p-4 text-sm leading-6 text-muted">
+      이 글은 공식 자료를 근거로 한 <strong class="text-ink">편집자 의견</strong>입니다.
+      생활(시간·거리·이용 가능성)의 변화만 다루며, 부동산 가치 판단은 다루지 않습니다.
+      기준일 이후 사실이 바뀌면 내용을 갱신합니다.
+      {analysis.disclaimer && <span> {analysis.disclaimer}</span>}
+    </p>
+
+    <section class="mb-12" aria-labelledby="impacts-title">
+      <SectionHeader title="생활이 어떻게 달라지나" />
+      <div class="grid gap-4">
+        {
+          analysis.lifeImpacts.map((impact) => (
+            <div class="rounded-xl border border-line p-5">
+              <div class="mb-3 flex items-center gap-2">
+                <span class="text-sm font-extrabold">{LIFE_AREA_LABELS[impact.area]}</span>
+                <StatusPill
+                  label={impact.confidence === 'confirmed' ? '확정' : '추정'}
+                  tone={impact.confidence === 'confirmed' ? 'green' : 'orange'}
+                />
+              </div>
+              <dl class="m-0 grid gap-2.5 text-sm leading-6">
+                <div>
+                  <dt class="font-bold text-muted">지금</dt>
+                  <dd class="m-0">{impact.current}</dd>
+                </div>
+                <div>
+                  <dt class="font-bold text-muted">달라지는 것</dt>
+                  <dd class="m-0">{impact.after}</dd>
+                </div>
+                <div>
+                  <dt class="font-bold text-muted">언제쯤</dt>
+                  <dd class="m-0 text-muted">{impact.when}</dd>
+                </div>
+              </dl>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mb-12" aria-labelledby="scenario-title">
+      <SectionHeader
+        title="세 가지 시나리오"
+        description="한쪽 전망을 단정하지 않습니다. 어느 길로 가는지는 관찰 신호로 판별하세요."
+      />
+      <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-3">
+        {
+          SCENARIOS.map((scenario) => (
+            <div class="bg-white p-5">
+              <StatusPill label={scenario.label} tone={scenario.tone} />
+              <p class="mb-2 mt-3 text-xs font-bold text-muted">전제</p>
+              <p class="m-0 text-sm leading-6">{scenario.data.assumption}</p>
+              <p class="mb-2 mt-4 text-xs font-bold text-muted">생활은</p>
+              <p class="m-0 text-sm leading-6">{scenario.data.life}</p>
+              <p class="mb-2 mt-4 text-xs font-bold text-muted">관찰 신호</p>
+              <ul class="m-0 grid gap-1 pl-4 text-xs leading-5 text-muted">
+                {scenario.data.signals.map((signal) => (
+                  <li>{signal}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mb-12" aria-labelledby="actions-title">
+      <SectionHeader
+        title="입주자가 함께 움직일 수 있는 것"
+        description="희망사항이 아니라 실제 행정 절차에 의견이 들어가는 지점입니다."
+      />
+      <div class="grid gap-4">
+        {
+          analysis.residentActions.map((action) => (
+            <div class="rounded-xl border border-line p-5">
+              <div class="mb-2 flex flex-wrap items-center gap-2">
+                <StatusPill
+                  label={ACTION_DIFFICULTY_LABELS[action.difficulty]}
+                  tone={DIFFICULTY_TONE[action.difficulty]}
+                />
+                <h3 class="m-0 text-base">{action.title}</h3>
+              </div>
+              <p class="m-0 text-sm leading-6 text-muted">{action.procedure}</p>
+              <p class="mb-0 mt-3 text-sm">
+                <a
+                  class="font-bold text-action underline underline-offset-2"
+                  href={action.channel.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {action.channel.label} →
+                </a>
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <details>
+        <summary class="cursor-pointer text-xs font-bold text-action">
+          공식 근거 {analysis.sources.length}개 보기
+        </summary>
+        <ul class="mb-0 mt-2 grid gap-1 pl-5 text-xs leading-5 text-muted">
+          {
+            analysis.sources.map((source) => (
+              <li>
+                {source.url ? (
+                  <a class="underline underline-offset-2 hover:text-action" href={source.url} target="_blank" rel="noreferrer">
+                    {source.label}
+                  </a>
+                ) : (
+                  source.label
+                )}
+                {' · '}
+                {source.asOf}
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </section>
+
+    <a class="text-sm font-bold text-muted no-underline hover:text-action" href={`/status#${analysis.statusItemId}`}>
+      ← 이 사업의 진행 상태 보기
+    </a>
+  </article>
+</Base>

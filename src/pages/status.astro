@@ -2,9 +2,23 @@
 import Base from '../layouts/Base.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import StatusPill from '../components/StatusPill.astro';
+import { ANALYSES } from '../data/analysis/items';
+import bidsJson from '../data/generated/bids.json';
 import { STATUS_BOARD } from '../data/status/board';
 import { formatDate } from '../lib/format';
 import { toEditorialUpdate, type EditorialStatus } from '../lib/editorial';
+import { assertBidRadarSnapshot } from '../lib/generated';
+
+const analysisIds = new Set(ANALYSES.map((analysis) => analysis.statusItemId));
+
+// 조달 레이더 — 자동 수집 신호. 수집일 기준 7일 이내 처음 본 공고에 '신규' 표시.
+const radar = assertBidRadarSnapshot(bidsJson);
+const radarCollectedOn = radar.fetchedAt.slice(0, 10);
+const isNewBid = (firstSeenAt: string): boolean => {
+  const age = (Date.parse(radarCollectedOn) - Date.parse(firstSeenAt)) / 86_400_000;
+  return age <= 7;
+};
+const statusTitleById = new Map(STATUS_BOARD.map((item) => [item.id, item.title]));
 
 const categories = [
   { key: 'transport', label: '교통' },
@@ -40,6 +54,41 @@ const groups = categories.map((category) => ({
     <div class="bg-white p-4"><StatusPill label="확인 필요" tone="gray" /><p class="mb-0 mt-2 text-xs text-muted">미래 시점에 다시 확인</p></div>
   </div>
 
+  <section id="bid-radar" class="mb-12 scroll-mt-32">
+    <SectionHeader
+      title="조달 레이더"
+      description="나라장터에서 검단 관련 입찰공고를 매일 자동 감시합니다. 입찰공고는 절차의 '공고' 단계일 뿐 착공이 아닙니다."
+    />
+    {
+      radar.bids.length === 0 ? (
+        <p class="m-0 rounded-xl border border-line p-6 text-sm text-muted">
+          최근 90일 안에 감시 키워드({radar.keywords.join('·')})에 걸린 신규 공고가 없거나, 자동
+          수집이 아직 실행되지 않았습니다. 새 공고가 잡히면 이 자리에 자동으로 표시됩니다.
+        </p>
+      ) : (
+        <div class="divide-y divide-line border-y border-line">
+          {radar.bids.slice(0, 8).map((bid) => (
+            <div class="grid gap-1.5 py-4">
+              <div class="flex flex-wrap items-center gap-2">
+                {isNewBid(bid.firstSeenAt) && <StatusPill label="신규" tone="blue" />}
+                <StatusPill label={bid.kind} tone="gray" />
+                <time class="text-xs tabular-nums text-muted" datetime={bid.noticedAt}>{formatDate(bid.noticedAt)} 공고</time>
+              </div>
+              <p class="m-0 text-[.95rem] font-[680] leading-6">{bid.bidNtceNm}</p>
+              <p class="m-0 text-xs text-muted">
+                {bid.dminsttNm}
+                {bid.statusItemIds.map((id) => statusTitleById.has(id) && (
+                  <a class="ml-2 font-bold text-action no-underline hover:underline" href={`#${id}`}>→ {statusTitleById.get(id)}</a>
+                ))}
+              </p>
+            </div>
+          ))}
+        </div>
+      )
+    }
+    <p class="hint">{radarCollectedOn.replaceAll('-', '.')} 자동 수집 · 공고 발주는 사업 생애주기의 신호일 뿐, 상태 판정은 원문 검수 후 갱신합니다.</p>
+  </section>
+
   <nav class="-mx-[1.125rem] mb-12 flex gap-5 overflow-x-auto border-y border-line px-[1.125rem] py-3 text-sm font-bold [scrollbar-width:none]" aria-label="소식 분류">
     {groups.map((group) => <a class="shrink-0 no-underline hover:text-action" href={`#category-${group.key}`}>{group.label} <span class="text-muted">{group.updates.length}</span></a>)}
   </nav>
@@ -61,6 +110,11 @@ const groups = categories.map((category) => ({
                   <div><dt class="font-extrabold text-ink">지금 의미</dt><dd class="m-0 mt-1 text-muted">{update.currentMeaning}</dd></div>
                   <div><dt class="font-extrabold text-ink">다음에 볼 것</dt><dd class="m-0 mt-1 text-muted">{update.nextCheck}</dd></div>
                 </dl>
+                {analysisIds.has(update.id) && (
+                  <a class="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-action-soft px-3.5 py-2.5 text-sm font-bold text-action no-underline hover:bg-action hover:text-white" href={`/analysis/${update.id}`}>
+                    이 소식이 내 생활에 미치는 영향 →
+                  </a>
+                )}
                 <details class="mt-3">
                   <summary class="cursor-pointer text-xs font-bold text-action">공식 근거 {update.sources.length}개 보기</summary>
                   <ul class="mb-0 mt-2 grid gap-1 pl-5 text-xs leading-5 text-muted">

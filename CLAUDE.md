@@ -89,3 +89,11 @@ src/lib/profile.ts   localStorage 프로필 (파싱은 순수 함수로 분리, 
   계산기 코드와 독립적이다. 색인은 `docs/README.md`·`docs/INDEX.md`, 운영 규칙은
   `docs/00-meta/knowledge_base_rules.md` 참조. 공고 수치를 코드에 반영할 때는
   `docs/20-contract-finance/`의 납부액 자료와 교차 확인할 것.
+- **자동 수집 데이터**: `.github/workflows/update-data.yml`(매일 KST 07:30)이 루트 `scripts/`의
+  수집기(실거래·나라장터·인구, Node24 네이티브 TS, 의존성 0)를 돌려 `src/data/generated/*.json`을
+  변경 시에만 커밋한다(fetchedAt 제외 비교) → Vercel 자동 배포. 키는 GitHub Secret
+  `DATA_GO_KR_SERVICE_KEY`. 수집 실패는 exit 0(기존 JSON 유지)이고 `src/lib/generated.ts`
+  가드가 깨진 데이터의 빌드를 막는다. 자동 데이터는 상태판 stage를 바꾸지 않는다(신호 표시만).
+- **생활영향 분석**(`src/data/analysis/`, `/analysis/[id]`)은 검수된 편집자 의견 콘텐츠다 —
+  자동 생성·게시 금지, '의견' 표시·기준일 필수. `tests/analysis.test.ts`의 금지어 검사
+  (시세·집값·프리미엄·가격 전망)가 실패하면 게시 불가.

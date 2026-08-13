@@ -1,0 +1,248 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import StatusPill from '../components/StatusPill.astro';
+import marketJson from '../data/generated/market.json';
+import populationJson from '../data/generated/population.json';
+import { assertMarketSnapshot, assertPopulationSnapshot } from '../lib/generated';
+import { formatKRW } from '../lib/format';
+
+/**
+ * 검단 생활권 실거래 시세판.
+ * 데이터는 GitHub Actions가 매일 수집해 커밋한다 — fetchedAt(수집일) 표기는
+ * "데이터 기준일"이므로 빌드 시점 렌더가 의도된 동작이다 (방문 시점 D-day와 다름).
+ */
+const market = assertMarketSnapshot(marketJson);
+const hasData = market.monthly.some((m) => m.count > 0) || market.recentTrades.length > 0;
+const collectedOn = market.fetchedAt.slice(0, 10).replaceAll('-', '.');
+
+// ── 요약 스탯: 가장 최근의 "완결월"(신고기한 경과) 기준 ──
+const settled = market.monthly.filter((m) => !m.provisional);
+const latest = settled.at(-1);
+const previous = settled.at(-2);
+const countDelta = latest && previous ? latest.count - previous.count : null;
+
+const manToKRW = (man: number): string => formatKRW(man * 10_000);
+const manToShort = (man: number): string => {
+  const eok = man / 10_000;
+  return eok >= 1 ? `${Number(eok.toFixed(1))}억` : `${man.toLocaleString('ko-KR')}만`;
+};
+
+// ── 차트 좌표 (빌드 시 계산, 인라인 SVG — 단일 시리즈 × 2개 차트로 분리, 이중축 금지) ──
+const W = 640;
+const H = 150;
+const PAD = { left: 10, right: 10, top: 16, bottom: 24 };
+const plotH = H - PAD.top - PAD.bottom;
+const slot = (W - PAD.left - PAD.right) / Math.max(1, market.monthly.length);
+const barW = Math.min(26, slot * 0.62);
+
+const maxCount = Math.max(1, ...market.monthly.map((m) => m.count));
+const bars = market.monthly.map((m, i) => {
+  const h = Math.round((m.count / maxCount) * plotH);
+  return {
+    ...m,
+    x: PAD.left + slot * i + (slot - barW) / 2,
+    y: H - PAD.bottom - h,
+    h,
+    labelX: PAD.left + slot * i + slot / 2,
+  };
+});
+
+const medians = market.monthly
+  .map((m, i) => ({ month: m.month, value: m.medianAmountMan, provisional: m.provisional, i }))
+  .filter((p): p is typeof p & { value: number } => p.value !== null);
+const medianMin = medians.length ? Math.min(...medians.map((p) => p.value)) : 0;
+const medianMax = medians.length ? Math.max(...medians.map((p) => p.value)) : 1;
+const medianSpan = Math.max(1, medianMax - medianMin);
+const points = medians.map((p) => ({
+  ...p,
+  x: PAD.left + slot * p.i + slot / 2,
+  y: PAD.top + Math.round((1 - (p.value - medianMin) / medianSpan) * plotH * 0.82) + plotH * 0.09,
+}));
+const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
+
+const monthLabel = (month: string): string => `${month.slice(2, 4)}.${month.slice(5)}`;
+const dongs = [...new Set(market.recentTrades.map((t) => t.umdNm))];
+
+// ── 검단구 인구 계기판 (월 1회 자동 수집) ──
+const population = assertPopulationSnapshot(populationJson);
+const popLatest = population.months.at(-1);
+const popPrev = population.months.at(-2);
+const popDelta = popLatest && popPrev ? popLatest.population - popPrev.population : null;
+---
+
+<Base title="검단 시세판" description="검단 생활권 아파트 매매 실거래를 매일 자동 수집해 월별 거래량·중위가와 최근 거래를 보여줍니다.">
+  <header class="mb-8 max-w-3xl">
+    <p class="mb-3 text-sm font-bold text-action">검단 시세판</p>
+    <h1 class="mb-4">전망 없이,<br />실제 거래만 기록합니다</h1>
+    <p class="m-0 text-[1.05rem] leading-7 text-muted">
+      국토교통부 실거래 공개자료를 매일 자동 수집합니다. 호가가 아닌 신고된 거래이며,
+      해석과 전망은 붙이지 않습니다.
+    </p>
+  </header>
+
+  <div class="mb-8 rounded-xl bg-action-soft p-5 text-sm leading-6">
+    <strong>우리 단지 거래는 아직 없습니다.</strong> 더샵 검단레이크파크는 전매제한
+    3년(2026-07-03부터)이 적용되어 2029년 중반까지 분양권 거래가 불가능합니다. 이 시세판은
+    <strong>인근 법정동({dongs.length > 0 ? dongs.join('·') : '마전동·불로동 등'}) 기존 아파트의 매매</strong> 기록입니다.
+  </div>
+
+  {
+    !hasData ? (
+      <div class="rounded-2xl border border-line p-10 text-center">
+        <StatusPill label="첫 수집 대기" tone="blue" />
+        <p class="mx-auto mb-0 mt-4 max-w-md text-sm leading-6 text-muted">
+          자동 수집이 아직 실행되지 않았습니다. 데이터 파이프라인이 연결되면 매일 아침
+          이 자리에 월별 거래량·중위가와 최근 거래가 채워집니다.
+        </p>
+      </div>
+    ) : (
+      <>
+        {latest && (
+          <div class="mb-10 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-3">
+            <div class="bg-white p-5">
+              <p class="m-0 text-xs font-bold text-muted">최근 완결월</p>
+              <p class="num my-1 text-2xl font-extrabold">{monthLabel(latest.month)}</p>
+              <p class="m-0 text-xs text-muted">신고기한이 지난 마지막 달</p>
+            </div>
+            <div class="bg-white p-5">
+              <p class="m-0 text-xs font-bold text-muted">거래량</p>
+              <p class="num my-1 text-2xl font-extrabold">{latest.count}건</p>
+              <p class="m-0 text-xs text-muted">
+                {countDelta === null ? '전월 비교 불가' : countDelta === 0 ? '전월과 같음' : `전월 대비 ${countDelta > 0 ? '+' : ''}${countDelta}건`}
+              </p>
+            </div>
+            <div class="bg-white p-5">
+              <p class="m-0 text-xs font-bold text-muted">중위 거래가</p>
+              <p class="num my-1 text-2xl font-extrabold">{latest.medianAmountMan === null ? '—' : manToShort(latest.medianAmountMan)}</p>
+              <p class="m-0 text-xs text-muted">{latest.medianAmountMan === null ? '해당 월 거래 없음' : manToKRW(latest.medianAmountMan)}</p>
+            </div>
+          </div>
+        )}
+
+        <section class="mb-12" aria-labelledby="chart-title">
+          <SectionHeader title="월별 거래량" description="연한 막대는 신고기한(계약 후 30일)이 지나지 않아 아직 늘어날 수 있는 집계 중 수치입니다." />
+          <div class="scroll-x">
+            <svg viewBox={`0 0 ${W} ${H}`} class="min-w-[540px]" role="img" aria-label="최근 13개월 월별 거래량 막대 그래프">
+              <line x1={PAD.left} y1={H - PAD.bottom} x2={W - PAD.right} y2={H - PAD.bottom} stroke="#e5e8eb" stroke-width="1" />
+              {bars.map((bar) => (
+                <g>
+                  <rect
+                    x={bar.x}
+                    y={bar.y}
+                    width={barW}
+                    height={Math.max(1, bar.h)}
+                    rx="3"
+                    fill="#3182f6"
+                    fill-opacity={bar.provisional ? 0.35 : 1}
+                  >
+                    <title>{`${bar.month} · ${bar.count}건${bar.provisional ? ' (집계 중)' : ''}${bar.medianAmountMan ? ` · 중위 ${manToShort(bar.medianAmountMan)}` : ''}`}</title>
+                  </rect>
+                  {bar.count === maxCount && bar.count > 0 && (
+                    <text x={bar.labelX} y={bar.y - 5} text-anchor="middle" font-size="11" fill="#6b7684">{bar.count}건</text>
+                  )}
+                </g>
+              ))}
+              {bars.map((bar, i) => (i % 3 === 0 || i === bars.length - 1) && (
+                <text x={bar.labelX} y={H - 8} text-anchor="middle" font-size="10" fill="#6b7684">{monthLabel(bar.month)}</text>
+              ))}
+            </svg>
+          </div>
+        </section>
+
+        {points.length >= 2 && (
+          <section class="mb-12" aria-labelledby="median-title">
+            <SectionHeader title="월별 중위 거래가" description="해제 거래를 제외한 신고 금액의 중앙값입니다. 단지·면적 구성이 달라지면 중위가도 흔들립니다." />
+            <div class="scroll-x">
+              <svg viewBox={`0 0 ${W} ${H}`} class="min-w-[540px]" role="img" aria-label="최근 13개월 중위 거래가 추이 선 그래프">
+                <line x1={PAD.left} y1={H - PAD.bottom} x2={W - PAD.right} y2={H - PAD.bottom} stroke="#e5e8eb" stroke-width="1" />
+                <path d={linePath} fill="none" stroke="#191f28" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                {points.map((point) => (
+                  <circle cx={point.x} cy={point.y} r="4" fill={point.provisional ? '#ffffff' : '#191f28'} stroke="#191f28" stroke-width="2">
+                    <title>{`${point.month} · 중위 ${manToShort(point.value)} (${manToKRW(point.value)})${point.provisional ? ' · 집계 중' : ''}`}</title>
+                  </circle>
+                ))}
+                {points.at(-1) && (
+                  <text x={points.at(-1)!.x} y={points.at(-1)!.y - 10} text-anchor="end" font-size="11" font-weight="700" fill="#191f28">{manToShort(points.at(-1)!.value)}</text>
+                )}
+                {points.map((point, i) => (i % 3 === 0 || i === points.length - 1) && (
+                  <text x={point.x} y={H - 8} text-anchor="middle" font-size="10" fill="#6b7684">{monthLabel(point.month)}</text>
+                ))}
+              </svg>
+            </div>
+          </section>
+        )}
+
+        <section class="mb-10" aria-labelledby="trades-title">
+          <SectionHeader title="최근 거래" description="계약일 기준 최근 30건. 취소선은 신고 해제된 거래입니다." />
+          {dongs.length > 1 && (
+            <div class="mb-4 flex flex-wrap gap-2" role="group" aria-label="법정동 필터">
+              <button type="button" class="rounded-lg border border-line px-3.5 py-2 text-sm font-bold aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-white" data-filter-umd="all" aria-pressed="true">전체</button>
+              {dongs.map((dong) => (
+                <button type="button" class="rounded-lg border border-line px-3.5 py-2 text-sm font-bold aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-white" data-filter-umd={dong} aria-pressed="false">{dong}</button>
+              ))}
+            </div>
+          )}
+          <div class="scroll-x">
+            <table>
+              <thead>
+                <tr><th>계약일</th><th>단지</th><th class="text-right">전용</th><th class="text-right">층</th><th class="text-right">금액</th><th>비고</th></tr>
+              </thead>
+              <tbody>
+                {market.recentTrades.map((trade) => (
+                  <tr data-umd={trade.umdNm} class:list={[trade.canceled && 'text-muted line-through']}>
+                    <td class="num whitespace-nowrap text-sm">{trade.dealDate.slice(2).replaceAll('-', '.')}</td>
+                    <td class="text-sm font-semibold">{trade.aptNm}<span class="ml-1.5 text-xs font-normal text-muted no-underline">{trade.umdNm}</span></td>
+                    <td class="num text-right text-sm">{trade.excluUseAr}㎡</td>
+                    <td class="num text-right text-sm">{trade.floor}층</td>
+                    <td class="num whitespace-nowrap text-right text-sm font-bold">{manToKRW(trade.amountMan)}</td>
+                    <td class="text-xs">{trade.canceled ? <StatusPill label="해제" tone="red" /> : (trade.dealingGbn ?? '')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </>
+    )
+  }
+
+  {
+    popLatest && (
+      <section class="mb-10" aria-labelledby="population-title">
+        <SectionHeader
+          title="검단구 인구"
+          description="행정안전부 주민등록 통계, 월 1회 자동 수집. 인구 증가는 생활 인프라 수요(학교·의료·교통)와 함께 읽어야 합니다."
+        />
+        <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-3">
+          <div class="bg-white p-5">
+            <p class="m-0 text-xs font-bold text-muted">기준 월</p>
+            <p class="num my-1 text-2xl font-extrabold">{monthLabel(popLatest.month)}</p>
+          </div>
+          <div class="bg-white p-5">
+            <p class="m-0 text-xs font-bold text-muted">주민등록 인구</p>
+            <p class="num my-1 text-2xl font-extrabold">{popLatest.population.toLocaleString('ko-KR')}명</p>
+            <p class="m-0 text-xs text-muted">
+              {popDelta === null ? '전월 비교 불가' : popDelta === 0 ? '전월과 같음' : `전월 대비 ${popDelta > 0 ? '+' : ''}${popDelta.toLocaleString('ko-KR')}명`}
+            </p>
+          </div>
+          <div class="bg-white p-5">
+            <p class="m-0 text-xs font-bold text-muted">세대수</p>
+            <p class="num my-1 text-2xl font-extrabold">{popLatest.households.toLocaleString('ko-KR')}세대</p>
+          </div>
+        </div>
+        <p class="hint">{population.seriesNote}</p>
+      </section>
+    )
+  }
+
+  <p class="rounded-xl bg-canvas p-4 text-xs leading-5 text-muted">
+    실거래 신고 기한은 계약 후 30일입니다 — 최근 1~2개월 수치는 앞으로 늘어나며, 신고 후
+    해제되는 거래도 있습니다. 한 건의 최고가를 대표 시세로 읽지 마세요. {collectedOn} 자동 수집 ·
+    출처 <a class="underline underline-offset-2" href={market.source.url} target="_blank" rel="noreferrer">{market.source.label}</a>
+  </p>
+
+  <script>
+    import '../scripts/market';
+  </script>
+</Base>

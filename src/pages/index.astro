@@ -3,9 +3,16 @@ import Base from '../layouts/Base.astro';
 import NewsRow from '../components/NewsRow.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import StatusPill from '../components/StatusPill.astro';
+import marketJson from '../data/generated/market.json';
 import { STATUS_BOARD } from '../data/status/board';
 import { SITE } from '../data/site';
 import { toEditorialUpdate, type EditorialStatus } from '../lib/editorial';
+import { formatKRW } from '../lib/format';
+import { assertMarketSnapshot } from '../lib/generated';
+
+const market = assertMarketSnapshot(marketJson);
+const latestTrade = market.recentTrades.find((trade) => !trade.canceled);
+const marketCollectedOn = market.fetchedAt.slice(5, 10).replace('-', '.');
 
 const updates = STATUS_BOARD.map(toEditorialUpdate);
 const lead = updates.find((item) => item.id === 'seoul-line5-extension')!;
@@ -44,6 +51,15 @@ const categoryLabels: Record<string, string> = {
       <SectionHeader title="최근 단지 소식" description="변경일과 공식 근거를 함께 확인했습니다." href="/status" />
       <div>
         {recent.map((item) => <NewsRow href={`/status#${item.id}`} category={categoryLabels[item.category] ?? item.category} title={item.headline} date={item.changedAt ?? item.checkedAt} status={statusLabels[item.status]} />)}
+        {latestTrade && (
+          <NewsRow
+            href="/market"
+            category="시세"
+            title={`${latestTrade.umdNm} ${latestTrade.aptNm} ${latestTrade.excluUseAr}㎡ ${formatKRW(latestTrade.amountMan * 10_000)} 거래`}
+            date={latestTrade.dealDate}
+            status={`${marketCollectedOn} 수집`}
+          />
+        )}
       </div>
     </div>
 

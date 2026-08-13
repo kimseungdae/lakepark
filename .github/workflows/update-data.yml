@@ -1,0 +1,54 @@
+name: update-data
+
+# 공공데이터 자동 수집 — 변경이 있을 때만 커밋하고, 커밋되면 Vercel이 자동 배포한다.
+# 커밋 메시지에 [skip ci]를 넣지 말 것 (Vercel도 존중해 배포를 건너뛰게 된다 — 배포가 목적).
+
+on:
+  schedule:
+    - cron: '30 22 * * *' # UTC 22:30 = KST 07:30 매일 아침
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # 네이티브 TS 실행 (node scripts/*.ts)
+
+      - run: npm ci
+
+      # 각 수집기는 API 실패 시 경고 후 exit 0 — 기존 JSON을 유지한다.
+      - name: fetch market trades
+        run: node scripts/fetch-market.ts
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+
+      - name: fetch bid notices
+        run: node scripts/fetch-bids.ts
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+
+      - name: fetch population
+        run: node scripts/fetch-population.ts
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+
+      # 스키마·무결성 게이트 — 깨진 데이터는 커밋되지 못한다.
+      - run: npm test
+
+      - name: commit & push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/generated
+          git diff --staged --quiet || { git commit -m "data: 공공데이터 자동 갱신 $(date -u -d '+9 hours' +%F)"; git push; }
