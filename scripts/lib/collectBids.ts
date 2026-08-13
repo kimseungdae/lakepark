@@ -34,21 +34,35 @@ function normalizeDate(value: unknown): string {
   return '';
 }
 
+/** API의 조회기간 제한(최대 1개월) 때문에 90일을 30일 구간으로 쪼개 조회한다. */
+function lookbackWindows(today: string): Array<{ begin: string; end: string }> {
+  const dayMs = 86_400_000;
+  const end = Date.parse(`${today}T00:00:00Z`);
+  const windows: Array<{ begin: string; end: string }> = [];
+  for (let offset = 0; offset < LOOKBACK_DAYS; offset += 30) {
+    const windowEnd = new Date(end - offset * dayMs).toISOString().slice(0, 10);
+    const windowBegin = new Date(end - Math.min(offset + 29, LOOKBACK_DAYS) * dayMs)
+      .toISOString()
+      .slice(0, 10);
+    windows.push({ begin: windowBegin, end: windowEnd });
+  }
+  return windows;
+}
+
 export async function collectBids(
   serviceKey: string,
   previous: ReadonlyArray<Pick<BidNotice, 'bidNtceNo' | 'firstSeenAt'>>,
   today: string,
 ): Promise<BidRadarSnapshot> {
-  const beginDate = new Date(Date.parse(`${today}T00:00:00Z`) - LOOKBACK_DAYS * 86_400_000)
-    .toISOString()
-    .slice(0, 10);
   const compact = (iso: string): string => iso.replaceAll('-', '');
+  const windows = lookbackWindows(today);
 
   const calls = API_KEYWORDS.flatMap((keyword) =>
-    OPERATIONS.map(async ({ op, kind }) => {
+    OPERATIONS.flatMap(({ op, kind }) =>
+      windows.map(async (window) => {
       const url =
         `${BASE_URL}/${op}?serviceKey=${serviceKey}&pageNo=1&numOfRows=100&type=json` +
-        `&inqryDiv=1&inqryBgnDt=${compact(beginDate)}0000&inqryEndDt=${compact(today)}2359` +
+        `&inqryDiv=1&inqryBgnDt=${compact(window.begin)}0000&inqryEndDt=${compact(window.end)}2359` +
         `&bidNtceNm=${encodeURIComponent(keyword)}`;
 
       const raws: RawNotice[] = [];
@@ -68,7 +82,8 @@ export async function collectBids(
         raws.push(raw);
       }
       return raws;
-    }),
+      }),
+    ),
   );
 
   const raws = (await Promise.all(calls)).flat();

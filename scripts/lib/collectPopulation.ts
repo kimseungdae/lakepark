@@ -3,19 +3,25 @@ import type { PopulationSnapshot } from '../../src/data/generated/types.ts';
 
 /**
  * 행안부 주민등록 인구·세대 수집 코어 — 실행 환경 공용 (국내 호출 전제).
- * 새로 확보한 월이 없거나 응답 구조가 예상과 다르면 null을 반환한다 (기존 데이터 유지).
+ *
+ * 2026-08-13 실측 확정 계약:
+ * - 필수 파라미터: stdgCd(10자리) + srchFrYm/srchToYm(YYYYMM) + lv + regSeCd
+ * - lv=2(시군구 수준) 조회 후 stdgCd로 검단구 행을 고른다
+ * - 응답: { Response: { head: { resultCode: '0' }, items: { item: [...] } | '' } }
+ * - 필드: totNmprCnt(총인구), hhCnt(세대수), statsYm(기준월)
+ * 새 월이 없거나 응답이 예상과 다르면 null (기존 데이터 유지).
  */
 
 const ENDPOINT = 'https://apis.data.go.kr/1741000/stdgPpltnHhStus/selectStdgPpltnHhStus';
+const GEOMDAN_STDG_CD = '2829000000';
 const SCOPE_NAME = '인천광역시 검단구';
 const KEEP_MONTHS = 24;
 
 type ApiRow = Record<string, unknown>;
 
 function extractRows(payload: unknown): ApiRow[] {
-  const body = (payload as { response?: { body?: { items?: unknown } } })?.response?.body;
-  const items = body?.items;
-  if (Array.isArray(items)) return items as ApiRow[];
+  const response = (payload as { Response?: { items?: unknown } })?.Response;
+  const items = response?.items;
   if (items && typeof items === 'object') {
     const inner = (items as { item?: unknown }).item;
     if (Array.isArray(inner)) return inner as ApiRow[];
@@ -46,28 +52,20 @@ export async function collectPopulation(
   if (storedLatest >= targetKey) return null;
 
   const url =
-    `${ENDPOINT}?serviceKey=${serviceKey}&type=JSON&pageNo=1&numOfRows=100` +
-    `&srchFrYm=${targetMonth}&srchToYm=${targetMonth}&lv=3&regSeCd=1`;
+    `${ENDPOINT}?serviceKey=${serviceKey}&type=JSON&pageNo=1&numOfRows=60` +
+    `&stdgCd=${GEOMDAN_STDG_CD}&srchFrYm=${targetMonth}&srchToYm=${targetMonth}&lv=2&regSeCd=1`;
   const rows = extractRows(await fetchJson(url));
 
-  const matched = rows.filter((row) =>
-    String(row.lctnRoadNmAddr ?? row.stdgNm ?? row.lctnNm ?? row.dongNm ?? '').includes('검단구'),
-  );
-  if (matched.length === 0) {
-    console.warn('[collectPopulation] 검단구 행을 찾지 못함 — 응답 구조 확인 필요');
+  const geomdan = rows.find((row) => String(row.stdgCd ?? '') === GEOMDAN_STDG_CD);
+  if (!geomdan) {
+    console.warn(`[collectPopulation] ${targetKey} 검단구 행 없음 (통계 미발행 가능) — 유지`);
     return null;
   }
 
-  const population = matched.reduce(
-    (acc, row) => acc + toNumber(row.totNmprCnt ?? row.tongPpltn ?? row.ppltnCnt),
-    0,
-  );
-  const households = matched.reduce(
-    (acc, row) => acc + toNumber(row.hhCnt ?? row.tongHhCnt ?? row.hshldCnt),
-    0,
-  );
+  const population = toNumber(geomdan.totNmprCnt);
+  const households = toNumber(geomdan.hhCnt);
   if (population <= 0) {
-    console.warn('[collectPopulation] 인구 합계 0 — 필드명 확인 필요');
+    console.warn('[collectPopulation] 인구 0 — 응답 확인 필요, 유지');
     return null;
   }
 
