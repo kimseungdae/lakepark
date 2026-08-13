@@ -12,7 +12,12 @@ async function fetchWithRetry(url: string, timeoutMs: number, retries: number): 
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
       const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) });
-      if (!response.ok) throw new Error(`HTTP ${response.status} — ${url}`);
+      if (!response.ok) {
+        // 쿼리스트링에는 서비스키가 들어 있다 — 로그·응답에 절대 노출하지 않는다.
+        const safeUrl = url.split('?')[0];
+        const body = (await response.text()).replace(/\s+/g, ' ').slice(0, 240);
+        throw new Error(`HTTP ${response.status} — ${safeUrl} :: ${body}`);
+      }
       return response;
     } catch (error) {
       lastError = error;
