@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-13T23:27:30.815Z",
+  "fetchedAt": "2026-08-14T23:27:32.154Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-14",
+    "asOf": "2026-08-15",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -343,21 +343,6 @@
       "closesAt": "2026-06-29"
     },
     {
-      "bidNtceNo": "R26BK01573345",
-      "bidNtceNm": "2026년 검단구 도로노면청소차 잔재물(폐토사) 처리용역",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-06-16",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [
-        "geomdan-road-network"
-      ],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-16"
-    },
-    {
       "bidNtceNo": "R26BK01584249",
       "bidNtceNm": "2026년 하반기 검단 도로시설물 정기안전점검용역",
       "kind": "용역",
@@ -436,6 +421,21 @@
         "검단"
       ],
       "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-16"
+    },
+    {
+      "bidNtceNo": "R26BK01573345",
+      "bidNtceNm": "2026년 검단구 도로노면청소차 잔재물(폐토사) 처리용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-06-10",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-road-network"
+      ],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-16"
     },
