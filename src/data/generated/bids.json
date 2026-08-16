@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-15T23:27:29.967Z",
+  "fetchedAt": "2026-08-16T23:27:30.643Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-16",
+    "asOf": "2026-08-17",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -507,6 +507,19 @@
       "closesAt": "2026-06-05"
     },
     {
+      "bidNtceNo": "R26BK01529628",
+      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-05-21",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-13",
+      "closesAt": "2026-06-09"
+    },
+    {
       "bidNtceNo": "R26BK01534765",
       "bidNtceNm": "검단중앙공원 내 급경사지 정비 공사",
       "kind": "공사",
@@ -531,45 +544,6 @@
       "statusItemIds": [],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-11"
-    },
-    {
-      "bidNtceNo": "R26BK01523869",
-      "bidNtceNm": "2026년 우기대비 검단천 준설공사",
-      "kind": "공사",
-      "dminsttNm": "인천광역시 서해구",
-      "noticedAt": "2026-05-19",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-05-20"
-    },
-    {
-      "bidNtceNo": "R26BK01529628",
-      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-05-19",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-09"
-    },
-    {
-      "bidNtceNo": "R26BK01532699",
-      "bidNtceNm": "2026년 우기대비 검단천 준설공사",
-      "kind": "공사",
-      "dminsttNm": "인천광역시 서해구",
-      "noticedAt": "2026-05-19",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-05-26"
     }
   ]
 }
