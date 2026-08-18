@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-17T23:27:30.469Z",
+  "fetchedAt": "2026-08-18T23:27:30.002Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-18",
+    "asOf": "2026-08-19",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -83,18 +83,148 @@
     },
     {
       "month": "2026-07",
-      "count": 266,
+      "count": 271,
       "medianAmountMan": 49000,
       "provisional": true
     },
     {
       "month": "2026-08",
-      "count": 79,
+      "count": 95,
       "medianAmountMan": 48500,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "검단 금호어울림 센트럴",
+      "umdNm": "원당동",
+      "excluUseAr": 74.84,
+      "floor": 23,
+      "dealDate": "2026-08-17",
+      "amountMan": 70000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단힐스테이트4차",
+      "umdNm": "당하동",
+      "excluUseAr": 107.4423,
+      "floor": 2,
+      "dealDate": "2026-08-17",
+      "amountMan": 50750,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "당하KCC스위첸",
+      "umdNm": "당하동",
+      "excluUseAr": 84.997,
+      "floor": 1,
+      "dealDate": "2026-08-16",
+      "amountMan": 35700,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "파라곤센트럴파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.9595,
+      "floor": 10,
+      "dealDate": "2026-08-15",
+      "amountMan": 65000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시한신더휴캐널파크(THEHUECANALPARK)",
+      "umdNm": "당하동",
+      "excluUseAr": 84.1588,
+      "floor": 6,
+      "dealDate": "2026-08-15",
+      "amountMan": 64000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "유승한내들 에듀파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.5123,
+      "floor": 17,
+      "dealDate": "2026-08-15",
+      "amountMan": 59000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "우미린더헤리티지",
+      "umdNm": "원당동",
+      "excluUseAr": 59.8221,
+      "floor": 14,
+      "dealDate": "2026-08-15",
+      "amountMan": 56500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신안인스빌어반퍼스트",
+      "umdNm": "당하동",
+      "excluUseAr": 84.7322,
+      "floor": 7,
+      "dealDate": "2026-08-15",
+      "amountMan": 50500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단우방아이유쉘",
+      "umdNm": "금곡동",
+      "excluUseAr": 84.3431,
+      "floor": 6,
+      "dealDate": "2026-08-15",
+      "amountMan": 39500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "원당LG자이(원당지구69BL1L)",
+      "umdNm": "원당동",
+      "excluUseAr": 84.9511,
+      "floor": 3,
+      "dealDate": "2026-08-15",
+      "amountMan": 36900,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "원당LG자이(원당지구69BL1L)",
+      "umdNm": "원당동",
+      "excluUseAr": 59.949,
+      "floor": 4,
+      "dealDate": "2026-08-15",
+      "amountMan": 31800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "당하3차풍림아이원",
+      "umdNm": "마전동",
+      "excluUseAr": 59.906,
+      "floor": 9,
+      "dealDate": "2026-08-15",
+      "amountMan": 29000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "원당풍림아이원",
+      "umdNm": "당하동",
+      "excluUseAr": 84.55,
+      "floor": 4,
+      "dealDate": "2026-08-14",
+      "amountMan": 30800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "영남탑스빌",
       "umdNm": "마전동",
@@ -152,6 +282,16 @@
       "floor": 8,
       "dealDate": "2026-08-12",
       "amountMan": 37200,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "대림e편한세상(원당지구78BL1L)",
+      "umdNm": "원당동",
+      "excluUseAr": 84.981,
+      "floor": 5,
+      "dealDate": "2026-08-12",
+      "amountMan": 33000,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -236,163 +376,22 @@
       "dealingGbn": "중개거래"
     },
     {
+      "aptNm": "파라곤센트럴파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.9595,
+      "floor": 3,
+      "dealDate": "2026-08-10",
+      "amountMan": 62000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
       "aptNm": "검단신도시로제비앙라포레",
       "umdNm": "원당동",
       "excluUseAr": 84.4159,
       "floor": 5,
       "dealDate": "2026-08-10",
       "amountMan": 51000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단자이2단지",
-      "umdNm": "왕길동",
-      "excluUseAr": 123.19,
-      "floor": 4,
-      "dealDate": "2026-08-10",
-      "amountMan": 38800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "대림e-편한세상(검단2지구66BL1L)",
-      "umdNm": "왕길동",
-      "excluUseAr": 84.91,
-      "floor": 11,
-      "dealDate": "2026-08-10",
-      "amountMan": 35000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "백두",
-      "umdNm": "불로동",
-      "excluUseAr": 59.76,
-      "floor": 4,
-      "dealDate": "2026-08-10",
-      "amountMan": 17700,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "금호어울림2차(원당지구80BL3L)",
-      "umdNm": "원당동",
-      "excluUseAr": 84.9949,
-      "floor": 3,
-      "dealDate": "2026-08-09",
-      "amountMan": 30800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시푸르지오더베뉴",
-      "umdNm": "원당동",
-      "excluUseAr": 105.52,
-      "floor": 12,
-      "dealDate": "2026-08-08",
-      "amountMan": 83000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시푸르지오더베뉴",
-      "umdNm": "원당동",
-      "excluUseAr": 84.93,
-      "floor": 17,
-      "dealDate": "2026-08-08",
-      "amountMan": 71000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "파라곤센트럴파크",
-      "umdNm": "당하동",
-      "excluUseAr": 84.9595,
-      "floor": 19,
-      "dealDate": "2026-08-08",
-      "amountMan": 68400,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시예미지트리플에듀",
-      "umdNm": "원당동",
-      "excluUseAr": 76.357,
-      "floor": 8,
-      "dealDate": "2026-08-08",
-      "amountMan": 58950,
-      "canceled": true,
-      "canceledDate": "26-08-12",
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시예미지트리플에듀",
-      "umdNm": "원당동",
-      "excluUseAr": 76.357,
-      "floor": 8,
-      "dealDate": "2026-08-08",
-      "amountMan": 58900,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "호반써밋프라임뷰",
-      "umdNm": "당하동",
-      "excluUseAr": 84.2832,
-      "floor": 3,
-      "dealDate": "2026-08-08",
-      "amountMan": 57400,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시대방디에트르리버파크",
-      "umdNm": "원당동",
-      "excluUseAr": 59.9834,
-      "floor": 15,
-      "dealDate": "2026-08-08",
-      "amountMan": 55200,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단힐스테이트5차",
-      "umdNm": "당하동",
-      "excluUseAr": 99.4816,
-      "floor": 5,
-      "dealDate": "2026-08-08",
-      "amountMan": 48800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "신검단중앙역디에트르더에듀",
-      "umdNm": "불로동",
-      "excluUseAr": 59.8701,
-      "floor": 10,
-      "dealDate": "2026-08-08",
-      "amountMan": 47800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "신검단중앙역디에트르더에듀",
-      "umdNm": "불로동",
-      "excluUseAr": 59.8448,
-      "floor": 10,
-      "dealDate": "2026-08-08",
-      "amountMan": 44200,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단자이1단지",
-      "umdNm": "왕길동",
-      "excluUseAr": 84.341,
-      "floor": 12,
-      "dealDate": "2026-08-08",
-      "amountMan": 36000,
       "canceled": false,
       "dealingGbn": "중개거래"
     }

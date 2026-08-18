@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-17T23:27:31.018Z",
+  "fetchedAt": "2026-08-18T23:27:30.086Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-18",
+    "asOf": "2026-08-19",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -15,6 +15,21 @@
     "넥스트콤플렉스"
   ],
   "bids": [
+    {
+      "bidNtceNo": "R26BK01687066",
+      "bidNtceNm": "(가칭)검단3중학교 신축 전기․정보통신․소방공사 재해예방기술지도, 공사안전보건대장 (관급자재 포함)적정성 검토 및 이행 확인 용역 견적제출 안내 공고",
+      "kind": "용역",
+      "dminsttNm": "인천광역시교육청",
+      "noticedAt": "2026-08-18",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [
+        "geomdan-schools"
+      ],
+      "firstSeenAt": "2026-08-19",
+      "closesAt": "2026-08-25"
+    },
     {
       "bidNtceNo": "R26BK01677265",
       "bidNtceNm": "[긴급]검단중학교 외부환경(비탈면) 개선공사 입찰 공고",
@@ -505,45 +520,6 @@
       "statusItemIds": [],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-05"
-    },
-    {
-      "bidNtceNo": "R26BK01529628",
-      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-05-21",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-09"
-    },
-    {
-      "bidNtceNo": "R26BK01534765",
-      "bidNtceNm": "검단중앙공원 내 급경사지 정비 공사",
-      "kind": "공사",
-      "dminsttNm": "인천광역시 계양공원사업소",
-      "noticedAt": "2026-05-21",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-05-29"
-    },
-    {
-      "bidNtceNo": "R26BK01538354",
-      "bidNtceNm": "2026년 검단구 CCTV 통합관제센터 유지관리 용역",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-05-21",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-11"
     }
   ]
 }
