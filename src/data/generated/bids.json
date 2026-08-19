@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-18T23:27:30.086Z",
+  "fetchedAt": "2026-08-19T23:13:06.077Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-19",
+    "asOf": "2026-08-20",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -15,6 +15,19 @@
     "넥스트콤플렉스"
   ],
   "bids": [
+    {
+      "bidNtceNo": "R26BK01684427",
+      "bidNtceNm": "2026 검단구 업사이클 페스티벌 용역",
+      "kind": "용역",
+      "dminsttNm": "인천광역시 검단구",
+      "noticedAt": "2026-08-19",
+      "matchedKeywords": [
+        "검단"
+      ],
+      "statusItemIds": [],
+      "firstSeenAt": "2026-08-20",
+      "closesAt": "2026-08-31"
+    },
     {
       "bidNtceNo": "R26BK01687066",
       "bidNtceNm": "(가칭)검단3중학교 신축 전기․정보통신․소방공사 재해예방기술지도, 공사안전보건대장 (관급자재 포함)적정성 검토 및 이행 확인 용역 견적제출 안내 공고",
@@ -192,7 +205,7 @@
       "bidNtceNm": "검단2일반산업단지 개발사업 단지전기 설계용역",
       "kind": "용역",
       "dminsttNm": "인천도시공사",
-      "noticedAt": "2026-07-21",
+      "noticedAt": "2026-07-24",
       "matchedKeywords": [
         "검단"
       ],
