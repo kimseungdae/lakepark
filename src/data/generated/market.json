@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-19T23:13:05.316Z",
+  "fetchedAt": "2026-08-20T23:25:19.273Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-20",
+    "asOf": "2026-08-21",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -83,18 +83,48 @@
     },
     {
       "month": "2026-07",
-      "count": 271,
+      "count": 272,
       "medianAmountMan": 49000,
       "provisional": true
     },
     {
       "month": "2026-08",
-      "count": 103,
+      "count": 107,
       "medianAmountMan": 47800,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "검단힐스테이트6차",
+      "umdNm": "당하동",
+      "excluUseAr": 84.9908,
+      "floor": 6,
+      "dealDate": "2026-08-20",
+      "amountMan": 49300,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "원당풍림아이원",
+      "umdNm": "당하동",
+      "excluUseAr": 74.0892,
+      "floor": 14,
+      "dealDate": "2026-08-19",
+      "amountMan": 29400,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "월드",
+      "umdNm": "불로동",
+      "excluUseAr": 59.89,
+      "floor": 4,
+      "dealDate": "2026-08-19",
+      "amountMan": 17500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "검단신도시예미지트리플에듀",
       "umdNm": "원당동",
@@ -102,6 +132,16 @@
       "floor": 21,
       "dealDate": "2026-08-18",
       "amountMan": 62000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시디에트르더힐",
+      "umdNm": "원당동",
+      "excluUseAr": 75.8458,
+      "floor": 14,
+      "dealDate": "2026-08-18",
+      "amountMan": 55000,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -352,46 +392,6 @@
       "floor": 8,
       "dealDate": "2026-08-12",
       "amountMan": 37200,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "대림e편한세상(원당지구78BL1L)",
-      "umdNm": "원당동",
-      "excluUseAr": 84.981,
-      "floor": 5,
-      "dealDate": "2026-08-12",
-      "amountMan": 33000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "태평",
-      "umdNm": "당하동",
-      "excluUseAr": 59.99,
-      "floor": 17,
-      "dealDate": "2026-08-12",
-      "amountMan": 24000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "하나",
-      "umdNm": "금곡동",
-      "excluUseAr": 59.8455,
-      "floor": 7,
-      "dealDate": "2026-08-12",
-      "amountMan": 20000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "호반써밋프라임뷰",
-      "umdNm": "당하동",
-      "excluUseAr": 84.2832,
-      "floor": 22,
-      "dealDate": "2026-08-11",
-      "amountMan": 58000,
       "canceled": false,
       "dealingGbn": "중개거래"
     }
