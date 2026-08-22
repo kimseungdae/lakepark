@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-21T22:53:09.627Z",
+  "fetchedAt": "2026-08-22T23:14:26.007Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-22",
+    "asOf": "2026-08-23",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -205,7 +205,7 @@
       "bidNtceNm": "검단2일반산업단지 개발사업 단지전기 설계용역",
       "kind": "용역",
       "dminsttNm": "인천도시공사",
-      "noticedAt": "2026-07-24",
+      "noticedAt": "2026-07-21",
       "matchedKeywords": [
         "검단"
       ],
