@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-24T22:57:10.325Z",
+  "fetchedAt": "2026-08-25T22:59:57.349Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-25",
+    "asOf": "2026-08-26",
     "confidence": "confirmed",
     "grade": "B"
   },
