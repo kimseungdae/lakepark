@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-25T22:59:57.440Z",
+  "fetchedAt": "2026-08-26T22:39:20.157Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-26",
+    "asOf": "2026-08-27",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -77,8 +77,8 @@
     },
     {
       "month": "2026-06",
-      "count": 249,
-      "medianAmountMan": 47000,
+      "count": 248,
+      "medianAmountMan": 47250,
       "provisional": false
     },
     {
@@ -89,12 +89,22 @@
     },
     {
       "month": "2026-08",
-      "count": 150,
-      "medianAmountMan": 48600,
+      "count": 157,
+      "medianAmountMan": 49300,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "파라곤센트럴파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.986,
+      "floor": 9,
+      "dealDate": "2026-08-25",
+      "amountMan": 67800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "검단신도시예미지트리플에듀",
       "umdNm": "원당동",
@@ -112,6 +122,26 @@
       "floor": 25,
       "dealDate": "2026-08-25",
       "amountMan": 59000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시디에트르더힐",
+      "umdNm": "원당동",
+      "excluUseAr": 84.6755,
+      "floor": 19,
+      "dealDate": "2026-08-25",
+      "amountMan": 58500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "호반써밋프라임뷰",
+      "umdNm": "당하동",
+      "excluUseAr": 84.0988,
+      "floor": 23,
+      "dealDate": "2026-08-25",
+      "amountMan": 57800,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -362,36 +392,6 @@
       "floor": 7,
       "dealDate": "2026-08-21",
       "amountMan": 27000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "탑스빌(영남,신대진,성웅)아파트",
-      "umdNm": "당하동",
-      "excluUseAr": 59.995,
-      "floor": 6,
-      "dealDate": "2026-08-21",
-      "amountMan": 25700,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "마전3차풍림아이원",
-      "umdNm": "마전동",
-      "excluUseAr": 84.6689,
-      "floor": 9,
-      "dealDate": "2026-08-21",
-      "amountMan": 21000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시푸르지오더베뉴",
-      "umdNm": "원당동",
-      "excluUseAr": 84.93,
-      "floor": 11,
-      "dealDate": "2026-08-20",
-      "amountMan": 72600,
       "canceled": false,
       "dealingGbn": "중개거래"
     }
