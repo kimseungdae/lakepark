@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-26T22:39:20.157Z",
+  "fetchedAt": "2026-08-27T22:53:18.097Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-27",
+    "asOf": "2026-08-28",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -77,8 +77,8 @@
     },
     {
       "month": "2026-06",
-      "count": 248,
-      "medianAmountMan": 47250,
+      "count": 247,
+      "medianAmountMan": 47000,
       "provisional": false
     },
     {
@@ -89,12 +89,32 @@
     },
     {
       "month": "2026-08",
-      "count": 157,
+      "count": 161,
       "medianAmountMan": 49300,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "검단신안인스빌어반퍼스트",
+      "umdNm": "당하동",
+      "excluUseAr": 94.955,
+      "floor": 5,
+      "dealDate": "2026-08-26",
+      "amountMan": 52000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "영남탑스빌",
+      "umdNm": "마전동",
+      "excluUseAr": 153.03,
+      "floor": 16,
+      "dealDate": "2026-08-26",
+      "amountMan": 42500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "파라곤센트럴파크",
       "umdNm": "당하동",
@@ -142,6 +162,16 @@
       "floor": 23,
       "dealDate": "2026-08-25",
       "amountMan": 57800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시모아미래도엘리트파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.6561,
+      "floor": 10,
+      "dealDate": "2026-08-25",
+      "amountMan": 55300,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -364,36 +394,6 @@
       "amountMan": 40930,
       "canceled": false,
       "dealingGbn": "직거래"
-    },
-    {
-      "aptNm": "검단대광로제비앙센트럴포레",
-      "umdNm": "불로동",
-      "excluUseAr": 61.8494,
-      "floor": 18,
-      "dealDate": "2026-08-21",
-      "amountMan": 36900,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "퀸스타운(동성)",
-      "umdNm": "불로동",
-      "excluUseAr": 134.97,
-      "floor": 4,
-      "dealDate": "2026-08-21",
-      "amountMan": 34000,
-      "canceled": false,
-      "dealingGbn": "직거래"
-    },
-    {
-      "aptNm": "영남탑스빌",
-      "umdNm": "마전동",
-      "excluUseAr": 84.97,
-      "floor": 7,
-      "dealDate": "2026-08-21",
-      "amountMan": 27000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
     }
   ]
 }
