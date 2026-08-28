@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-27T22:53:18.097Z",
+  "fetchedAt": "2026-08-28T22:50:29.065Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-28",
+    "asOf": "2026-08-29",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -89,12 +89,32 @@
     },
     {
       "month": "2026-08",
-      "count": 161,
-      "medianAmountMan": 49300,
+      "count": 164,
+      "medianAmountMan": 49150,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "우미린더시그니처",
+      "umdNm": "원당동",
+      "excluUseAr": 74.3179,
+      "floor": 17,
+      "dealDate": "2026-08-27",
+      "amountMan": 72300,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "당하3차풍림아이원",
+      "umdNm": "마전동",
+      "excluUseAr": 59.906,
+      "floor": 17,
+      "dealDate": "2026-08-27",
+      "amountMan": 29000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "검단신안인스빌어반퍼스트",
       "umdNm": "당하동",
@@ -112,6 +132,16 @@
       "floor": 16,
       "dealDate": "2026-08-26",
       "amountMan": 42500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단아이파크",
+      "umdNm": "마전동",
+      "excluUseAr": 84.2846,
+      "floor": 15,
+      "dealDate": "2026-08-26",
+      "amountMan": 35000,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -364,36 +394,6 @@
       "amountMan": 56500,
       "canceled": false,
       "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시예미지트리플에듀",
-      "umdNm": "원당동",
-      "excluUseAr": 84.9227,
-      "floor": 2,
-      "dealDate": "2026-08-21",
-      "amountMan": 56300,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "힐스테이트검단포레스트",
-      "umdNm": "불로동",
-      "excluUseAr": 84.8616,
-      "floor": 16,
-      "dealDate": "2026-08-21",
-      "amountMan": 48500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단힐스테이트4차",
-      "umdNm": "당하동",
-      "excluUseAr": 115.7167,
-      "floor": 12,
-      "dealDate": "2026-08-21",
-      "amountMan": 40930,
-      "canceled": false,
-      "dealingGbn": "직거래"
     }
   ]
 }
