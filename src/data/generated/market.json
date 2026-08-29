@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-28T22:50:29.065Z",
+  "fetchedAt": "2026-08-29T22:31:24.173Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-29",
+    "asOf": "2026-08-30",
     "confidence": "confirmed",
     "grade": "B"
   },
