@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-30T23:08:07.110Z",
+  "fetchedAt": "2026-08-31T23:21:27.274Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-08-31",
+    "asOf": "2026-09-01",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -15,12 +15,6 @@
     }
   ],
   "monthly": [
-    {
-      "month": "2025-08",
-      "count": 148,
-      "medianAmountMan": 38750,
-      "provisional": false
-    },
     {
       "month": "2025-09",
       "count": 220,
@@ -53,8 +47,8 @@
     },
     {
       "month": "2026-02",
-      "count": 253,
-      "medianAmountMan": 49000,
+      "count": 252,
+      "medianAmountMan": 49200,
       "provisional": false
     },
     {
@@ -85,16 +79,192 @@
       "month": "2026-07",
       "count": 273,
       "medianAmountMan": 49000,
-      "provisional": true
+      "provisional": false
     },
     {
       "month": "2026-08",
-      "count": 164,
-      "medianAmountMan": 49150,
+      "count": 190,
+      "medianAmountMan": 48600,
+      "provisional": true
+    },
+    {
+      "month": "2026-09",
+      "count": 0,
+      "medianAmountMan": null,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "신검단중앙역디에트르더에듀",
+      "umdNm": "불로동",
+      "excluUseAr": 59.8554,
+      "floor": 15,
+      "dealDate": "2026-08-31",
+      "amountMan": 47700,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "신검단중앙역디에트르더에듀",
+      "umdNm": "불로동",
+      "excluUseAr": 59.8448,
+      "floor": 9,
+      "dealDate": "2026-08-31",
+      "amountMan": 43985,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시대방디에트르리버파크",
+      "umdNm": "원당동",
+      "excluUseAr": 59.9971,
+      "floor": 17,
+      "dealDate": "2026-08-30",
+      "amountMan": 54700,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신안인스빌어반퍼스트",
+      "umdNm": "당하동",
+      "excluUseAr": 84.7322,
+      "floor": 10,
+      "dealDate": "2026-08-30",
+      "amountMan": 48500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단자이1단지",
+      "umdNm": "왕길동",
+      "excluUseAr": 84.743,
+      "floor": 2,
+      "dealDate": "2026-08-30",
+      "amountMan": 34000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "불로e-편한세상",
+      "umdNm": "불로동",
+      "excluUseAr": 84.861,
+      "floor": 1,
+      "dealDate": "2026-08-30",
+      "amountMan": 29200,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "우미린더시그니처",
+      "umdNm": "원당동",
+      "excluUseAr": 74.0973,
+      "floor": 22,
+      "dealDate": "2026-08-29",
+      "amountMan": 73000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시푸르지오더베뉴",
+      "umdNm": "원당동",
+      "excluUseAr": 84.98,
+      "floor": 17,
+      "dealDate": "2026-08-29",
+      "amountMan": 71000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단자이2단지",
+      "umdNm": "왕길동",
+      "excluUseAr": 123.541,
+      "floor": 15,
+      "dealDate": "2026-08-29",
+      "amountMan": 54000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시로제비앙라포레",
+      "umdNm": "원당동",
+      "excluUseAr": 84.4159,
+      "floor": 1,
+      "dealDate": "2026-08-29",
+      "amountMan": 47000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단자이1단지",
+      "umdNm": "왕길동",
+      "excluUseAr": 123.19,
+      "floor": 2,
+      "dealDate": "2026-08-29",
+      "amountMan": 42800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "대림e-편한세상(검단2지구66BL1L)",
+      "umdNm": "왕길동",
+      "excluUseAr": 84.91,
+      "floor": 11,
+      "dealDate": "2026-08-29",
+      "amountMan": 37500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단힐스테이트",
+      "umdNm": "마전동",
+      "excluUseAr": 84.2846,
+      "floor": 8,
+      "dealDate": "2026-08-29",
+      "amountMan": 32000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단풍림아이원",
+      "umdNm": "왕길동",
+      "excluUseAr": 59.7024,
+      "floor": 1,
+      "dealDate": "2026-08-29",
+      "amountMan": 24300,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "신검단중앙역풍경채어바니티",
+      "umdNm": "불로동",
+      "excluUseAr": 84.7571,
+      "floor": 5,
+      "dealDate": "2026-08-28",
+      "amountMan": 84800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시푸르지오더베뉴",
+      "umdNm": "원당동",
+      "excluUseAr": 75.84,
+      "floor": 20,
+      "dealDate": "2026-08-28",
+      "amountMan": 66200,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단2차우방아이유쉘",
+      "umdNm": "마전동",
+      "excluUseAr": 59.9375,
+      "floor": 1,
+      "dealDate": "2026-08-28",
+      "amountMan": 31400,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "우미린더시그니처",
       "umdNm": "원당동",
@@ -106,12 +276,42 @@
       "dealingGbn": "중개거래"
     },
     {
+      "aptNm": "검단신도시디에트르더펠리체",
+      "umdNm": "당하동",
+      "excluUseAr": 75.7971,
+      "floor": 14,
+      "dealDate": "2026-08-27",
+      "amountMan": 57300,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
       "aptNm": "당하3차풍림아이원",
       "umdNm": "마전동",
       "excluUseAr": 59.906,
       "floor": 17,
       "dealDate": "2026-08-27",
       "amountMan": 29000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "원당풍림아이원",
+      "umdNm": "당하동",
+      "excluUseAr": 74.0892,
+      "floor": 4,
+      "dealDate": "2026-08-27",
+      "amountMan": 26500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "호반써밋1차",
+      "umdNm": "원당동",
+      "excluUseAr": 84.8917,
+      "floor": 4,
+      "dealDate": "2026-08-26",
+      "amountMan": 74500,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -142,6 +342,16 @@
       "floor": 15,
       "dealDate": "2026-08-26",
       "amountMan": 35000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "월드",
+      "umdNm": "불로동",
+      "excluUseAr": 59.83,
+      "floor": 9,
+      "dealDate": "2026-08-26",
+      "amountMan": 20000,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -182,216 +392,6 @@
       "floor": 19,
       "dealDate": "2026-08-25",
       "amountMan": 58500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "호반써밋프라임뷰",
-      "umdNm": "당하동",
-      "excluUseAr": 84.0988,
-      "floor": 23,
-      "dealDate": "2026-08-25",
-      "amountMan": 57800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시모아미래도엘리트파크",
-      "umdNm": "당하동",
-      "excluUseAr": 84.6561,
-      "floor": 10,
-      "dealDate": "2026-08-25",
-      "amountMan": 55300,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "신안실크벨리",
-      "umdNm": "당하동",
-      "excluUseAr": 59.9639,
-      "floor": 5,
-      "dealDate": "2026-08-25",
-      "amountMan": 26000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시푸르지오더베뉴",
-      "umdNm": "원당동",
-      "excluUseAr": 105.52,
-      "floor": 8,
-      "dealDate": "2026-08-24",
-      "amountMan": 82000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시파라곤보타닉파크",
-      "umdNm": "원당동",
-      "excluUseAr": 84.9947,
-      "floor": 10,
-      "dealDate": "2026-08-24",
-      "amountMan": 57000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단힐스테이트6차",
-      "umdNm": "당하동",
-      "excluUseAr": 84.9869,
-      "floor": 6,
-      "dealDate": "2026-08-24",
-      "amountMan": 46300,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시예미지트리플에듀",
-      "umdNm": "원당동",
-      "excluUseAr": 84.5075,
-      "floor": 22,
-      "dealDate": "2026-08-23",
-      "amountMan": 59500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "우미린더시그니처",
-      "umdNm": "원당동",
-      "excluUseAr": 84.9732,
-      "floor": 10,
-      "dealDate": "2026-08-22",
-      "amountMan": 82500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "아라역금강펜테리움더시글로1차",
-      "umdNm": "당하동",
-      "excluUseAr": 84.906,
-      "floor": 23,
-      "dealDate": "2026-08-22",
-      "amountMan": 70000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "파라곤센트럴파크",
-      "umdNm": "당하동",
-      "excluUseAr": 84.986,
-      "floor": 10,
-      "dealDate": "2026-08-22",
-      "amountMan": 67400,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시예미지트리플에듀",
-      "umdNm": "원당동",
-      "excluUseAr": 84.5075,
-      "floor": 18,
-      "dealDate": "2026-08-22",
-      "amountMan": 61000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시모아미래도엘리트파크",
-      "umdNm": "당하동",
-      "excluUseAr": 84.6561,
-      "floor": 2,
-      "dealDate": "2026-08-22",
-      "amountMan": 52800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단대광로제비앙센트럴포레",
-      "umdNm": "불로동",
-      "excluUseAr": 74.9089,
-      "floor": 23,
-      "dealDate": "2026-08-22",
-      "amountMan": 42900,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "불로금호어울림(불로지구39BL)",
-      "umdNm": "불로동",
-      "excluUseAr": 84.9949,
-      "floor": 13,
-      "dealDate": "2026-08-22",
-      "amountMan": 31800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단 양우내안애 퍼스트힐",
-      "umdNm": "마전동",
-      "excluUseAr": 59.6939,
-      "floor": 11,
-      "dealDate": "2026-08-22",
-      "amountMan": 29800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "동아",
-      "umdNm": "마전동",
-      "excluUseAr": 84.9,
-      "floor": 14,
-      "dealDate": "2026-08-22",
-      "amountMan": 28500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "월드",
-      "umdNm": "불로동",
-      "excluUseAr": 59.73,
-      "floor": 6,
-      "dealDate": "2026-08-22",
-      "amountMan": 19200,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "힐스테이트신검단센트럴",
-      "umdNm": "불로동",
-      "excluUseAr": 99.4559,
-      "floor": 6,
-      "dealDate": "2026-08-21",
-      "amountMan": 97500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "호반써밋1차",
-      "umdNm": "원당동",
-      "excluUseAr": 84.8981,
-      "floor": 9,
-      "dealDate": "2026-08-21",
-      "amountMan": 74500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단 금호어울림 센트럴",
-      "umdNm": "원당동",
-      "excluUseAr": 74.84,
-      "floor": 17,
-      "dealDate": "2026-08-21",
-      "amountMan": 71200,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시대방디에트르리버파크",
-      "umdNm": "원당동",
-      "excluUseAr": 59.9368,
-      "floor": 16,
-      "dealDate": "2026-08-21",
-      "amountMan": 56500,
       "canceled": false,
       "dealingGbn": "중개거래"
     }

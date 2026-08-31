@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-30T23:08:07.564Z",
+  "fetchedAt": "2026-08-31T23:21:27.356Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-08-31",
+    "asOf": "2026-09-01",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -507,19 +507,6 @@
       "statusItemIds": [],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-10"
-    },
-    {
-      "bidNtceNo": "R26BK01558896",
-      "bidNtceNm": "2026년 검단구 직원 단체보장보험 가입",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-06-03",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-12"
     }
   ]
 }
