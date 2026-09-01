@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-08-31T23:21:27.356Z",
+  "fetchedAt": "2026-09-01T22:47:28.608Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-09-01",
+    "asOf": "2026-09-02",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -132,7 +132,7 @@
       "closesAt": "2026-08-12"
     },
     {
-      "bidNtceNo": "R26BK01664328",
+      "bidNtceNo": "R26BK01662034",
       "bidNtceNm": "사업수행능력평가서 제출 안내공고[검단 박물관·도서관 복합문화시설 건립사업 감독권한대행 등 건설사업관리용역]",
       "kind": "용역",
       "dminsttNm": "인천도시공사",
@@ -146,11 +146,11 @@
       "firstSeenAt": "2026-08-13"
     },
     {
-      "bidNtceNo": "R26BK01662034",
+      "bidNtceNo": "R26BK01664328",
       "bidNtceNm": "사업수행능력평가서 제출 안내공고[검단 박물관·도서관 복합문화시설 건립사업 감독권한대행 등 건설사업관리용역]",
       "kind": "용역",
       "dminsttNm": "인천도시공사",
-      "noticedAt": "2026-08-03",
+      "noticedAt": "2026-08-04",
       "matchedKeywords": [
         "검단"
       ],
@@ -494,19 +494,6 @@
       "statusItemIds": [],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-16"
-    },
-    {
-      "bidNtceNo": "R26BK01560809",
-      "bidNtceNm": "2026년 검단지역 하천 준설공사 폐기물(준설토) 처리 용역",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 서해구",
-      "noticedAt": "2026-06-04",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-10"
     }
   ]
 }
