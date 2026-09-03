@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-09-02T22:34:01.211Z",
+  "fetchedAt": "2026-09-03T22:32:35.117Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-09-03",
+    "asOf": "2026-09-04",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -83,14 +83,14 @@
     },
     {
       "month": "2026-08",
-      "count": 206,
+      "count": 209,
       "medianAmountMan": 48500,
       "provisional": true
     },
     {
       "month": "2026-09",
-      "count": 12,
-      "medianAmountMan": 53750,
+      "count": 13,
+      "medianAmountMan": 54000,
       "provisional": true
     }
   ],
@@ -102,6 +102,16 @@
       "floor": 12,
       "dealDate": "2026-09-02",
       "amountMan": 59000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "우미린더헤리티지",
+      "umdNm": "원당동",
+      "excluUseAr": 59.8229,
+      "floor": 17,
+      "dealDate": "2026-09-02",
+      "amountMan": 58800,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -296,6 +306,16 @@
       "dealingGbn": "중개거래"
     },
     {
+      "aptNm": "파라곤센트럴파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.9595,
+      "floor": 17,
+      "dealDate": "2026-08-30",
+      "amountMan": 64800,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
       "aptNm": "검단신도시대방디에트르리버파크",
       "umdNm": "원당동",
       "excluUseAr": 59.9971,
@@ -372,26 +392,6 @@
       "floor": 15,
       "dealDate": "2026-08-29",
       "amountMan": 54000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단신도시로제비앙라포레",
-      "umdNm": "원당동",
-      "excluUseAr": 84.4159,
-      "floor": 1,
-      "dealDate": "2026-08-29",
-      "amountMan": 47000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단자이1단지",
-      "umdNm": "왕길동",
-      "excluUseAr": 123.19,
-      "floor": 2,
-      "dealDate": "2026-08-29",
-      "amountMan": 42800,
       "canceled": false,
       "dealingGbn": "중개거래"
     }
