@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-09-04T22:32:35.329Z",
+  "fetchedAt": "2026-09-05T22:32:34.763Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-09-05",
+    "asOf": "2026-09-06",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -464,34 +464,6 @@
       "statusItemIds": [
         "geomdan-road-network"
       ],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-16"
-    },
-    {
-      "bidNtceNo": "R26BK01564067",
-      "bidNtceNm": "용역 수의계약 안내공고(나진포천 지방하천 정비사업 내 법정보호종(맹꽁이) 정밀조사, 포획∙이주 및 모니터링 용역)",
-      "kind": "용역",
-      "dminsttNm": "경기도청 북부청사",
-      "noticedAt": "2026-06-08",
-      "matchedKeywords": [
-        "나진포천"
-      ],
-      "statusItemIds": [
-        "najinpo-stream"
-      ],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-12"
-    },
-    {
-      "bidNtceNo": "R26BK01567071",
-      "bidNtceNm": "2026년 검단구청 임시청사 방호 용역",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-06-08",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-16"
     }
