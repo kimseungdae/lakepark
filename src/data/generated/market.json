@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-09-08T22:32:35.294Z",
+  "fetchedAt": "2026-09-09T22:32:35.361Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-09-09",
+    "asOf": "2026-09-10",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -65,8 +65,8 @@
     },
     {
       "month": "2026-05",
-      "count": 263,
-      "medianAmountMan": 49000,
+      "count": 262,
+      "medianAmountMan": 49375,
       "provisional": false
     },
     {
@@ -83,18 +83,28 @@
     },
     {
       "month": "2026-08",
-      "count": 218,
-      "medianAmountMan": 48350,
+      "count": 219,
+      "medianAmountMan": 48200,
       "provisional": true
     },
     {
       "month": "2026-09",
-      "count": 52,
-      "medianAmountMan": 52400,
+      "count": 53,
+      "medianAmountMan": 52500,
       "provisional": true
     }
   ],
   "recentTrades": [
+    {
+      "aptNm": "검단신도시파라곤보타닉파크",
+      "umdNm": "원당동",
+      "excluUseAr": 84.9947,
+      "floor": 9,
+      "dealDate": "2026-09-08",
+      "amountMan": 58000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
     {
       "aptNm": "검단신도시디에트르더힐",
       "umdNm": "원당동",
@@ -382,16 +392,6 @@
       "floor": 5,
       "dealDate": "2026-09-04",
       "amountMan": 60500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "우미린파크뷰1단지",
-      "umdNm": "당하동",
-      "excluUseAr": 59.938,
-      "floor": 8,
-      "dealDate": "2026-09-04",
-      "amountMan": 50000,
       "canceled": false,
       "dealingGbn": "중개거래"
     }

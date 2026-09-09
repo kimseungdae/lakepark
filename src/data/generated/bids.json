@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-09-08T22:32:35.521Z",
+  "fetchedAt": "2026-09-09T22:32:35.364Z",
   "source": {
     "label": "조달청 나라장터 입찰공고 (기계 수집)",
     "url": "https://www.data.go.kr/data/15129394/openapi.do",
-    "asOf": "2026-09-09",
+    "asOf": "2026-09-10",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -414,32 +414,6 @@
       ],
       "firstSeenAt": "2026-08-13",
       "closesAt": "2026-06-23"
-    },
-    {
-      "bidNtceNo": "R26BK01577977",
-      "bidNtceNm": "2026년 검단구 직원 단체보장보험 가입",
-      "kind": "용역",
-      "dminsttNm": "인천광역시 검단구",
-      "noticedAt": "2026-06-12",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-18"
-    },
-    {
-      "bidNtceNo": "R26BK01578122",
-      "bidNtceNm": "2026~2029년 업무용 차량 임차 용역 (검단근로자복합문화센터, 계산국민체육센터)",
-      "kind": "용역",
-      "dminsttNm": "인천시설공단",
-      "noticedAt": "2026-06-12",
-      "matchedKeywords": [
-        "검단"
-      ],
-      "statusItemIds": [],
-      "firstSeenAt": "2026-08-13",
-      "closesAt": "2026-06-18"
     }
   ]
 }
