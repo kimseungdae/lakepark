@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-09-09T22:32:35.361Z",
+  "fetchedAt": "2026-09-10T22:32:35.217Z",
   "source": {
     "label": "국토교통부 아파트 매매 실거래가 (기계 수집)",
     "url": "https://www.data.go.kr/data/15126468/openapi.do",
-    "asOf": "2026-09-10",
+    "asOf": "2026-09-11",
     "confidence": "confirmed",
     "grade": "B"
   },
@@ -83,14 +83,14 @@
     },
     {
       "month": "2026-08",
-      "count": 219,
-      "medianAmountMan": 48200,
+      "count": 221,
+      "medianAmountMan": 48000,
       "provisional": true
     },
     {
       "month": "2026-09",
-      "count": 53,
-      "medianAmountMan": 52500,
+      "count": 62,
+      "medianAmountMan": 52400,
       "provisional": true
     }
   ],
@@ -99,9 +99,79 @@
       "aptNm": "검단신도시파라곤보타닉파크",
       "umdNm": "원당동",
       "excluUseAr": 84.9947,
+      "floor": 4,
+      "dealDate": "2026-09-10",
+      "amountMan": 56500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단힐스테이트3차1단지",
+      "umdNm": "오류동",
+      "excluUseAr": 84.9098,
+      "floor": 17,
+      "dealDate": "2026-09-10",
+      "amountMan": 35500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "파라곤센트럴파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.9595,
+      "floor": 4,
+      "dealDate": "2026-09-09",
+      "amountMan": 62600,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시모아미래도엘리트파크",
+      "umdNm": "당하동",
+      "excluUseAr": 84.6561,
+      "floor": 7,
+      "dealDate": "2026-09-09",
+      "amountMan": 53500,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시대성베르힐라프리미어",
+      "umdNm": "당하동",
+      "excluUseAr": 84.9376,
+      "floor": 16,
+      "dealDate": "2026-09-09",
+      "amountMan": 52000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "신검단중앙역금강펜테리움센트럴파크",
+      "umdNm": "불로동",
+      "excluUseAr": 74.9594,
+      "floor": 13,
+      "dealDate": "2026-09-09",
+      "amountMan": 45900,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "검단신도시파라곤보타닉파크",
+      "umdNm": "원당동",
+      "excluUseAr": 84.9947,
       "floor": 9,
       "dealDate": "2026-09-08",
       "amountMan": 58000,
+      "canceled": false,
+      "dealingGbn": "중개거래"
+    },
+    {
+      "aptNm": "대원레스피아2차",
+      "umdNm": "마전동",
+      "excluUseAr": 84.8494,
+      "floor": 1,
+      "dealDate": "2026-09-08",
+      "amountMan": 21700,
       "canceled": false,
       "dealingGbn": "중개거래"
     },
@@ -322,76 +392,6 @@
       "floor": 5,
       "dealDate": "2026-09-05",
       "amountMan": 36500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단아이파크",
-      "umdNm": "마전동",
-      "excluUseAr": 84.2846,
-      "floor": 13,
-      "dealDate": "2026-09-05",
-      "amountMan": 33000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "금호어울림2차(원당지구80BL3L)",
-      "umdNm": "원당동",
-      "excluUseAr": 84.9949,
-      "floor": 7,
-      "dealDate": "2026-09-05",
-      "amountMan": 31500,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "검단아이파크",
-      "umdNm": "마전동",
-      "excluUseAr": 84.2846,
-      "floor": 4,
-      "dealDate": "2026-09-05",
-      "amountMan": 31000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "동남디아망",
-      "umdNm": "왕길동",
-      "excluUseAr": 84.9651,
-      "floor": 2,
-      "dealDate": "2026-09-05",
-      "amountMan": 27800,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "원당풍림아이원",
-      "umdNm": "당하동",
-      "excluUseAr": 59.832,
-      "floor": 4,
-      "dealDate": "2026-09-05",
-      "amountMan": 25600,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "아라역금강펜테리움더시글로1차",
-      "umdNm": "당하동",
-      "excluUseAr": 84.906,
-      "floor": 22,
-      "dealDate": "2026-09-04",
-      "amountMan": 70000,
-      "canceled": false,
-      "dealingGbn": "중개거래"
-    },
-    {
-      "aptNm": "유승한내들 에듀파크",
-      "umdNm": "당하동",
-      "excluUseAr": 92.2153,
-      "floor": 5,
-      "dealDate": "2026-09-04",
-      "amountMan": 60500,
       "canceled": false,
       "dealingGbn": "중개거래"
     }
